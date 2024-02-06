@@ -1,0 +1,154 @@
+<openerp>
+	<data>
+		<record id="report_paperformat_bg_2" model="report.paperformat">
+			<field name="name">Landscape</field>
+			<field name="default" eval="True" />
+			<field name="format">A4</field>
+			<field name="orientation">Landscape</field>
+			<field name="margin_top">5</field>
+			<field name="margin_bottom">0</field>
+			<field name="margin_left">15</field>
+			<field name="margin_right">15</field>
+			<field name="header_line" eval="False" />
+			<field name="header_spacing">12</field>
+			<field name="dpi">0</field>
+		</record>
+        <record model="ir.ui.view" id="report_work_hours_planned_wizard_id">
+			<field name="name">work.hours.reports</field>
+			<field name="model">work.hours.reports</field>
+			<field name="arch" type="xml">
+				<form string="Work Hours Planned Report By Qs">
+					<group col="3">
+						<group>
+							<field name="date_from"/>
+						</group>
+						<group>
+							<field name="date_to"/>
+						</group>
+						<group>
+							<field name="project_id"/>
+						</group>
+                    </group>
+					<footer>
+						<button name="action_work_hrs_view" type="object" string="View" class="oe_highlight" />
+						<button name="action_work_hours" type="object" string="Print" class="oe_highlight" />
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+<report id="report_work_hrs_planned_id" string="Work Hrs Planned"
+			model="work.hours.reports" report_type="qweb-pdf"
+			name="hiworth_project_management.report_work_hrs_planned_template"/>
+				<record id="hiworth_project_management.report_work_hrs_planned_id" model="ir.actions.report.xml">
+    <field name="paperformat_id" ref="hiworth_project_management.report_paperformat_bg_2"/>
+</record>
+<!--	.....TEMPLATE..............................................................................-->
+		<template id="report_work_hrs_planned_template">
+			<style>
+             table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+             th, td {
+				padding: 17px;
+				text-align: left;
+				}
+           </style>
+
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="report.external_layout">
+						<div class="page">
+
+							<center><b><h1>Work Hours Planned By QS</h1></b></center><br/>
+
+	                    <span><center><b><h4> <span t-field="o.date_from"/> To <span t-field="o.date_to"/></h4></b></center></span>
+	                    <span><center><b><h4> <span t-field="o.project_id.name"/></h4></b></center></span>
+							<t t-set="sl_no" t-value="1" />
+							<t t-set="subtotal" t-value="0" />
+
+							<div>
+								<center>
+
+									<table>
+										<thead>
+											<tr>
+												<td colspan="8"><center><b>Estimated</b></center></td>
+                                                <td colspan="3"><center><b>Actual Till Date</b></center></td>
+										    </tr>
+
+
+											<tr>
+												<td style="width: 4%;" align="center"><h4><b><center>S# No</center></b></h4></td>
+												<td style="width: 4%;" align="center"><h4><b><center>Construction Activities</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Project</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Date</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Category</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Estimated Quantity</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Units</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Estimated Manhours</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Total Manhours Used</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Difference</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>% used</center></b></h4></td>
+											</tr>
+										</thead>
+										<tbody>
+											<t t-foreach="docs.get_details()" t-as="line">
+												<tr >
+													<td >
+														<center><span t-esc="sl_no" />
+															<t t-set="sl_no" t-value="sl_no+1" /></center>
+													</td>
+													<td><center><span t-esc="line['construction_activities']"/></center></td>
+													<td>
+														<center><span t-esc="line['project_id']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['date']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['category']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['estimated_qty']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['unit']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['estimated_manhours_required']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['total_manhours_required']"/></center>
+													</td>
+													<td><center><span t-esc="line['difference']"/></center></td>
+													<td><center><span t-esc="line['per_used']"/></center></td>
+												</tr>
+											</t>
+										</tbody>
+									</table>
+								</center>
+							</div>
+						</div>
+					</t>
+				</t>
+			</t>
+</template>
+<!--_____________________________________________________________________________________________________________________-->
+
+		<record id="action_qs_workhours_planned_report" model="ir.actions.act_window">
+					<field name="name">Print Work Planned Hours</field>
+					<field name="type">ir.actions.act_window</field>
+					<field name="res_model">work.hours.reports</field>
+					<field name="target">new</field>
+					<field name="view_type">form</field>
+					<field name="view_mode">form</field>
+		</record>
+
+		<menuitem action="action_qs_workhours_planned_report" id="menu_work_planned_reports_child"
+                              name="Work Hours Planned By Qs"
+                              sequence="7" parent="menu_recurring_expense_reports"/>
+
+    </data>
+</openerp>

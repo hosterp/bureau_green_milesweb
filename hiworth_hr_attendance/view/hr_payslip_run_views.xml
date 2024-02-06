@@ -1,0 +1,122 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <record id="hr_payslip_batches_form_employee" model="ir.ui.view">
+            <field name="name">Payslip Batches</field>
+            <field name="model">hr.payslip.batches</field>
+            <field name="arch" type="xml">
+                <form string="Payslip Batches" create="false" >
+                    <header>
+                        <button name="action_generate_payslip" string="Generate Payslip Lines" type="object" states='draft' class="oe_highlight"/>
+                      <button name="action_verify" string="Verify" type="object" states='draft' class="oe_highlight"/>
+                         <button name="action_approve" string="Approve" type="object" states='verify' class="oe_highlight"/>
+                         <button name="action_paid" string="Paid" type="object" states='payment' class="oe_highlight"/>
+                         <button name="action_payment" string="Payment" type="object" states='approve' class="oe_highlight"/>
+                      <button name="action_cancel" string="Cancel" type="object" states='verify,approve,payment' groups="base.group_erp_manager" class="oe_highlight"/>
+<!--                       <button name="action_view_payroll_report" string="Payroll Report" type="object" class="oe_highlight"/>-->
+<!--                        <button name="action_view_individual" string="Payslip Report" type="object" class="oe_highlight"/>-->
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <group col="4">
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                        <field name="contract_company_id"/>
+                    </group>
+                    <notebook>
+                        <page>
+                            <field name="employee_hr_payslip_ids">
+                                <tree create="false" delete="false" editable="bottom">
+<!--                                    <field name="employee_id" readonly="1"/>-->
+<!--                                    <field name="number" readonly="1"/>-->
+<!--                                    <field name="name" readonly="1"/>-->
+<!--                                    <field name="month" readonly="1"/>-->
+<!--                                    <field name="basic_salary" readonly="1"/>-->
+<!--                                    <field name="on_public_holidays" readonly="1"/>-->
+<!--                                    <field name="overtime" readonly="1"/>-->
+
+<!--                                    <field name="state" invisile="1"/>-->
+
+<!--                                    <field name="house_rent_allowance" attrs="{'readonly':[('state','!=','draft')]}"/>-->
+<!--                                    <field name="vehicle_allowance" attrs="{'readonly':[('state','!=','draft')]}"/>-->
+<!--                                    <field name="petrol_allowance" attrs="{'readonly':[('state','!=','draft')]}"/>-->
+<!--                                    <field name="travel_allowance" attrs="{'readonly':[('state','!=','draft')]}"/>-->
+<!--                                    <field name="da" attrs="{'readonly':[('state','!=','draft')]}"/>-->
+<!--                                    <field name="other_allowance" attrs="{'readonly':[('state','!=','draft')]}"/>-->
+
+<!--                                    <field name="gross_salary" readonly="1"/>-->
+<!--                                    <field name="attendance"   string="LOP days" readonly="1"/>-->
+<!--                                    <field name="wages_due" string="Salary deduction" readonly="1"/>-->
+
+<!--                                    <field name="amount_advance" attrs="{'readonly':[('state','!=','draft')]}"/>-->
+<!--                                    <field name="loan_refund" attrs="{'readonly':[('state','!=','draft')]}"/>-->
+<!--                                    <field name="fine" attrs="{'readonly':[('state','!=','draft')]}"/>-->
+
+<!--                                    <field name="total_deduction" style="font-size:13pt;" readonly="1"/>-->
+<!--                                    <field name="net_salary" readonly="1"/>-->
+<!--                                    <field name="gratuity" readonly="1"/>-->
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+         <record id="hr_payslip_batches_tree_employee" model="ir.ui.view">
+            <field name="name">Payslip Batches</field>
+            <field name="model">hr.payslip.batches</field>
+            <field name="arch" type="xml">
+                <tree>
+                     <field name="date_from"/>
+                        <field name="date_to"/>
+                        <field name="contract_company_id"/>
+                </tree>
+            </field>
+         </record>
+
+          <record id="action_payslip_batches_employee" model="ir.actions.act_window">
+            <field name="name">Payslip - Batches &amp; Report</field>
+            <field name="res_model">hr.payslip.batches</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="target">current</field>
+            <field name="view_id" ref="hr_payslip_batches_tree_employee" />
+        </record>
+
+
+        <record id="hr_payslip_batches_form_salary_employee" model="ir.ui.view">
+            <field name="name">Payslip Batches</field>
+            <field name="model">hr.payslip.batches.line</field>
+            <field name="arch" type="xml">
+                <form string="Payslip Batches" create="false" >
+                    <group col="4">
+                        <field name="employee_id"/>
+
+                    </group>
+                    <notebook>
+                        <page>
+                            <field name="payslip_batches_salary_ids">
+                                <tree create="false" delete="false" editable="bottom">
+                                    <field name="name"/>
+                               <field name="code"/>
+                               <field name="category_id"/>
+
+                               <field name="amount"/>
+                               <field name="total"/></tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+
+<!--        <menuitem name="Payslip - Batches &amp; Report"-->
+<!--                  id="menu_payslip_batches_employee"-->
+<!--                  parent="hr_payroll.menu_hr_root_payroll"-->
+<!--                  sequence="3"-->
+<!--                  action="action_payslip_batches_employee"-->
+<!--                  groups="base.group_erp_manager,group_hr"/>-->
+
+    </data>
+</openerp>

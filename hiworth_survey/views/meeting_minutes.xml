@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+
+        <record id="review_meeting_minutes_tree_id" model="ir.ui.view">
+            <field name="name">Review Meeting Minutes Tree</field>
+            <field name="model">review.meeting.minutes</field>
+            <field name="arch" type="xml">
+                <tree editable="top" create="true" string="Review Meeting Minutes">
+                    <field name="date"/>
+                    <field name="employee_id"/>
+                    <field name="attachment_id"/>
+                    <field name="remarks"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="review_meeting_minutes_form_id" model="ir.ui.view">
+            <field name="name">Review Meeting Minutes Form</field>
+            <field name="model">review.meeting.minutes</field>
+            <field name="arch" type="xml">
+                <form string="Review Meeting Minutes">
+                    <header>
+						<button name="done" string="Done" type="object" class="oe_highlight" states="not"/>
+						<field name="state" widget="statusbar"/>
+					</header>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="employee_id"/>
+                        </group>
+                        <group>
+                            <field name="attachment_id"/>
+                            <field name="remarks"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_review_meeting_minutes" model="ir.actions.act_window">
+            <field name="name">Review Meeting Minutes</field>
+            <field name="res_model">review.meeting.minutes</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="action_review_meeting_minutes" name="Review Meeting/ Minutes" id="menu_review_meeting_minutes" sequence="7" parent="hiworth_survey.menu_hiworth_survey_department"/>
+
+    </data>
+</openerp>

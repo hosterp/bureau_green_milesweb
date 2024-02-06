@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="tree_work_planned_by_qs" model="ir.ui.view">
+            <field name="name">work.hours.qs</field>
+            <field name="model">work.hours.qs</field>
+            <field name="arch" type="xml">
+                <tree string="Work Hours Planned By Qs">
+                    <field name="project_id"/>
+                    <field name="date"/>
+                    <field name="construction_activities"/>
+                    <field name="overhead_category"/>
+                    <field name="estimated_qty"/>
+                    <field name="unit"/>
+                    <field name="estimated_manhours_required"/>
+                    <field name="total_manhours_required"/>
+                    <field name="difference"/>
+                </tree>
+            </field>
+        </record>
+        <record id="workhrs_planned_by_qs_form_id" model="ir.ui.view">
+			<field name="name">work.hours.qs</field>
+			<field name="model">work.hours.qs</field>
+			<field name="arch" type="xml">
+				<form string="Work Hours Planned By Qs">
+					<sheet>
+					<h1><center>Work Hours Planned By Qs</center></h1><br></br><br></br>
+					<group col="2" string="Estimated">
+						<group>
+							<field name="project_id"/>
+                           <field name="date"/>
+						   <field name="construction_activities"/>
+                           <field name="overhead_category"/>
+                           <field name="estimated_qty"/>
+                           <field name="unit"/>
+                           <field name="estimated_manhours_required"/>
+						</group>
+						<group>
+
+						</group>
+					</group>
+						<group col="2" string="Actual">
+							<group>
+								<field name="total_manhours_required"/>
+                                <field name="difference"/>
+							</group>
+							<group>
+
+							</group>
+
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+			<record model="ir.actions.act_window" id="action_work_hours_planned_by_qs">
+			<field name="name">Work Hours Planned by Qs</field>
+			<field name="res_model">work.hours.qs</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,kanban</field>
+		</record>
+				<menuitem id="work_hours_by_qs_parent_id" name="Work Hours Planned" parent="hiworth_project_management.menu_office_management" sequence="8"/>
+				<menuitem action="action_work_hours_planned_by_qs" id="work_hours_by_qs_child_id" name="By QS" parent="work_hours_by_qs_parent_id"/>
+    </data>
+</openerp>

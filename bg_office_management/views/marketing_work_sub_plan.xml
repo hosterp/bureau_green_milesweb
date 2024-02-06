@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <record id="tree_work_sub_plans_id" model="ir.ui.view">
+            <field name="name">work.submission.plan</field>
+            <field name="model">work.submission.plan</field>
+            <field name="arch" type="xml">
+                <tree string="Work Submission Plan">
+<!--                    <field name="name"/>-->
+                    <field name="project"/>
+                    <field name="location"/>
+                    <field name="sqft"/>
+                    <field name="no_floors"/>
+                    <field name="work_start_date"/>
+                    <field name="work_completeion_date"/>
+                    <field name="work_agreement_date"/>
+                    <field name="work_target_date"/>
+                </tree>
+            </field>
+        </record>
+        <record id="form_work_sub_plans_id" model="ir.ui.view">
+			<field name="name">work.submission.plan</field>
+			<field name="model">work.submission.plan</field>
+			<field name="arch" type="xml">
+				<form string="Work Submission Plans">
+					<h1><center>Work Submission Plans</center></h1><br></br><br></br>
+					<group col="2">
+						<group>
+<!--							<field name="name"/>-->
+                            <field name="project"/>
+                            <field name="location"/>
+                            <field name="sqft"/>
+                            <field name="no_floors"/>
+						</group>
+						<group>
+                            <field name="work_start_date"/>
+                            <field name="work_completeion_date"/>
+                            <field name="work_agreement_date"/>
+                            <field name="work_target_date"/>
+						</group>
+					</group>
+                        <notebook>
+                            <page String="Work Plans">
+                                <field name ="work_plan_ids">
+                                    <tree editable="bottom">
+                                        <field name="nature"/>
+                                        <field name="work_description"/>
+<!--                                        <field name="start_date"/>-->
+<!--                                        <field name="appro_finish_date"/>-->
+<!--                                        <field name="duration"/>-->
+<!--                                        <field name="sqft"/>-->
+<!--                                        <field name="machines"/>-->
+<!--                                        <field name="materials"/>-->
+<!--                                        <field name="sub_contractor"/>-->
+<!--                                        <field name="site_engineer"/>-->
+                                        <field name="file_loc"/>
+                                        <field name="remarks"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+				</form>
+			</field>
+		</record>
+        <record model="ir.actions.act_window" id="action_work_sub_plans_id">
+			<field name="name">Work Submission Plans</field>
+			<field name="res_model">work.submission.plan</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,kanban</field>
+		</record>
+<!--        <menuitem action="action_work_sub_plans_id" id="work_sub_plan_id_child" name="Work Submission Plan" parent="site_visit_parent_id"/>-->
+    </data>
+</openerp>

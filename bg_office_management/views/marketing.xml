@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <record id="tree_marketing_site_visits_id" model="ir.ui.view">
+            <field name="name">site.visit.entry</field>
+            <field name="model">site.visit.entry</field>
+            <field name="arch" type="xml">
+                <tree string="Site Visits">
+                    <field name="project"/>
+                    <field name="location"/>
+                    <field name="creation_date"/>
+                </tree>
+            </field>
+        </record>
+        <record id="form_marketing_site_visits_id" model="ir.ui.view">
+			<field name="name">site.visit.entry</field>
+			<field name="model">site.visit.entry</field>
+			<field name="arch" type="xml">
+				<form string="Site Visits">
+					<sheet>
+					<h1><center>Site Visit Details</center></h1><br></br><br></br>
+					<group col="2">
+						<group>
+							<field name="project"/>
+							<field name="location"/>
+						</group>
+						<group>
+                            <field name="creation_date"/>
+						</group>
+					</group>
+                        <notebook>
+                            <page String="Site Visit Details">
+                                <field name ="site_visit_ids">
+                                    <tree editable="bottom">
+<!--                                        <field name="no"/>-->
+                                        <field name="date"/>
+                                        <field name="place"/>
+                                        <field name="meeting_person"/>
+                                        <field name="nature_of_work"/>
+                                        <field name="remarks"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+        <record model="ir.actions.act_window" id="action_site_visits">
+			<field name="name">Site Visit Details</field>
+			<field name="res_model">site.visit.entry</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,kanban</field>
+		</record>
+        <menuitem id="site_visit_parent_id" name="Marketing" parent="hiworth_project_management.menu_office_management" sequence="1"/>
+        <menuitem action="action_site_visits" id="site_visit_id_child" name="Site Visit Details" parent="site_visit_parent_id" sequence="1"/>
+    </data>
+</openerp>

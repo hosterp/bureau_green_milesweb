@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="tree_overhead_costing_commercial" model="ir.ui.view">
+            <field name="name">overheadcost.commercial</field>
+            <field name="model">overheadcost.commercial</field>
+            <field name="arch" type="xml">
+                <tree string="Project Overhead Distribution">
+                    <field name="overhead_category"/>
+                    <field name="overhead_sub_category"/>
+                    <field name="estimated_total_amount"/>
+                    <field name="estimated_total_amount_month"/>
+                    <field name="month_select"/>
+                    <field name="actual_value"/>
+                </tree>
+            </field>
+        </record>
+        <record id="overhead_costing_commercial_form_id" model="ir.ui.view">
+			<field name="name">overheadcost.commercial</field>
+			<field name="model">overheadcost.commercial</field>
+			<field name="arch" type="xml">
+				<form string="Overhead Costing By Commercial">
+					<sheet>
+					<h1><center>Overhead Costing By Commercial</center></h1><br></br>
+					<group col="2">
+						<group>
+							<field name="overhead_category"/>
+							<field name="overhead_sub_category"/>
+							<field name="estimated_total_amount"/>
+							<field name="estimated_total_amount_month"/>
+						</group>
+						<group>
+
+						</group>
+					</group>
+						<notebook>
+							<Page string="Actual Project Value">
+								<group col="2">
+									<group>
+										<field name="month_select"/>
+										<field name="actual_value"/>
+						            </group>
+									<group>
+										<field name="date" required="1"/>
+									</group>
+								</group>
+							</Page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+			<record model="ir.actions.act_window" id="action_overhead_costing_by_commercial">
+			<field name="name">Overhead Costing By Commercial</field>
+			<field name="res_model">overheadcost.commercial</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,kanban</field>
+		</record>
+				<menuitem id="overhead_costing" name="Overhead Costing" parent="hiworth_project_management.menu_office_management" sequence="2" />
+				<menuitem id="overhead_costing_by_commercial" name="Overhead Costing By Commercial" parent="overhead_costing" action="action_overhead_costing_by_commercial"/>
+    </data>
+</openerp>

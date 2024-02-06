@@ -1,0 +1,277 @@
+<openerp>
+    <data>
+    	<template id="external_layout_header_inherit_sales_order">
+    				<div class="header">
+        					<div class="row">
+        						<t t-foreach="docs" t-as="o">
+            					<div class="col-xs-12 text-center">
+               						 <img t-if="o.company.logo" t-att-src="'data:image/png;base64,%s' % o.company.logo" style="max-height: 80px;"/>
+            					</div>
+            					<div class="col-xs-12 text-center" style="font-size: 20px;margin-top:30px;" t-field="o.company.name"/>
+
+            				</t>
+        					</div>
+           					<div class="col-xs-12 text-center" style="font-size: 20px;margin-top:10px;"> 
+                			<div style="border-style:solid;">ORDER FORM</div>
+        					</div>
+                    	
+        <div class="row zero_min_height">
+            <div class="col-xs-12" align='center'>
+                <div  style="width:100%;border-bottom: 1px solid black;"></div>
+            </div>
+
+        </div>
+        
+    </div>
+</template>
+    	<template id="external_layout_inherit_sales_order">
+    <!-- Multicompany -->
+    <t t-if="o and 'company_id' in o">
+        <t t-set="company" t-value="o.company_id"></t>
+    </t>
+    <t t-if="not o or not 'company_id' in o">
+        <t t-set="company" t-value="res_company"></t>
+    </t>
+
+    <t t-call="hiworth_manufacturing.external_layout_header_inherit_sales_order" />
+    <t t-raw="0" />
+    <!--t t-call="hiworth_construction.external_layout_footer_inherit_purchase_order" /-->
+    
+</template>
+       <template id="sale.report_saleorder">
+        <t t-call="report.html_container">
+                <t t-call="hiworth_manufacturing.external_layout_inherit_sales_order">
+                    <div class="page" >
+                    	<t t-foreach="docs" t-as="o">
+                    		
+                    <table  align="left" style="font-size: 12px;width:100%;border: 1px solid black;margin-top: 50px;">
+                                    <tr height="30" style="font-size: 12px;width:100%;">
+                                        <td style = "font-size: 15px;border-bottom: 1px solid black;">
+                                            <strong>Customer details</strong>
+                                        </td>
+                                        <td style = "font-size: 15px;border-bottom: 1px solid black;border-left: 1px solid black;">
+                                            <strong>Customer ID    : <span t-field='o.customer_identify'/></strong>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr height="30">
+                                        <td style = "font-size: 15px">
+                                            <span><b>Name :</b></span><span t-field="o.partner_id.name"/>
+                                        </td>
+                                        <td style = "font-size: 15px;border-bottom: 1px solid black;border-left: 1px solid black;">
+                                            <span><b>Showroom visited Date  : <span t-field='o.show_visit_date'/></b></span>
+                                        </td>
+                                    </tr>
+                                    <tr height="30">
+                                        <td style = "font-size: 15px">
+                                            <span><b>Address :</b></span><span t-field="o.partner_id.street"/><span>,</span> <span t-field="o.partner_id.street2"/> 
+                                        </td>
+                                        <td style = "font-size: 15px;border-bottom: 1px solid black;border-left: 1px solid black;">
+                                            <span><b>Order Confirmed Date: <span t-field='o.date_order'/></b></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr height="30">
+                                        <td style = "font-size: 15px">
+                                            <span t-field="o.partner_id.post"/>
+                                        </td>
+                                        <td style = "font-size: 15px;border-bottom: 1px solid black;border-left: 1px solid black;">
+                                            <b>Supply Date: <span t-field='o.supply_date'/></b>
+                                        </td>
+                                    </tr>
+                                    <tr height="30">
+                                        <td style = "font-size: 15px">
+                                             <span t-field="o.partner_id.city"/> 
+                                        </td>
+                                        <td style = "font-size: 15px;border-bottom: 1px solid black;border-left: 1px solid black;">
+                                            <span><b>Delivery To : <span t-field='o.partner_id.name'/></b></span>
+                                        </td>
+                                    </tr>
+
+                                    <tr height="30">
+                                        <td style = "font-size: 15px">
+                                            <span><b>Mob :</b></span><span t-field="o.partner_id.phone"/>
+                                        </td>
+                                        <td style = "font-size: 15px;border-bottom: 1px solid black;border-left: 1px solid black;"><span><b>GST NO (if avilable)  : <span t-field='o.partner_id.gst_no'/></b></span></td></tr>
+                    </table>
+                    <table class ='table table-bordered'>
+
+                                   <tr height ="30" style="font-size: 12px;width:100%;"><td style="border-left: 1px solid black;border-bottom: 1px solid black;width:10%">ItemCode</td>
+                                        <td style="border-right: 1px solid black;border-bottom: 1px solid black;width:30%">Description</td>
+                                        <td style="border-right: 1px solid black;border-bottom: 1px solid black;width:10%">Qty</td>
+                                        <td style="border-right: 1px solid black;border-bottom: 1px solid black;width:10%">Rate/Sqft</td>
+                                        <td style="border-right: 1px solid black;border-bottom: 1px solid black;width:10%">Tax</td>
+                                        <td style="border-right: 1px solid black;border-bottom: 1px solid black;width:10%">Rate/sqft Including Tax</td>
+                                        <td style="border-right: 1px solid black;border-bottom: 1px solid black;width:20%">Amount</td>
+                                    </tr>
+                                    <t t-set="sl_no" t-value="1"/>
+                            
+                                    <tr t-foreach="o.order_line" t-as="line">
+
+                                        <td style="border-right: 1px solid black;border-bottom: 1px solid black;"><span t-esc= "sl_no"/></td>
+                                        <td style="border-right: 1px solid black;border-bottom: 1px solid black;"><span t-esc="line.name"/><br><span t-esc = "line.product_id.pro_color"/></br><br><span t-esc ="line.product_id.pro_design"/></br></td>
+                                        <td style="border-right: 1px solid black;border-bottom: 1px solid black;">
+                                            <span t-esc = "line.product_uom_qty"/></td>
+                                        <td style="border-right: 1px solid black;border-bottom: 1px solid black;">
+                                            <span t-esc = "line.price_unit"/></td>
+                                        <td style="border-right: 1px solid black;border-bottom: 1px solid black;">
+                                            <span t-esc = "line.tax_id.id"/></td>
+                                        <td style="border-right: 1px solid black;border-bottom: 1px solid black;">
+                                            <span t-esc = "line.price_subtotal"/></td>
+                                        <td style="border-right: 1px solid black;border-bottom: 1px solid black;">
+                                            <span t-esc = "line.price_subtotal"/></td>
+                                        <t t-set="sl_no" t-value="sl_no+1"/>
+                                    </tr>
+                                    <tr >
+                                        <td rowspan="3"></td>
+                                        <td rowspan="3"><span t-field="o.note"/></td>
+                                        <td rowspan="3"></td>
+                                        <td colspan = "3"><span> Total Amount</span></td>
+                                        <td ><span t-field = "o.amount_total"/></td>
+                                    </tr> 
+                                    <tr>
+                                        
+                                        
+                                        
+                                        <td colspan = "3"><span> Advance Amount</span></td>
+                                        <td ><span t-field = "o.sale_advance"/></td>
+                                    </tr>
+                                    <tr>
+                                       
+                                        
+                                        <td colspan = "3"><span> Balance Amount</span></td>
+                                        <td ><span t-field = "o.balance_amount"/></td>
+                                    </tr>
+                                    
+                                    <tr >
+                                
+                                        <td colspan="6"><span>Terms &amp; Conditions: </span>
+                                    </td><td></td>
+                                    </tr>
+                                    <t t-set="sl_no_tc" t-value="1"/>
+                                    
+                                    <tr t-if ="o.t_c_1">
+                                        <td><span t-esc= "sl_no_tc"/></td>
+                                        <td colspan="5">
+                                        <span>Payment:advance must 50 per cent of the total cost</span>
+                                        </td>
+                                        <td></td>
+                                    <t t-set="sl_no_tc" t-value="sl_no_tc+1"/>
+                                    </tr>
+                                    <tr t-if ="o.t_c_2">
+                                        <td><span t-esc= "sl_no_tc"/></td>
+                                        <td colspan="5">
+                                        <span>Goods once sold can not be taken back</span>
+                                        </td>
+                                        <td></td>
+                                        <t t-set="sl_no_tc" t-value="sl_no_tc+1"/>
+                                    </tr> 
+                                    <tr t-if ="o.t_c_3">
+                                        <td><span t-esc= "sl_no_tc"/></td>
+                                        <td colspan="5">
+                                        <span>Delivery:With in </span><span t-field="o.days_within"/> days<span> from the date of order placed</span>
+                                        </td>
+                                        <td></td>
+                                        <t t-set="sl_no_tc" t-value="sl_no_tc+1"/>
+                                    </tr>
+                                    <tr t-if ="o.t_c_4">
+                                        <td><span t-esc= "sl_no_tc"/></td>
+                                        <td colspan="5">
+                                        <span>Unloading charge should be beared ny customer of 50Ps/Piece</span>
+                                        </td>
+                                        <td></td>
+                                        <t t-set="sl_no_tc" t-value="sl_no_tc+1"/>
+                                    </tr>
+                                    <tr t-if ="o.t_c_5">
+                                        <td><span t-esc= "sl_no_tc"/></td>
+                                        <td colspan="5">
+                                        <span>Earth work charges should be given seperately by customer of rs 750/Head/day</span>
+                                        </td>
+                                        <td></td>
+                                        <t t-set="sl_no_tc" t-value="sl_no_tc+1"/>
+                                    </tr> 
+                                    <tr t-if ="o.t_c_6">
+                                        <td><span t-esc= "sl_no_tc"/></td>
+                                        <td colspan="5">
+                                        <span>Laying Charge:excluded,it should be made by customer directly to laying crew</span><br>Rs.<span t-field="o.laying_charge"/> per Sq.ft</br>
+                                        </td>
+                                        <td></td>
+                                        <t t-set="sl_no_tc" t-value="sl_no_tc+1"/>
+                                    </tr>
+                                     <tr t-if ="o.t_c_7">
+                                        <td><span t-esc= "sl_no_tc"/></td>
+                                        <td colspan="5">
+                                        <span>Chips for laying should be provided by the customer</span>
+                                        </td>
+                                        <td></td>
+                                        <t t-set="sl_no_tc" t-value="sl_no_tc+1"/>
+                                    </tr>
+                                    <tr t-if ="o.t_c_8">
+                                        <td><span t-esc= "sl_no_tc"/></td>
+                                        <td colspan="5">
+                                        <span>Cement &amp; M.dust for boarder concreting should be supplied by customer</span>
+                                        </td>
+                                        <td></td>
+                                        <t t-set="sl_no_tc" t-value="sl_no_tc+1"/>
+                                    </tr> 
+                                    <tr t-if ="o.t_c_9">
+                                        <td><span t-esc= "sl_no_tc"/></td>
+                                        <td colspan="5">
+                                        <span>Transporting charge should given by the customer</span>
+                                        </td>
+                                        <td></td>
+                                        <t t-set="sl_no_tc" t-value="sl_no_tc+1"/>
+                                    </tr>
+                                    <tr t-if ="o.t_c_10">
+                                        <td><span t-esc= "sl_no_tc"/></td>
+                                        <td colspan="5">
+                                        <span>Mode of Payment : In addition to the advance amount,
+                                        the balance payment for each load should be made on the day of itself</span>
+                                        </td>
+                                        <td></td>
+                                        <t t-set="sl_no_tc" t-value="sl_no_tc+1"/>
+                                    </tr> 
+                                    <tr t-if ="o.t_c_11">
+                                        <td><span t-esc= "sl_no_tc"/></td>
+                                        <td colspan="5">
+                                        <span>Wastage :3 percent is applicable</span>
+                                        </td>
+                                        <td></td>
+                                        <t t-set="sl_no_tc" t-value="sl_no_tc+1"/>
+                                    </tr> 
+                                    <tr height="30">
+                                        <td colspan="3"><span>(Customer's Signature)</span></td>
+                                        <td colspan="4" align="right"><span class ="text-right">(Authorised Signatory)</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="7" align="center"><span><b>Bank Details</b></span>
+                                                                        <br>Name: <span t-field="o.bank_details.name"/>
+                                                                            <span>,Branch: </span><span t-field="o.bank_details.branch"/></br><br>A/c No: 
+                                                                            <span t-field="o.bank_details.bic"/></br></td></tr>
+                                    <tr>
+                                        <td colspan="7" align="center"><b><span t-field="o.company.name"/></b>
+                                                                        <br><span t-field="o.company.street"/>,<span t-field="o.company.street2"/>,<span t-field="o.company.city"/>,<span t-field="o.company.state_id.name"/></br><br>Ph: <span t-field="o.company.phone"/>,Web: <span t-field="o.company.website"/></br><br>Email: <span t-field="o.company.email"/></br>
+                                                                    
+                                                                    </td></tr>
+
+                                     
+
+                                    
+                                    
+
+
+                                  
+                     
+                     
+                                
+                                   
+                                  
+                     </table>
+                    </t>
+                    </div>
+                </t>
+        </t>
+        </template>
+    </data>
+</openerp>

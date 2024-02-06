@@ -1,0 +1,376 @@
+
+<openerp>
+	<data>
+<!--		LANDSCAPE VIEW CODE-->
+		<record id="report_paperformat" model="report.paperformat">
+			<field name="name">Landscape</field>
+			<field name="default" eval="True" />
+			<field name="format">A4</field>
+			<field name="orientation">Landscape</field>
+			<field name="margin_top">5</field>
+			<field name="margin_bottom">0</field>
+			<field name="margin_left">15</field>
+			<field name="margin_right">15</field>
+			<field name="header_line" eval="False" />
+			<field name="header_spacing">12</field>
+			<field name="dpi">0</field>
+		</record>
+
+		<record model="ir.ui.view" id="fleet_vehicle_rent_expense_wizard">
+			<field name="name">vehicle.rent.wizard</field>
+			<field name="model">vehicle.rent.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Vehicle Site Expense Report">
+					<group col="4">
+						<field name="date_from" required="1"/>
+						<field name="date_to" required="1"/>
+					</group>
+
+					<footer>
+						<button name="action_vehicle_rent_open_window" type="object" string="Print" class="oe_highlight" />
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="action_fleet_vehicle_rent_wizard" model="ir.actions.act_window">
+					<field name="name">Print Vehicle Site Expense Report</field>
+					<field name="type">ir.actions.act_window</field>
+					<field name="res_model">vehicle.rent.wizard</field>
+					<field name="target">new</field>
+					<field name="view_type">form</field>
+					<field name="view_mode">form</field>
+		</record>
+<menuitem id="fleet_vehicle_rent_report" parent="hiworth_construction.fleet_report" name="Vehicle Site Expense Report" sequence="80" action="action_fleet_vehicle_rent_wizard"/>
+
+   <report id="report_fleet_vehicle_rent_report" string="Vehicle Site Expense"
+			model="vehicle.rent.wizard" report_type="qweb-pdf"
+			name="hiworth_tms.report_fleet_vehicle_rent_template"/>
+
+   <record id="hiworth_tms.report_fleet_vehicle_rent_report" model="ir.actions.report.xml">
+			<field name="paperformat_id" ref="hiworth_tms.report_paperformat"/>
+		</record>
+
+
+
+
+   <template id="report_fleet_vehicle_rent_template">
+	   <style>
+table, th, td {
+
+  border-collapse: collapse;
+
+}
+th, td {
+  padding: 17px;
+  text-align: left;
+}
+</style>
+
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="report.external_layout">
+						<div class="page">
+							<center><b><h1>Vehicle Site Expense Report</h1></b></center>
+
+	<span><center><b><h4> <span t-field="o.date_from"/> To <span t-field="o.date_to"/></h4></b></center></span>
+							<t t-set="sl_no" t-value="1" />
+							<t t-set="subtotal" t-value="0" />
+
+							<div>
+								<center>
+
+									<table class="table table-bordered">
+										<thead>
+
+											<tr>
+												<td style="width: 10%;" align="center"><h4><b>S# No</b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b>Owner Name</b></h4></td>
+<!--												<td style="width: 10%;" align="center"><h4><b>Wheel</b></h4></td>-->
+												<td style="width: 30%; " align="center"><h4><b>Machinery Type</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Reg No</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Days Worked</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Rent/Day</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Total Rent</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Total KM/Hr</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Total Diesel (ltr)</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Total Diesel Price</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Mileage</b></h4></td>
+<!--												<td style="width: 20%; " align="center"><h4><b>Other Expense</b></h4></td>-->
+												<td style="width: 20%; " align="center"><h4><b>Wage/ Day </b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Total Wage</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Food (150)</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Material</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>No of Loads</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Absent Days</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Total amt</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Loss/Idling</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Profit/Loss</b></h4></td>
+
+											</tr>
+										</thead>
+										<tbody>
+
+
+
+
+											<t t-set="demo1" t-value="0"/>
+									<p t-foreach="docs.get_details()" t-as="line">
+										<t t-set="demo1" t-value="line['rent_sum']"/>
+									</p>
+
+									<t t-set="demo2" t-value="0"/>
+									<p t-foreach="docs.get_details()" t-as="line">
+										<t t-set="demo2" t-value="line['km_sum']"/>
+									</p>
+
+									<t t-set="demo3" t-value="0"/>
+									<p t-foreach="docs.get_details()" t-as="line">
+										<t t-set="demo3" t-value="line['diesel_sum']"/>
+									</p>
+
+									<t t-set="demo4" t-value="0"/>
+									<p t-foreach="docs.get_details()" t-as="line">
+										<t t-set="demo4" t-value="line['diesel_amt_sum']"/>
+									</p>
+
+									<t t-set="demo5" t-value="0"/>
+									<p t-foreach="docs.get_details()" t-as="line">
+										<t t-set="demo5" t-value="line['sal_sum']"/>
+									</p>
+
+									<t t-set="demo6" t-value="0"/>
+									<p t-foreach="docs.get_details()" t-as="line">
+										<t t-set="demo6" t-value="line['food_sum']"/>
+									</p>
+											<t t-set="test_variable" t-value="0"/>
+									<p t-foreach="docs.get_details()" t-as="line">
+										<t t-set="test_variable" t-value="line['sub_total']"/>
+									</p>
+											<t t-set="test_variable4" t-value="0"/>
+									<p t-foreach="docs.get_details()" t-as="line">
+										<t t-set="test_variable4" t-value="line['sum1_profit']"/>
+									</p>
+											<t t-set="test_variable3" t-value="0"/>
+									<p t-foreach="docs.get_details()" t-as="line">
+										<t t-set="test_variable3" t-value="line['loss']"/>
+									</p>
+
+
+
+
+											<t t-foreach="docs.get_details()" t-as="line">
+												<tr >
+													<td >
+														<span t-esc="sl_no" />
+														<t t-set="sl_no" t-value="sl_no+1" />
+													</td>
+													<td >
+														<span t-esc="line['owner']"/>
+													</td>
+<!--													<td >-->
+<!--														<span t-esc="line['wheel']"/>-->
+<!--													</td>-->
+													<td >
+														<span t-esc="line['type']"/>
+													</td>
+													<td >
+														<span t-esc="line['reg_no']"/>
+													</td>
+													<td >
+														<span t-esc="line['no_days_worked']"/>
+													</td>
+													<td >
+														<span t-esc="line['rent_per_day']"/>
+													</td>
+													<td >
+														<span t-esc="line['rent_total']"/>
+													</td>
+													<td >
+														<span t-esc="line['km']"/>
+													</td>
+													<td >
+														<span t-esc="line['total_diesel']"/>
+													</td>
+													<td >
+														<span t-esc="line['total_diesel_amt']"/>
+													</td>
+													<td >
+														<span t-esc="line['mileage']"/>
+													</td>
+													<td >
+														<span t-esc="line['daily_sal_driver']"/>
+													</td>
+													<td >
+														<span t-esc="line['total_sal_driver']"/>
+													</td>
+													<td >
+														<span t-esc="line['total_fd_exp']"/>
+													</td>
+													<td >
+														<span t-esc="line['material']"/>
+													</td>
+													<td >
+														<span t-esc="line['no_loads']"/>
+													</td>
+													<td >
+														<span t-esc="line['absent_days']"/>
+													</td>
+													<td >
+														<span t-esc="line['total_fd_exp']+line['total_sal_driver']+line['rent_total']+line['total_diesel_amt']"/>
+													</td>
+
+													<td>
+														<span t-esc="line['rent_per_day']*line['absent_days'] "/>
+													</td>
+													<td >
+<!--														<span t-esc="line['rent_total']-line['total_fd_exp']-line['total_diesel_amt']"/>-->
+														<span t-esc="line['rent_total']-(line['rent_per_day']*line['absent_days']+line['total_sal_driver']+line['total_fd_exp'])-(line['total_fd_exp']+line['total_sal_driver']+line['rent_total']+line['total_diesel_amt'])"/>
+													</td>
+
+												</tr>
+											</t>
+											<tr>
+												<td colspan="6" style="width: 10%;" align="center"><center><h3><b>Grand Total</b></h3></center></td>
+
+												<td><b><span t-esc="demo1"/></b></td>
+												<td></td>
+												<td><b><span t-esc="demo3"/></b></td>
+												<td><b><span t-esc="demo4"/></b></td>
+												<td></td>
+												<td></td>
+												<td><b><span t-esc="demo5"/></b></td>
+												<td><b><span t-esc="demo6"/></b></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td><b><span t-esc="test_variable"/></b></td>
+												<td><b><span t-esc="test_variable3"/></b></td>
+												<td><b><span t-esc="test_variable4"/></b></td>
+											</tr>
+
+
+
+
+
+										</tbody>
+									</table>
+
+
+
+
+<!--									2nd Table -->
+
+
+
+									<t t-set="demo1" t-value="0"/>
+									<p t-foreach="docs.get_details()" t-as="line">
+										<t t-set="demo1" t-value="line['rent_sum']"/>
+									</p>
+
+									<t t-set="demo2" t-value="0"/>
+									<p t-foreach="docs.get_details()" t-as="line">
+										<t t-set="demo2" t-value="line['km_sum']"/>
+									</p>
+
+									<t t-set="demo3" t-value="0"/>
+									<p t-foreach="docs.get_details()" t-as="line">
+										<t t-set="demo3" t-value="line['diesel_sum']"/>
+									</p>
+
+									<t t-set="demo4" t-value="0"/>
+									<p t-foreach="docs.get_details()" t-as="line">
+										<t t-set="demo4" t-value="line['diesel_amt_sum']"/>
+									</p>
+
+									<t t-set="demo5" t-value="0"/>
+									<p t-foreach="docs.get_details()" t-as="line">
+										<t t-set="demo5" t-value="line['sal_sum']"/>
+									</p>
+
+									<t t-set="demo6" t-value="0"/>
+									<p t-foreach="docs.get_details()" t-as="line">
+										<t t-set="demo6" t-value="line['food_sum']"/>
+									</p>
+
+                       <table  width="100%"><tr><th>
+<!--									<table class="table table-bordered">-->
+<!--											<tr>-->
+<!--												<th><h3>Total Rent</h3></th>-->
+<!--												<td><h3><span t-esc="demo1"/></h3></td>-->
+<!--											</tr>-->
+<!--										   <tr>-->
+<!--											   <th><h3>Total KM/Hr </h3></th>-->
+<!--											   <td><h3><span t-esc="demo2"/></h3></td>-->
+<!--											</tr>-->
+<!--										    <tr>-->
+<!--												<th><h3>Total Diesel(Ltr) </h3></th>-->
+<!--												<td><h3><span t-esc="demo3"/></h3></td>-->
+<!--											</tr>-->
+
+<!--										   <tr>-->
+<!--											   <th><h3>Total Diesel Amount</h3></th>-->
+<!--											   <td><h3><span t-esc="demo4"/></h3></td>-->
+<!--											</tr>-->
+<!--										    <tr>-->
+<!--												<th><h3>Total Driver Salary</h3></th>-->
+<!--												<td><h3><span t-esc="demo5"/></h3></td>-->
+<!--											</tr>-->
+<!--											<tr>-->
+<!--												<th><h3>Total Food Amount</h3></th>-->
+<!--												<td><h3><span t-esc="demo6"/></h3></td>-->
+<!--											</tr>-->
+<!--									</table>-->
+                 </th>
+	               <th>
+
+<!--									<t t-set="test_variable" t-value="0"/>-->
+<!--									<p t-foreach="docs.get_details()" t-as="line">-->
+<!--										<t t-set="test_variable" t-value="line['sub_total']"/>-->
+<!--									</p>-->
+<!--									<h3 style="text-align:right"><b>Total Amount : </b><t t-esc="test_variable"/></h3>-->
+
+<!--					                <t t-set="test_diesel" t-value="0"/>-->
+<!--									<p t-foreach="docs.get_details()" t-as="line">-->
+<!--										<t t-set="test_diesel" t-value="line['diesel_amt_sum']"/>-->
+<!--									</p>-->
+<!--									<h3 style="text-align:right"><b>Total Diesel Amount : </b><t t-esc="test_diesel"/></h3>-->
+
+
+
+
+<!--									<t t-set="test_variable4" t-value="0"/>-->
+<!--									<p t-foreach="docs.get_details()" t-as="line">-->
+<!--										<t t-set="test_variable4" t-value="line['sum1_profit']"/>-->
+<!--									</p>-->
+<!--									<h3 style="text-align:right"><b>Profit/Loss Sum : </b><t t-esc="test_variable4"/></h3>-->
+
+<!--									<t t-set="test_variable3" t-value="0"/>-->
+<!--									<p t-foreach="docs.get_details()" t-as="line">-->
+<!--										<t t-set="test_variable3" t-value="line['loss']"/>-->
+<!--									</p>-->
+<!--									<h3 style="text-align:right"><b>Total Loss Due to Idle Time : </b><t t-esc="test_variable3"/></h3>-->
+
+<!--									<t t-set="test_variable2" t-value="0"/>-->
+<!--									<p t-foreach="docs.get_details()" t-as="line">-->
+<!--										<t t-set="test_variable2" t-value="line['net']"/>-->
+<!--									</p>-->
+<!--									<h3 style="text-align:right"><b>Net Profit/Loss : </b><t t-esc="test_variable2"/></h3>-->
+
+	          </th></tr>
+              </table>
+								</center>
+							</div>
+
+						</div>
+					</t>
+				</t>
+			</t>
+		</template>
+
+
+
+    </data>
+</openerp>

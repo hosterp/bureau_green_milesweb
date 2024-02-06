@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+        <record id="quantity_status_tree_id" model="ir.ui.view">
+            <field name="name">Quantity Status Tree</field>
+            <field name="model">quantity.status</field>
+            <field name="arch" type="xml">
+                <tree string="Quantity Status">
+                    <field name="location_id"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="quantity_status_form_id" model="ir.ui.view">
+            <field name="name">Quantity Status Form</field>
+            <field name="model">quantity.status</field>
+            <field name="arch" type="xml">
+                <form string="Quantity Status">
+                    <header>
+						<button name="done" string="Done" type="object" class="oe_highlight" states="not"/>
+						<field name="state" widget="statusbar"/>
+					</header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="project_id" options="{'no_create':True}"/>
+                                <field name="location_id" options="{'no_create':True,'no_open':True}"/>
+                                <field name="final" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="district"/>
+                                <field name="length"/>
+                                <field name="date"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page>
+                                <field name="status_line" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="status_id" invisible="True"/>
+                                        <field name="worklist_id"/>
+                                        <field name="schedule" string="Scheduled/RE – Rs"/>
+                                        <field name="proposal"/>
+                                        <field name="difference" string="Difference – Rs"/>
+                                        <field name="remark"/>
+                                        <field name="attachment"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <notebook>
+                            <page>
+                                <field name="work_status_line" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="worklist_id"/>
+                                        <field name="no_binding"/>
+                                        <field name="no_field_book"/>
+                                        <field name="date_submission"/>
+                                        <field name="submi_auth"/>
+                                        <field name="subm_by_id"/>
+                                        <field name="reporting_date"/>
+                                        <field name="approval_date"/>
+                                        <field name="approval_status"/>
+                                        <field name="remarks"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <menuitem name="Quantity Status" id="menu_quantity_status" sequence="2" parent="hiworth_survey.menu_hiworth_survey_department"/>
+
+        <record id="action_quantity_status_proposal" model="ir.actions.act_window">
+            <field name="name">Quantity Status Proposal</field>
+            <field name="res_model">quantity.status</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('final', '=', False)]</field>
+            <field name="context">{'default_final': False}</field>
+        </record>
+
+        <menuitem parent="hiworth_survey.menu_quantity_status" action="action_quantity_status_proposal" name="Proposal" id="menu_quantity_status_proposal" sequence="1"/>
+
+        <record id="action_quantity_status_final" model="ir.actions.act_window">
+            <field name="name">Quantity Status Final</field>
+            <field name="res_model">quantity.status</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('final', '=', True)]</field>
+            <field name="context">{'default_final': True}}</field>
+        </record>
+
+        <menuitem parent="hiworth_survey.menu_quantity_status" action="action_quantity_status_final" name="Final" id="menu_quantity_status_final" sequence="2"/>
+
+    </data>
+</openerp>

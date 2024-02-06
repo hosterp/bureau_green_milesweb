@@ -1,0 +1,117 @@
+
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="fleet_vehicle_spare_parts_wizard">
+			<field name="name">vehicle.spare.wizard</field>
+			<field name="model">vehicle.spare.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Spare Parts Expense Report">
+					<group col="4">
+						<field name="date_from" required="1"/>
+						<field name="date_to" required="1"/>
+					</group>
+
+					<footer>
+						<button name="action_vehicle_spare_open_window" type="object" string="Print" class="oe_highlight" />
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="action_fleet_vehicle_spare_wizard" model="ir.actions.act_window">
+					<field name="name">Print All Vehicle Spare Parts Expense Report</field>
+					<field name="type">ir.actions.act_window</field>
+					<field name="res_model">vehicle.spare.wizard</field>
+					<field name="target">new</field>
+					<field name="view_type">form</field>
+					<field name="view_mode">form</field>
+		</record>
+<menuitem id="fleet_vehicle_fuel_report" parent="hiworth_construction.fleet_report" name="Spare Parts Expense Report" sequence="40" action="action_fleet_vehicle_spare_wizard"/>
+
+   <report id="report_fleet_vehicle_spare_report" string="Spare Parts Expense"
+			model="vehicle.spare.wizard" report_type="qweb-pdf"
+			name="hiworth_tms.report_fleet_vehicle_spare_template" />
+
+   <template id="report_fleet_vehicle_spare_template">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="report.external_layout">
+						<div class="page">
+							<center><b><h1>All Vehicle Spare Parts Expense Report</h1></b></center>
+
+	<span><center><b><h4> <span t-field="o.date_from"/> To <span t-field="o.date_to"/></h4></b></center></span>
+							<t t-set="sl_no" t-value="1" />
+							<t t-set="subtotal" t-value="0" />
+
+							<div>
+								<center>
+
+									<table class="table table-bordered">
+										<thead>
+
+											<tr>
+												<td style="width: 10%;" align="center"><h4><b>SL.No</b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b>Date</b></h4></td>
+												<td style="width: 30%; " align="center"><h4><b>Vehicle No</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Vehicle Model</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Parts Changed</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Total Amount</b></h4></td>
+											</tr>
+										</thead>
+										<tbody>
+											<t t-foreach="docs.get_details()" t-as="line">
+												<tr >
+													<td >
+														<span t-esc="sl_no" />
+														<t t-set="sl_no" t-value="sl_no+1" />
+													</td>
+
+													<td >
+														<span t-esc="line['date']"/>
+													</td>
+													<td >
+														<span t-esc="line['vehicle_no']"/>
+													</td>
+													<td >
+														<span t-esc="line['vehicle_model']"/>
+													</td>
+													<td >
+														<span t-esc="line['parts_change']"/>
+													</td>
+													<td >
+														<span t-esc="line['total_amt']"/>
+													</td>
+<!--													<td style="border-right: outset;padding-right: 10px;" align="right">-->
+<!--														<span t-esc="'{0:,.2f}'.format(line['km'])" />-->
+<!--													</td>-->
+<!--													<td style="border-right: outset;padding-right: 10px;" align="right">-->
+<!--														<span t-esc="'{0:,.2f}'.format(line['litre'])" />-->
+<!--													</td>-->
+<!--													<td style="border-right: outset;padding-right: 10px;" align="right">-->
+<!--														<span t-esc="'{0:,.2f}'.format(line['mileage']) " />-->
+<!--													</td>-->
+												</tr>
+
+											</t>
+										</tbody>
+									</table>
+									<t t-set="test_variable" t-value="0"/>
+									<p t-foreach="docs.get_details()" t-as="line">
+										<t t-set="test_variable" t-value="line['sub_total']"/>
+									</p>
+									<h3 style="text-align:right"><b>Total Amount : </b><t t-esc="test_variable"/></h3>
+								</center>
+							</div>
+
+						</div>
+					</t>
+				</t>
+			</t>
+		</template>
+
+
+
+    </data>
+</openerp>

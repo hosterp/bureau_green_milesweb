@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <menuitem name="Fleet" id="fleet.menu_root" sequence="110" groups="fleet.group_fleet_user,hiworth_hr_attendance.group_supervisor,base.group_erp_manager"/>
+        <menuitem  parent="fleet.fleet_vehicles" id="menu_rent_vehicless" sequence="5"  name="Rent Vehicles" />
+   
+        <menuitem name="Configuration" parent="fleet.menu_root" id="fleet.fleet_configuration" sequence="10" groups="fleet.group_fleet_manager"/>
+
+
+
+    <record model='ir.ui.view' id='hiworth_fleet_vehicle_type'>
+            <field name="name">vehicle.category.type</field>
+            <field name="model">vehicle.category.type</field>
+            <field name="arch" type="xml">
+            <form>
+                <field name="name"/>
+
+            </form>
+</field>
+
+        </record>
+
+        <record model='ir.ui.view' id='fleet_vehicle_type_tree'>
+            <field name="name">vehicle.category.type.tree</field>
+            <field name="model">vehicle.category.type</field>
+            <field name="arch" type="xml">
+                <tree string="Route Mapping">
+                    <field name="name" />
+             
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record model="ir.actions.act_window" id="action_fleet_vehicle_type_tree">
+            <field name="name">Vehicle Type</field>
+            <field name="res_model">vehicle.category.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,graph</field>
+      </record>
+      <menuitem  parent="fleet.fleet_configuration" id="menu_type_vehicles" sequence="6"  name="Vehicle Type" action="action_fleet_vehicle_type_tree"/>
+        <record id="hiworth_fleet_vehicle_log_services_form1" model="ir.ui.view">
+            <field name="name">fleet.vehicle.log.services.form1</field>
+            <field name="model">fleet.vehicle.log.services</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_log_services_form" />
+            <field name="arch" type="xml">
+<!--                <xpath expr="//group[@string='Odometer Details']" position="after">-->
+<!--                    <group string="Route Details" col="4">-->
+<!--                        <field name="odometer" class="oe_inline" string="Start Value"/>-->
+<!--                        <field name="odometer_end" class="oe_inline"/>-->
+<!--                        <field name="start_location" />-->
+<!--                        <field name="dest_location" />-->
+<!--                        <field name="opening_bal" />-->
+<!--                        <field name="ending_bal" />-->
+<!--                    </group>-->
+<!--                </xpath>-->
+                <xpath expr="//group[@string='Additional Details']" position="after">
+                    <newline/>
+                    <newline/>
+                    <group string="Repair/Service Details">
+                        <field name="vehicle_preventive_maintenance_line_ids" nolabel="1">
+                            <tree editable="bottom">
+<!--                                <field name="vehicle_id"/>-->
+                                <field name="date"/>
+                                <field name="work"/>
+                                <field name="last_service_km"/>
+                                <field name="service_period"/>
+                                <field name="next_service_km"/>
+                                <field name="cost" string="Expense" sum="Total"/>
+                                <field name="remarks"/>
+                            </tree>
+							</field>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record model='ir.ui.view' id='fleet_vehicle_route_mapping_form'>
+            <field name="name">fleet.route.mapping.form</field>
+            <field name="model">fleet.route.mapping</field>
+            <field name="arch" type="xml">
+                <form string="Route Mapping">
+                    <group string="Vehicle Details" col="4">
+                        <field name="vehicle_id" required="1" />
+                        <field name="start_date" required="1" />
+                        <field name="driver_id" required="1" />
+                        <field name="end_date" required="1" />
+                        <field name="start_bal" />
+                        <!-- <field name="end_bal" /> -->
+                    </group>
+                    <field name="routes">
+                        <tree>
+                            <field name="time_from"/>
+                            <field name="time_to"/>
+                            <field name="odometer_start"/>
+                            <field name="odometer_end"/>
+                            <field name="start_location" />
+                            <field name="dest_location" />
+                            <field name="opening_bal" />
+                            <field name="ending_bal" />
+                        </tree>
+                        <form>
+                             <group col="4">
+                                    <field name="time_from"/>
+                                    <field name="time_to"/>
+                                </group>
+                            <group col="2">
+                               
+                            
+                                <group string="Odometer Details">
+                                    
+                                    <field name="odometer_start" class="oe_inline"/>
+                                    <field name="odometer_end" class="oe_inline"/>
+                                </group>
+                                <group string="Route Details">
+                                    <field name="start_location" />
+                                    <field name="dest_location" />
+                                </group>
+                                <group string="Cash in hand">
+                                    <field name="opening_bal" />
+                                    <field name="ending_bal" />
+                                </group>
+                            </group>
+                            <group>
+                                <field name="stocks" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="product_id" />
+                                        <field name="description" />
+                                        <field name="quantity" />
+                                    </tree>
+                                </field>
+                            </group>
+                        </form>
+                    </field>
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.ui.view' id='fleet_vehicle_route_mapping_tree'>
+            <field name="name">fleet.route.mapping.tree</field>
+            <field name="model">fleet.route.mapping</field>
+            <field name="arch" type="xml">
+                <tree string="Route Mapping">
+                    <field name="start_date" />
+                    <field name="end_date" />
+                    <field name="vehicle_id" />
+                    <!-- <field name="license_plate" /> -->
+                    <field name="driver_id" />
+                </tree>
+            </field>
+        </record>
+
+        
+
+        <record model='ir.actions.act_window' id='fleet_vehicle_route_mapping_act'>
+            <field name="name">Vehicles Delivery Mapping</field>
+            <field name="res_model">fleet.route.mapping</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- <menuitem id="fleet_vehicle_route_mapping_menu" name="Delivery Mapping" action="fleet_vehicle_route_mapping_act" parent="fleet.fleet_vehicles"  /> -->
+
+
+
+
+        <record model='ir.ui.view' id='fleet_vehicle_route_mapping_line_form'>
+            <field name="name">fleet.route.mapping.line.form</field>
+            <field name="model">fleet.route.mapping.line</field>
+            <field name="arch" type="xml">
+                <form string="Route Mapping">
+                    
+                    <group col="2">
+                        <group string="Vehicle Details">
+                            <field name="vehicle_id" required="1" />
+                            <field name="driver_id" required="1" />
+                        </group>
+                        
+                    
+                        <group string="Odometer Details">
+                            
+                            <field name="odometer_start" class="oe_inline"/>
+                            <field name="odometer_end" class="oe_inline"/>
+                        </group>
+                        <group string="Route Details">
+                            <field name="start_location" />
+                            <field name="dest_location" />
+                        </group>
+                        <group string="Cash in hand">
+                            <field name="opening_bal" />
+                            <field name="ending_bal" />
+                        </group>
+                        <group >
+                            <field name="time_from"/>
+                            <field name="time_to"/>
+                        </group>
+                        
+                    </group>
+                    <group>
+                        <field name="stocks" nolabel="1">
+                            <tree editable="bottom">
+                                <field name="product_id" />
+                                <field name="description" />
+                                <field name="quantity" />
+                            </tree>
+                        </field>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.ui.view' id='fleet_vehicle_route_mapping_line_tree'>
+            <field name="name">fleet.route.mapping.line.tree</field>
+            <field name="model">fleet.route.mapping.line</field>
+            <field name="arch" type="xml">
+                <tree string="Route Mapping">
+                    <field name="vehicle_id" />
+                    <field name="driver_id" />
+                    <field name="time_from" />
+                    <field name="time_to" />
+                    
+                </tree>
+            </field>
+        </record>
+
+        
+
+        <record model='ir.actions.act_window' id='fleet_vehicle_route_mapping_line_act'>
+            <field name="name">Vehicles Route Mapping</field>
+            <field name="res_model">fleet.route.mapping.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+       <!--  <menuitem id="fleet_vehicle_route_mapping_line_menu" name="Route Mapping" action="fleet_vehicle_route_mapping_line_act" parent="fleet.fleet_vehicles"  /> -->
+
+
+       <!--  <record model="ir.ui.menu" id="fleet.fleet_vehicle_log_fuel_menu">
+            <field name="groups_id" eval="[(6,0,[ref('tms_transport_and_fuel')])]"/>
+        </record> -->
+
+        <!-- Fleet Documents -->
+
+        <record model='ir.ui.view' id='fleet_vehicle_documents_form'>
+            <field name="name">fleet.vehicle.documents.form</field>
+            <field name="model">fleet.vehicle.documents</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <header>
+                        <button name="button_payment" string="Payment" type="object" 
+                            class="oe_highlight" attrs="{'invisible':['|',('state','!=','draft'),('is_account_entry','!=',True)]}"></button>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,paid" />
+                    </header>
+                    <sheet>
+
+                            <group col="4">
+                                <field name="start_date" readonly="1"/>
+                                  <field name="end_date" readonly="1"/>
+                                  <field name="renewal_date" readonly="1"  attrs="{'readonly':[('state','=','paid')]}" />
+                               <label for="renewal_duration" class="oe_inline"/>
+                                 <div>
+
+                                 <field name="renewal_duration" class="oe_inline" attrs="{'readonly':[('state','=','paid')]}" required="1"/>
+                                <field name="renewal_type" class="oe_inline" required="1" attrs="{'readonly':[('state','=','paid')]}"/>
+                                 </div>
+                                <field name="date" required="1" attrs="{'readonly':[('state','=','paid')]}"/>
+                            <field name="journal_id"  attrs="{'readonly':[('state','=','paid')]}" />
+                                <field name="vehicle_id" required="1" attrs="{'readonly':[('state','=','paid')]}" />
+                                <field name="vehicle_type" required="1" attrs="{'readonly':[('state','=','paid')]}" />
+                               <field name="account_id"  attrs="{'readonly':[('state','=','paid')]}" />
+                                <field name="amount" required="1" attrs="{'readonly':[('state','=','paid')]}" />
+                                <field name="is_account_entry"  attrs="{'readonly':[('state','=','paid')]}" />
+                                <field name="insurer_id"  attrs="{'invisible':[('document_type','!=','insurance')],'readonly':[('state','=','paid')],'required':[('document_type','=','insurance')]}" />
+
+                                <field name="document_type" invisible="1"/>
+                            </group>
+
+
+
+
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.ui.view' id='fleet_vehicle_documents_tree'>
+            <field name="name">fleet.vehicle.documents.tree</field>
+            <field name="model">fleet.vehicle.documents</field>
+            <field name="arch" type="xml">
+                <tree create="false">
+                    <field name="start_date" required="1" />
+                       <field name="end_date" required="1" />
+                    <field name="renewal_date" required="1" />
+                    <field name="vehicle_id" required="1" />
+                    <field name="amount" required="1" />
+                    <field name="journal_id" />
+                    <field name="account_id" />
+                    <field name="attach_count"/>
+                </tree>
+            </field>
+        </record>
+
+         <record model='ir.ui.view' id='fleet_vehicle_documents_search'>
+            <field name="name">fleet.vehicle.documents.tree</field>
+            <field name="model">fleet.vehicle.documents</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="vehicle_id"/>
+                </search>
+            </field>
+         </record>
+
+        
+
+        <record model='ir.actions.act_window' id='fleet_vehicle_pollution_act'>
+            <field name="name">Pollution Renewal</field>
+            <field name="res_model">fleet.vehicle.documents</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('document_type','=','pollution')]</field>
+            <field name="search_view_id" ref="fleet_vehicle_documents_search"/>
+            <field name="context">{'default_document_type': 'pollution'}</field>
+        </record>
+
+        <menuitem id="fleet_vehicle_documents_menu" name="Documents Renewal" parent="fleet.menu_root" sequence="3"/>
+     
+        <menuitem id="fleet_vehicle_pollution_menu" name="Pollution Renewal" action="fleet_vehicle_pollution_act" parent="fleet_vehicle_documents_menu"  />
+
+
+        <record model='ir.actions.act_window' id='fleet_vehicle_road_tax_act'>
+            <field name="name">Road Tax Renewal</field>
+            <field name="res_model">fleet.vehicle.documents</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="fleet_vehicle_documents_search"/>
+            <field name="domain">[('document_type','=','road_tax')]</field>
+            <field name="context">{'default_document_type': 'road_tax'}</field>
+        </record>
+
+        <menuitem id="fleet_vehicle_road_tax_menu" name="Road Tax Renewal" action="fleet_vehicle_road_tax_act" parent="fleet_vehicle_documents_menu"  />
+        
+
+        <record model='ir.actions.act_window' id='fleet_vehicle_fitness_act'>
+            <field name="name">Fitness Renewal</field>
+            <field name="res_model">fleet.vehicle.documents</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="fleet_vehicle_documents_search"/>
+            <field name="domain">[('document_type','=','fitness')]</field>
+            <field name="context">{'default_document_type': 'fitness'}</field>
+        </record>
+
+        <menuitem id="fleet_vehicle_fitness_menu" name="Fitness Renewal" action="fleet_vehicle_fitness_act" parent="fleet_vehicle_documents_menu"  />
+
+   
+        
+
+        <record model='ir.actions.act_window' id='fleet_vehicle_insurance_act'>
+            <field name="name">Insurance Renewal</field>
+            <field name="res_model">fleet.vehicle.documents</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="fleet_vehicle_documents_search"/>
+            <field name="domain">[('document_type','=','insurance')]</field>
+            <field name="context">{'default_document_type': 'insurance'}</field>
+        </record>
+
+        <menuitem id="fleet_vehicle_insurance_menu"
+                  name="Insurance Renewal"
+                  action="fleet_vehicle_insurance_act"
+                  parent="fleet_vehicle_documents_menu"  />
+
+         <record model='ir.actions.act_window' id='fleet_vehicle_gps_act'>
+            <field name="name">GPS Renewal</field>
+            <field name="res_model">fleet.vehicle.documents</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="fleet_vehicle_documents_search"/>
+            <field name="domain">[('document_type','=','gps')]</field>
+            <field name="context">{'default_document_type': 'gps'}</field>
+        </record>
+
+        <menuitem id="fleet_vehicle_gps__renewal_menu"
+                  name="GPS Renewal"
+                  action="fleet_vehicle_gps_act"
+                  parent="fleet_vehicle_documents_menu"  />
+
+        <record model='ir.actions.act_window' id='fleet_vehicle_permit_act'>
+            <field name="name">Permit Renewal</field>
+            <field name="res_model">fleet.vehicle.documents</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="fleet_vehicle_documents_search"/>
+            <field name="domain">[('document_type','=','permit')]</field>
+            <field name="context">{'default_document_type': 'permit'}</field>
+        </record>
+   <menuitem id="fleet_vehicle_permit_menu" name="Permit Renewal" action="fleet_vehicle_permit_act" parent="fleet_vehicle_documents_menu"  />
+
+        <record model='ir.actions.act_window' id='fleet_insurance_companies_act'>
+            <field name="name">Insurance Companies</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+
+            <field name="domain">[('is_insurer','=',True)]</field>
+            <field name="context">{'default_is_insurer': True}</field>
+        </record>
+
+        <menuitem id="menu_fleet_insurance_companies1"
+                  name="Insurance Companies"
+                  action="fleet_insurance_companies_act"
+                  parent="fleet.fleet_configuration" />
+
+
+
+
+    
+
+    </data>
+</openerp>

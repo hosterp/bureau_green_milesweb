@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+        <record id="hr_salary_advance_view" model="ir.ui.view">
+            <field name="name">HR Salary Advance</field>
+            <field name="model">hr.salary.advance</field>
+            <field name="arch" type="xml">
+                <form string="Salary Advance">
+                	<header>
+                        <button name="button_active" string="Activate" class="oe_highlight" type="object" states="draft"/>
+                		<field name="state" widget="statusbar"/>
+                	</header>
+                	<sheet>
+                	<center><separator string="Salary Advance Loan"/></center>
+                        <group>
+                            <group>
+                                <field name="date" required="1" attrs="{'readonly':[('state','=','closed')]}"/>
+                                <field name="employee_id" required="1" attrs="{'readonly':[('state','=','closed')]}"/>
+                                <field name="emi_start_date" required="1" attrs="{'readonly':[('state','=','closed')]}"/>
+                                <field name="emi_end_date" required="1" attrs="{'readonly':[('state','=','closed')]}"/>
+                                <field name="tenure" required="1" attrs="{'readonly':[('state','=','closed')]}"/>
+                            </group>
+                            <group>
+                                <field name="advance_amount"  required="1" attrs="{'readonly':[('state','=','closed')]}"/>
+                                <field name="emi_amount" required="1"/>
+                                <field name="paid_amount"/>
+                                <field name="balance_amount"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Repayment details">
+                                <field name="emi_lines">
+                                    <tree editable="bottom">
+                                        <field name="date"/>
+                                        <field name="payment"/>
+                                        <field name="salary_slip"/>
+<!--                                        <field name="balance_amount" attrs="{'readonly':[('state','=','closed')]}"/>-->
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_salary_advance_view_tree">
+            <field name="name">HR Salary Advance</field>
+            <field name="model">hr.salary.advance</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="date"/>
+                    <field name="employee_id"/>
+                    <field name="tenure"/>
+                    <field name="emi_start_date"/>
+                    <field name="emi_end_date"/>
+                    <field name="advance_amount"/>
+                    <field name="emi_amount"/>
+                    <field name="paid_amount"/>
+                    <field name="balance_amount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_hr_salary_advance_view" model="ir.actions.act_window">
+			<field name="name">HR salary Advance</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.salary.advance</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+        <menuitem
+                id="hr_salary_advance_view_main"
+                parent="hr_payroll.menu_hr_root_payroll"
+                name="Salary Advance Loan"
+                action="action_hr_salary_advance_view"
+                sequence="4"
+                  />
+
+
+    </data>
+</openerp>

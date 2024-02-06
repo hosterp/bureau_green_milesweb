@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<!-- Employee insurance Details -->
+
+		<record model="ir.ui.view" id="employee_professional_tax_wizard">
+			<field name="name">professional.tax.wizard.wizard</field>
+			<field name="model">professional.tax.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Professional Tax Report">
+					<group col="4">
+						<label for="month" string="Period"/>
+	                    <div>
+	                        <field name="month" class="oe_inline" required="1"/> - <field name="year" class="oe_inline" required="1"/>
+	                    </div>
+							<field name="company_contractor_id" options="{'no_create':True}"/>
+					</group>
+
+					<footer>
+						<button name="action_employee_pf_esi_open_window" type="object" string="Print" class="oe_highlight" />
+						<button name="action_employee_pf_esi_open_window1" type="object" string="View" class="oe_highlight" />
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_employee_professional_tax_wizard" model="ir.actions.act_window">
+			<field name="name">Professional Tax Report</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">professional.tax.wizard</field>
+			<field name="target">new</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+		</record>
+
+
+<!--		<menuitem id="menu_employee_professional_tax_wizard"-->
+<!--				  parent="hiworth_hr_attendance.menu_pf_esi_report"-->
+<!--				  name="Professional Tax Report"-->
+<!--				  sequence="3"-->
+<!--				  action="action_employee_professional_tax_wizard"/>-->
+
+
+			<report id="report_employee_professional_tax_report" string="Professional Tax Report"
+			model="professional.tax.wizard" report_type="qweb-pdf"
+			name="hiworth_hr_attendance.report_employee_professional_tax_template" />
+
+		<template id="report_employee_professional_tax_template">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="report.external_layout">
+						<div class="page">
+							<center><b><h1>Professional Tax Report For Month <span t-esc="o.month"/> <span t-esc="o.year"/> </h1></b></center>
+
+							<center><b>Company Contractor : <span t-field="o.company_contractor_id"/> </b></center>
+							<t t-set="sl_no" t-value="1" />
+
+
+								<center>
+
+									<table style="font-size:16px;border-bottom: outset;border-top: outset;margin-top:30px;width: 100%;">
+											<t t-foreach="docs.get_esi_pf_details()" t-as="line">
+													<t t-foreach="line.values()" t-as="oli_line">
+										<t t-if="oli_line!=[]">
+														<thead>
+											<tr style="border-bottom: outset;border-right: outset;border-left: outset;">
+												<td colspan="4" style="border-right: outset;">
+													<center><h5><b><span t-esc="line.keys()"/></b></h5></center>
+												</td>
+											</tr>
+
+											<tr style="border-bottom: outset;border-right: outset;border-left: outset;" >
+												<td style="width:5%; border-right: outset;" align="center">SL.No</td>
+												<td style="width:30%; border-right: outset;" align="center">Name of Employee</td>
+
+												<td style="width: 30%; border-right: outset;" align="center">Wages Due</td>
+												<td style="width: 70%; border-right: outset;" align="center">Half Yearly Professional Tax</td>
+
+
+											</tr>
+										</thead>
+
+										<t t-set="basic_pay" t-value="0" />
+										<t t-set="wages_due" t-value="0" />
+										<t t-set="pf_wages" t-value="0" />
+										<t t-set="edli" t-value="0" />
+										<t t-set="employer_epf" t-value="0" />
+										<t t-set="employee_epf" t-value="0" />
+										<t t-set="eps" t-value="0" />
+										<t t-set="employer_esi" t-value="0" />
+										<t t-set="employee_esi" t-value="0" />
+
+										<tbody>
+
+
+												<tr style="border-left: outset;" t-foreach="oli_line" t-as="oli">
+													<td style="border-right: outset;">
+														<span t-esc="sl_no" />
+														<t t-set="sl_no" t-value="sl_no+1" />
+													</td>
+
+													<td style="border-right: outset;padding-left: 2px;">
+														<span t-esc="oli['employee_name']"/>
+													</td>
+
+													<td style="border-right: outset;padding-right: 2px;" align="right">
+														<span t-esc="'{0:,.2f}'.format(oli['wages_due'])"/>
+														<t t-set="wages_due" t-value="wages_due+oli['wages_due']" />
+													</td>
+
+													<td style="border-right: outset;padding-right: 2px;" align="right">
+														<span t-esc="'{0:,.2f}'.format(oli['pf_wages'])"/>
+													<t t-set="pf_wages" t-value="pf_wages+oli['pf_wages']" />
+													</td>
+
+
+												</tr>
+
+
+											<tr style="border-left: outset;border-top: outset;border-bottom: outset;">
+												<td style="border-right: outset;">
+												</td>
+
+												<td style="border-right: outset;padding-left: 2px;">
+													Total
+												</td>
+
+
+												<td style="border-right: outset;padding-right: 2px;" align="right">
+													<span t-esc="'{0:,.2f}'.format(wages_due)"/>
+												</td>
+
+												<td style="border-right: outset;padding-right: 2px;" align="right">
+													<span t-esc="'{0:,.2f}'.format(pf_wages)"/>
+												</td>
+
+
+											</tr>
+
+										</tbody>
+														</t>
+											</t>
+										</t>
+									</table>
+
+
+								</center>
+
+
+						</div>
+					</t>
+				</t>
+			</t>
+		</template>
+
+    </data>
+</openerp>

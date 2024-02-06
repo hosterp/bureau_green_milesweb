@@ -1,0 +1,284 @@
+<openerp>
+	<data>
+		<record id="report_paperformat_oh1" model="report.paperformat">
+			<field name="name">Landscape</field>
+			<field name="default" eval="True" />
+			<field name="format">A4</field>
+			<field name="orientation">Landscape</field>
+			<field name="margin_top">5</field>
+			<field name="margin_bottom">0</field>
+			<field name="margin_left">15</field>
+			<field name="margin_right">15</field>
+			<field name="header_line" eval="False" />
+			<field name="header_spacing">12</field>
+			<field name="dpi">0</field>
+		</record>
+        <record model="ir.ui.view" id="report_overhead_project_wizard_id">
+			<field name="name">overhead.project</field>
+			<field name="model">overhead.project</field>
+			<field name="arch" type="xml">
+				<form string="Project Overhead Distribution Report">
+					<group col="2">
+						<group>
+							<field name="project_id"/>
+						</group>
+						<group>
+							<field name="date_from" required="1"/>
+							<field name="date_to" required="1"/>
+						</group>
+                    </group>
+					<footer>
+						<button name="action_overhead_project_view" type="object" string="View" class="oe_highlight" />
+						<button name="action_overhead_project" type="object" string="Print" class="oe_highlight" />
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</footer>
+				</form>
+			</field>
+		</record>
+<report id="report_overhead_poh_id" string="Project Overhead Distribution Report"
+			model="overhead.project" report_type="qweb-pdf"
+			name="bg_office_management.report_overhead_project_template"/>
+					<record id="bg_office_management.report_overhead_poh_id" model="ir.actions.report.xml">
+    <field name="paperformat_id" ref="bg_office_management.report_paperformat_oh1"/>
+</record>
+
+<!--	.....TEMPLATE..............................................................................-->
+		<template id="report_overhead_project_template">
+			<style>
+             table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+             th, td {
+				padding: 17px;
+				text-align: left;
+				}
+           </style>
+
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="report.external_layout">
+						<div class="page">
+
+							<center><b><h1>Project Overhead Distribution Report</h1></b></center><br/>
+
+<!--	                    <span><center><b><h4> <span t-field="o.date_from"/> To <span t-field="o.date_to"/></h4></b></center></span>-->
+							<t t-set="sl_no" t-value="1" />
+							<t t-set="subtotal" t-value="0" />
+
+							<div>
+								<center>
+
+									<table>
+										<thead>
+											<tr>
+
+												<td colspan="4"></td>
+                                                <td colspan="13"><center><b>Actual</b></center></td>
+										    </tr>
+											<tr>
+												<td style="width: 4%;" align="center"><h4><b><center>S# No</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Project</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Project Value</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>%Weightage</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Jan</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Feb</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Mar</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Apr</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>May</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Jun</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Jul</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Aug</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Sep</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Oct</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Nov</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Dec</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Total</center></b></h4></td>
+											</tr>
+										</thead>
+										<t t-set="total_project_cost" t-value="0"/>
+										<t t-set="grand_total" t-value="0"/>
+										<t t-set="total_weightage" t-value="0"/>
+										<t t-set="jan" t-value="0"/>
+										<t t-set="feb" t-value="0"/>
+										<t t-set="mar" t-value="0"/>
+										<t t-set="apr" t-value="0"/>
+										<t t-set="may" t-value="0"/>
+										<t t-set="jun" t-value="0"/>
+										<t t-set="jul" t-value="0"/>
+										<t t-set="aug" t-value="0"/>
+										<t t-set="sep" t-value="0"/>
+										<t t-set="oct" t-value="0"/>
+										<t t-set="nov" t-value="0"/>
+										<t t-set="dec" t-value="0"/>
+
+										<tbody>
+<!--											<t t-set="t1" t-value="0"/>-->
+<!--									        <p t-foreach="docs.get_details()" t-as="line">-->
+<!--										    <t t-set="t1" t-value="line['e_totalproject_value']"/>-->
+<!--									        </p>-->
+
+<!--											<t t-set="t2" t-value="0"/>-->
+<!--									        <p t-foreach="docs.get_details()" t-as="line">-->
+<!--										    <t t-set="t2" t-value="line['per_total']"/>-->
+<!--									        </p>-->
+
+<!--											<t t-set="jan" t-value="0"/>-->
+<!--									        <p t-foreach="docs.get_details()" t-as="line">-->
+<!--										    <t t-set="jan" t-value="line['jan_total']"/>-->
+<!--									        </p>-->
+
+<!--											<t t-set="feb" t-value="0"/>-->
+<!--									        <p t-foreach="docs.get_details()" t-as="line">-->
+<!--										    <t t-set="feb" t-value="line['feb_total']"/>-->
+<!--									        </p>-->
+
+<!--											<t t-set="mar" t-value="0"/>-->
+<!--									        <p t-foreach="docs.get_details()" t-as="line">-->
+<!--										    <t t-set="mar" t-value="line['mar_total']"/>-->
+<!--									        </p>-->
+
+<!--											<t t-set="apr" t-value="0"/>-->
+<!--									        <p t-foreach="docs.get_details()" t-as="line">-->
+<!--										    <t t-set="apr" t-value="line['apr_total']"/>-->
+<!--									        </p>-->
+
+<!--											<t t-set="may" t-value="0"/>-->
+<!--									        <p t-foreach="docs.get_details()" t-as="line">-->
+<!--										    <t t-set="may" t-value="line['may_total']"/>-->
+<!--									        </p>-->
+
+<!--											<t t-set="june" t-value="0"/>-->
+<!--									        <p t-foreach="docs.get_details()" t-as="line">-->
+<!--										    <t t-set="june" t-value="line['june_total']"/>-->
+<!--									        </p>-->
+
+<!--											<t t-set="july" t-value="0"/>-->
+<!--									        <p t-foreach="docs.get_details()" t-as="line">-->
+<!--										    <t t-set="july" t-value="line['july_total']"/>-->
+<!--									        </p>-->
+
+<!--											<t t-set="aug" t-value="0"/>-->
+<!--									        <p t-foreach="docs.get_details()" t-as="line">-->
+<!--										    <t t-set="aug" t-value="line['aug_total']"/>-->
+<!--									        </p>-->
+
+<!--											<t t-set="sep" t-value="0"/>-->
+<!--									        <p t-foreach="docs.get_details()" t-as="line">-->
+<!--										    <t t-set="sep" t-value="line['sep_total']"/>-->
+<!--									        </p>-->
+
+<!--											<t t-set="oct" t-value="0"/>-->
+<!--									        <p t-foreach="docs.get_details()" t-as="line">-->
+<!--										    <t t-set="oct" t-value="line['oct_total']"/>-->
+<!--									        </p>-->
+
+<!--											<t t-set="nov" t-value="0"/>-->
+<!--									        <p t-foreach="docs.get_details()" t-as="line">-->
+<!--										    <t t-set="nov" t-value="line['nove_total']"/>-->
+<!--									        </p>-->
+
+<!--											<t t-set="dec" t-value="0"/>-->
+<!--									        <p t-foreach="docs.get_details()" t-as="line">-->
+<!--										    <t t-set="dec" t-value="line['dec_total']"/>-->
+<!--									        </p>-->
+<!--											<t t-set="grand_total" t-value="0"/>-->
+<!--									        <p t-foreach="docs.get_details()" t-as="line">-->
+<!--										    <t t-set="grand_total" t-value="line['grand_total']"/>-->
+<!--									        </p>-->
+
+
+											<t t-foreach="docs.get_details()" t-as="line">
+												<tr>
+													<td>
+														<center><span t-esc="sl_no" />
+															<t t-set="sl_no" t-value="sl_no+1" /></center>
+													</td>
+
+													<td>
+														<center><span t-esc="line['project']"/></center>
+													</td>
+
+													<td>
+														<center><span t-esc="line['project_cost']"/></center>
+														<t t-set="total_project_cost" t-value="total_project_cost+line['project_cost']"/>
+													</td>
+
+													<td><center><span t-esc="line['weightage']"/></center></td>
+													<t t-set="total_weightage" t-value="total_weightage+line['weightage']"/>
+
+													<td><center><span t-esc="line['jan']"/></center></td>
+													<t t-set="jan" t-value="jan+line['jan']"/>
+													<td><center><span t-esc="line['feb']"/></center></td>
+													<t t-set="feb" t-value="feb+line['feb']"/>
+													<td><center><span t-esc="line['mar']"/></center></td>
+													<t t-set="mar" t-value="mar+line['mar']"/>
+													<td><center><span t-esc="line['apr']"/></center></td>
+													<t t-set="apr" t-value="apr+line['apr']"/>
+													<td><center><span t-esc="line['may']"/></center></td>
+													<t t-set="may" t-value="may+line['may']"/>
+													<td><center><span t-esc="line['jun']"/></center></td>
+													<t t-set="jun" t-value="jun+line['jun']"/>
+													<td><center><span t-esc="line['jul']"/></center></td>
+													<t t-set="jul" t-value="jul+line['jul']"/>
+													<td><center><span t-esc="line['aug']"/></center></td>
+													<t t-set="aug" t-value="aug+line['aug']"/>
+													<td><center><span t-esc="line['sep']"/></center></td>
+													<t t-set="sep" t-value="sep+line['sep']"/>
+													<td><center><span t-esc="line['oct']"/></center></td>
+													<t t-set="oct" t-value="oct+line['oct']"/>
+													<td><center><span t-esc="line['nov']"/></center></td>
+													<t t-set="nov" t-value="nov+line['nov']"/>
+													<td><center><span t-esc="line['dec']"/></center></td>
+													<t t-set="dec" t-value="dec+line['dec']"/>
+
+													<td><center><span t-esc="line['total']"/></center></td>
+													<t t-set="grand_total" t-value="grand_total+line['total']"/>
+												</tr>
+											</t>
+										<tr>
+											<td colspan="2"><center><b>Total</b></center></td>
+											<td><center><b><span t-esc="total_project_cost"/></b></center></td>
+<!--											<td><center><b><span t-esc="total_weightage"/></b></center></td>-->
+											<td><center><b><span>100.00</span></b></center></td>
+											<td><center><b><span t-esc="jan"/></b></center></td>
+											<td><center><b><span t-esc="feb"/></b></center></td>
+											<td><center><b><span t-esc="mar"/></b></center></td>
+											<td><center><b><span t-esc="apr"/></b></center></td>
+											<td><center><b><span t-esc="may"/></b></center></td>
+											<td><center><b><span t-esc="jun"/></b></center></td>
+											<td><center><b><span t-esc="jul"/></b></center></td>
+											<td><center><b><span t-esc="aug"/></b></center></td>
+											<td><center><b><span t-esc="sep"/></b></center></td>
+											<td><center><b><span t-esc="oct"/></b></center></td>
+											<td><center><b><span t-esc="nov"/></b></center></td>
+											<td><center><b><span t-esc="dec"/></b></center></td>
+											<td><center><b><span t-esc="grand_total"/></b></center></td>
+										</tr>
+										</tbody>
+									</table>
+								</center>
+							</div>
+						</div>
+					</t>
+				</t>
+			</t>
+</template>
+<!--_____________________________________________________________________________________________________________________-->
+
+		<record id="action_project_os" model="ir.actions.act_window">
+					<field name="name">Print Overhead Project Report</field>
+					<field name="type">ir.actions.act_window</field>
+					<field name="res_model">overhead.project</field>
+					<field name="target">new</field>
+					<field name="view_type">form</field>
+					<field name="view_mode">form</field>
+		</record>
+
+
+		<menuitem action="action_project_os" id="menu_project_os_child"
+                              name="Project Overhead Distribution Report"
+                              sequence="2" parent="menu_recurring_expense_reports"/>
+
+    </data>
+</openerp>

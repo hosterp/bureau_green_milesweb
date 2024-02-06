@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="tree_project_costing_progress_id" model="ir.ui.view">
+            <field name="name">costprogress.commercial</field>
+            <field name="model">costprogress.commercial</field>
+            <field name="arch" type="xml">
+                <tree string="Project Costing-Progress by commercial">
+                    <field name="project_id"/>
+                    <field name="date"/>
+                    <field name="project_value"/>
+                    <field name="project_duration_months"/>
+                    <field name="project_estimated_man_hours"/>
+					<field name="actual_man_hours"/>
+					<field name="estimated_material_cost"/>
+					<field name="purchase_material_cost"/>
+                </tree>
+            </field>
+        </record>
+        <record id="cost_progress_commercial_form_id" model="ir.ui.view">
+			<field name="name">costprogress.commercial</field>
+			<field name="model">costprogress.commercial</field>
+			<field name="arch" type="xml">
+				<form string="Project Costing And Progress By Commercial">
+					<sheet>
+					<h1><center>Project Costing And Progress By Commercial</center></h1><br></br>
+					<group col="2">
+						<group>
+							<field name="project_id"/>
+							<field name="project_value"/>
+							<field name="project_duration_months"/>
+						</group>
+						<group>
+							<field name="date"/>
+							<field name="project_estimated_man_hours"/>
+							<field name="actual_man_hours"/>
+							<field name="estimated_material_cost"/>
+							<field name="purchase_material_cost"/>
+						</group>
+					</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+			<record model="ir.actions.act_window" id="action_project_project_costing_commercial">
+			<field name="name">Project Costing And Progress</field>
+			<field name="res_model">costprogress.commercial</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,kanban</field>
+		</record>
+		<menuitem id="project_costing_progress_parent_id" name="Project Costing And Progress" parent="hiworth_project_management.menu_office_management" sequence="4"/>
+				<menuitem action="action_project_project_costing_commercial" id="project_costing_id_child" name="By Commercial" parent="project_costing_progress_parent_id"/>
+
+    </data>
+</openerp>

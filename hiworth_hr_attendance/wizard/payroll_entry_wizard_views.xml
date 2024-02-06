@@ -1,0 +1,75 @@
+<openerp>
+    <data>
+          <record model="ir.ui.view" id="payroll_entry_form_wizard">
+            <field name="name">payroll.entry.wizard.form</field>
+            <field name="model">payroll.entry.wizard</field>
+            <field name="arch" type="xml">
+               <form>
+                  <group>
+                      <field name="date_from"/>
+                      <field name="date_to"/>
+                  </group>
+                   <group>
+                      <field name="payroll_entry_wizard_line_ids">
+                          <tree create="false" >
+                              <field name="employee_id"/>
+                             <button name="view_deduction_summary" string="View Deduction" icon="gtk-redo" type="object" />
+
+
+                          </tree>
+                      </field>
+
+                  </group>
+                   <footer>
+                       <button name="action_submit" string="Submit" type="object" class="oe_highlight"/>
+                       or
+                       <button string="Cancel" special="cancel" class="oe_highlight"/>
+                   </footer>
+               </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="payroll_entry_form_wizard_line">
+            <field name="name">payroll.entry.wizard.form.line</field>
+            <field name="model">payroll.entry.wizard.line</field>
+            <field name="arch" type="xml">
+               <form>
+                  <group>
+
+                      <field name="payroll_entry_wizard_line_salary_ids">
+                           <tree editable="bottom">
+                               <field name="name"/>
+                               <field name="code"/>
+                               <field name="category_id"/>
+
+                               <field name="amount"/>
+                               <field name="total"/>
+                           </tree>
+                      </field>
+                  </group>
+
+               </form>
+            </field>
+        </record>
+
+        <!-- <record id="action_payroll_entry_wizard" model="ir.actions.act_window">
+            <field name="name">Payroll Entry Wizard</field>
+            <field name="res_model">payroll.entry.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+             <field name="target">new</field>
+            <field name="view_id" eval="payroll_entry_form_wizard"/>-->
+
+           <!--  <act_window id="action_payroll_entry_wizard"
+					name="Payroll Entry" res_model="payroll.entry.wizard"
+					view_mode="form" target="new" multi="True"
+					view_id="payroll_entry_form_wizard"
+					src_model="hr.employee"
+					/>-->
+
+
+
+    </data>
+</openerp>

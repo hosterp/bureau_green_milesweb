@@ -1,0 +1,957 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+
+        <record id="view_custom_hr_dasboard_kanban" model="ir.ui.view">
+        <field name="name">custom.sales.dashboard.view</field>
+  <field name="model">hr.dashboard</field>
+  <field name="arch" type="xml">
+    <kanban class="oe_background_grey o_kanban_dashboard o_salesteam_kanban o_project_kanban " create="0">
+
+       <templates>
+          <t t-name="kanban-box" string="HR"> <!-- Use <t> tag instead of <span> for color change -->
+            <table style="">
+                <tr style="width:120px;">
+                    <td>
+                        <span t-attf-class="#{kanban_color(666)} oe_kanban_card ">
+
+                <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px">
+                  <div class="o_kanban_card_content" style="position:absolute;left:75px;" align="center">
+                    <center>
+                        <table>
+                            <tr>
+                                 <center>
+                                 <span style="font-size:27px;">
+                                   Attendance Analysis
+                                  </span>
+                              </center>
+
+                            </tr>
+                            <!--tr style="height:70%;">
+                                 <center>
+                                 <field name="attendance"/>
+                              </center>
+                            </tr-->
+                            <tr>
+                                 <center>
+                                 <span style="font-size:15px;">
+                                   Total Employees:<field name="total_employee"/>
+                                  </span>
+                              </center>
+
+                            </tr>
+                            
+                            <tr>
+                                 <center>
+                                 <span style="font-size:15px;">
+                                   Total Present:<field name="attendance"/>
+                                  </span>
+                              </center>
+
+                            </tr>
+                            
+                            <tr>
+                                 <center>
+                                 <span style="font-size:15px;">
+                                   Total Absent:<field name="absent"/>
+                                  </span>
+                              </center>
+
+                            </tr>
+                            
+                            <tr>
+                                <div >
+                            <center>
+                               <button class="btn btn-primary" type="object" name="dashboard_attendance_today" string="Attendances">Attendances</button>
+
+
+                               </center>
+                                </div>
+                            </tr>
+                        </table>
+
+                    </center>
+
+
+
+
+                        </div>
+
+                   </div>
+
+
+             </span>
+                    </td>
+                    <td>
+                        <span t-attf-class="#{kanban_color(677)} oe_kanban_card ">
+                            <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px;">
+                    <div class="o_kanban_card_content" style="position:absolute;top:70px;left:100px;">
+                   <table>
+                       <tr>
+                            <center>
+                                 <span style="font-size:27px;">
+                                   Leave Analysis
+                                  </span>
+                              </center>
+                       </tr>
+                       <tr style="height:70%;">
+                           <div>
+                              <center>
+                                 <field name="leaves_to_approve"/>
+                              </center>
+                          </div>
+                       </tr>
+                       <tr>
+                            <div>
+                            <center>
+                               <button class="btn btn-primary" type="object" name="dashboard_leave_to_approve" string="Leaves to Approve">Leaves to Approve</button>
+
+
+                               </center>
+                                </div>
+                       </tr>
+                   </table>
+
+
+                    </div>
+
+                            </div>
+
+                </span>
+                    </td>
+                    <td>
+                         <span t-attf-class="#{kanban_color(655)} oe_kanban_card ">
+                             <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px;">
+                    <div class="o_kanban_card_content" style="position:absolute;left:60px;">
+                        <table>
+                            <tr> <center>
+                                 <span style="font-size:27px;">
+                                   Supervisor Daily Statements
+                                  </span>
+                              </center></tr>
+                            <!--tr style="height:70%;"> <div>
+                              <center>
+                                 <field name="daily_statements_approve"/>
+                              </center>
+                          </div></tr-->
+                            <tr> <center>
+                                 <span style="font-size:15px;">
+                                   Total Supervisors : <field name="total_supervisor"/>
+                                  </span>
+                              </center></tr>
+                              <tr> <center>
+                                 <span style="font-size:12px;">
+                                   Total Daily Statements Received : <field name="daily_statements_approve"/>
+                                  </span>
+                              </center></tr>
+                              <tr> <center>
+                                 <span style="font-size:12px;">
+                                   Total Daily Statements pending : <field name="pending_daily_statement"/>
+                                  </span>
+                              </center></tr>
+
+
+                            <tr> <div>
+                            <center>
+                               <button class="btn btn-primary" type="object" name="dashboard_supervisor_daily_statement" string="Supervisor Daily Statements">Supervisor Daily Statements</button>
+
+
+                               </center>
+                                </div></tr>
+                        </table>
+
+                    </div>
+
+
+                            </div>
+
+                </span>
+                    </td>
+                </tr>
+                <tr style="width:100%;">
+                    <td>
+                        <span t-attf-class="#{kanban_color(444)} oe_kanban_card ">
+                            <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px;">
+                    <div class="o_kanban_card_content" style="position:absolute;left:75px;">
+                      <div >
+                          <div class="">
+                              <center>
+                                 <span style="font-size:27px;">
+                                  Driver Daily Statements
+                                  </span>
+                              </center>
+                           </div>
+                          <!--div>
+                              <center>
+                                 <field name="driver_daily_statements"/>
+                              </center>
+                          </div-->
+                          <div class="">
+                              <center>
+                                 <span style="font-size:15px;">
+                                  Total Drivers : <field name = "total_driver"/>
+                                  </span>
+                              </center>
+                           </div>
+                           <div class="">
+                              <center>
+                                 <span style="font-size:15px;">
+                                   Driver Statements Received : <field name = "driver_daily_statements"/>
+                                  </span>
+                              </center>
+                           </div>
+                           <div class="">
+                              <center>
+                                 <span style="font-size:15px;">
+                                   Driver Statements Pending : <field name = "pending_driver_statement"/>
+                                  </span>
+                              </center>
+                           </div>
+                            <div>
+                            <center>
+                               <button class="btn btn-primary" type="object" name="dashboard_driver_daily_statement" string="Driver Daily Statements">Driver Daily Statements</button>
+
+
+                               </center>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
+                </span>
+                    </td>
+
+                    <td>
+                         <span t-attf-class="#{kanban_color(333)} oe_kanban_card ">
+                             <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px;">
+                    <div class="o_kanban_card_content" style="position:absolute;left:120px;">
+                      <div >
+                          <div class="">
+                              <center>
+                                 <span style="font-size:27px;">
+                                  Todays Purchase Requisitions
+                                  </span>
+                              </center>
+                           </div>
+                           <div>
+                              <center>
+                                <span style="font-size:15px;">
+                                  Total Purchases : <field name="total_site_purchases_today"/>
+                                </span>
+                              </center>
+                          </div>
+                          <div>
+                              <center>
+                                <span style="font-size:15px;">
+                                  Total purchases to Approve : <field name="site_purchases"/>
+                               </span>
+                              </center>
+                          </div>
+                          <div>
+                              <center>
+                                <span style="font-size:15px;">
+                                  Total purchase Approved : <field name="total_site_purchase_approved_today"/>
+                               </span>
+                              </center>
+                          </div>
+                            <div>
+                            <center>
+                               <button class="btn btn-primary" type="object" name="dashboard_purchase" string="Site Purchases">Site Purchases</button>
+
+
+                               </center>
+                                </div>
+                            </div>
+                        </div>
+                             </div>
+                </span>
+                    </td>
+                    <td>
+                        <span t-attf-class="#{kanban_color(222)} oe_kanban_card ">
+                            <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px;">
+                    <div class="o_kanban_card_content" style="position:absolute;top:70px;left:75px;">
+                      <div >
+                          <div class="">
+                              <center>
+                                 <span style="font-size:27px;">
+                                  Current Inventory Valuation
+                                  </span>
+                              </center>
+                           </div>
+                          <!--<div>
+                              <center>
+                                 <field name="site_purchases"/>
+                              </center>
+                          </div>-->
+                            <div>
+                            <center>
+                               <button class="btn btn-primary" type="object" name="dashboard_current_inventory" string="Current Inventory Valuation">Current Inventory Valuation</button>
+
+
+                               </center>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
+                </span>
+                    </td>
+                </tr>
+                <tr>
+
+                     <td>
+                        <span t-attf-class="#{kanban_color(796)} oe_kanban_card ">
+                            <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px;">
+                    <div class="o_kanban_card_content" style="position:absolute;top:70px;left:150px;">
+                      <div >
+                          <div class="">
+                              <center>
+                                 <span style="font-size:27px;">
+                                  Tasks
+                                  </span>
+                              </center>
+                           </div>
+                          <div>
+                              <center>
+                                 <field name="events"/>
+                              </center>
+                          </div>
+                            <div>
+                            <center>
+                               <button class="btn btn-primary" type="object" name="dashboard_project_task" string="Tasks">Tasks</button>
+
+
+                               </center>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
+                </span>
+                    </td>
+
+                     <td>
+                        <span t-attf-class="#{kanban_color(111)} oe_kanban_card ">
+                            <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px;">
+                    <div class="o_kanban_card_content" style="position:absolute;top:70px;left:140px;">
+                      <div >
+                          <div class="">
+                              <center>
+                                 <span style="font-size:27px;">
+                                  Work Details
+                                  </span>
+                              </center>
+                           </div>
+                          <div>
+                              <center>
+                                 <field name="tasks"/>
+                              </center>
+                          </div>
+                            <div>
+                            <center>
+                               <button class="btn btn-primary" type="object" name="dashboard_project_estimation" string="Work Details">Work Details</button>
+
+
+                               </center>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
+                </span>
+                    </td>
+
+                     <td>
+                        <span t-attf-class="#{kanban_color(143)} oe_kanban_card ">
+                            <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px;">
+                    <div class="o_kanban_card_content" style="position:absolute;top:70px;left:75px;">
+                      <div >
+                          <div class="">
+                              <center>
+                                 <span style="font-size:27px;">
+                                  Next Day Settlement
+                                  </span>
+                              </center>
+                           </div>
+                          <div>
+                              <center>
+                                 <field name="next_day_settlement"/>
+                              </center>
+                          </div>
+                            <div>
+                            <center>
+                               <button class="btn btn-primary" type="object" name="dashboard_next_settlement" string="Next Day Settlement">Next Day Settlement</button>
+
+
+                               </center>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
+                </span>
+                    </td>
+                </tr>
+
+                <tr style="width:120px;">
+                    <td>
+                        <span t-attf-class="#{kanban_color(666)} oe_kanban_card ">
+
+                <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px">
+                  <div class="o_kanban_card_content" style="position:absolute;left:75px;" align="center">
+                    <center>
+                        <table>
+                            <tr>
+                                 <center>
+                                 <span style="font-size:27px;">
+                                   Yesterday Attendance
+                                  </span>
+                              </center>
+
+                            </tr>
+                            <!--tr style="height:70%;">
+                                 <center>
+                                 <field name="prev_attendance"/>
+                              </center>
+                            </tr-->
+                            <tr>
+                              <tr>
+                                 <center>
+                                 <span style="font-size:15px;">
+                                   Total Employees :<field name="total_employee"/>
+                                  </span>
+                              </center>
+
+                            </tr>
+                            <tr>
+                                 <center>
+                                 <span style="font-size:15px;">
+                                   Total Present :<field name="prev_attendance"/>
+                                  </span>
+                              </center>
+
+                            </tr>
+                            <tr>
+                                 <center>
+                                 <span style="font-size:15px;">
+                                   Total Absent :<field name="prev_absent"/>
+                                  </span>
+                              </center>
+
+                            </tr>
+                                <div >
+                            <center>
+                               <button class="btn btn-primary" type="object" name="dashboard_prev_attendance" string=" Yesterday Attendances"> Yesterday Attendances</button>
+
+
+                               </center>
+                                </div>
+                            </tr>
+                        </table>
+
+                    </center>
+
+
+
+
+                        </div>
+
+                   </div>
+
+
+             </span>
+                    </td>
+
+                    <td>
+                        <span t-attf-class="#{kanban_color(155)} oe_kanban_card ">
+
+                <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px">
+                  <div class="o_kanban_card_content" style="position:absolute;top:70px;left:125px;" align="center">
+                    <center>
+                        <table>
+                            <tr>
+                                 <center>
+                                 <span style="font-size:27px;">
+                                   Bank Details
+                                  </span>
+                              </center>
+
+                            </tr>
+                            <tr style="height:70%;">
+                                 <center>
+                                <!-- <field name="prev_attendance"/>-->
+                              </center>
+                            </tr>
+                            <tr>
+                                <div >
+                            <center>
+                                <button class="btn btn-primary" type="object" name="dashboard_bank_details" string="Bank Details"> Bank Details</button>
+
+                               </center>
+                                </div>
+                            </tr>
+                        </table>
+
+                    </center>
+
+
+
+
+                        </div>
+
+                   </div>
+
+
+             </span>
+                    </td>
+                     <td>
+                         <span t-attf-class="#{kanban_color(655)} oe_kanban_card ">
+                             <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px;">
+                    <div class="o_kanban_card_content" style="position:absolute;left:60px;">
+                        <table>
+                            <tr> <center>
+                                 <span style="font-size:27px;">
+                                  Yesterday Supervisor Daily Statements
+                                  </span>
+                              </center></tr>
+                            <!--tr style="height:70%;"> <div>
+                              <center>
+                                 <field name="daily_statements_approve_prev"/>
+                              </center>
+                          </div></tr-->
+                          <tr> <center>
+                                 <span style="font-size:12px;">
+                                  Total Supervisors : <field name="total_supervisor"/>
+                                  </span>
+                              </center></tr>
+                          <tr> <center>
+                                 <span style="font-size:12px;">
+                                   Total Daily Statements Received: <field name="daily_statements_approve_prev"/>
+                                  </span>
+                              </center></tr>
+                          <tr> <center>
+                                 <span style="font-size:12px;">
+                                   Total Daily Statements Pending: <field name="yes_pending_daily_statement"/>
+                                  </span>
+                              </center></tr>
+                            <tr> <div>
+                            <center>
+                               <button class="btn btn-primary" type="object" name="dashboard_supervisor_daily_statement_prev" string="Supervisor Daily Statements">Yesterday Supervisor Daily Statements</button>
+
+
+                               </center>
+                                </div></tr>
+                        </table>
+
+                    </div>
+
+
+                            </div>
+
+                </span>
+                    </td>
+                </tr>
+                  <tr style="width:100%;">
+                    <td>
+                        <span t-attf-class="#{kanban_color(444)} oe_kanban_card ">
+                            <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px;">
+                    <div class="o_kanban_card_content" style="position:absolute;left:75px;">
+                      <div >
+                          <div class="">
+                              <center>
+                                 <span style="font-size:27px;">
+                                   Yesterday Driver Daily Statements
+                                  </span>
+                              </center>
+                           </div>
+                          <!--div>
+                              <center>
+                                 <field name="driver_daily_statements_prev"/>
+                              </center>
+                          </div-->
+                            <div>
+                            <div class="">
+                              <center>
+                                 <span style="font-size:15px;">
+                                   Total Drivers:<field name = "total_driver"/>
+                                  </span>
+                              </center>
+                           </div>
+                           <div class="">
+                              <center>
+                                 <span style="font-size:15px;">
+                                   Driver Statements Received<field name = "driver_daily_statements_prev"/>
+                                  </span>
+                              </center>
+                           </div>
+                           <div class="">
+                              <center>
+                                 <span style="font-size:15px;">
+                                   Driver Statements Pending:<field name = "yes_pending_driver_daily_statement"/>
+                                  </span>
+                              </center>
+                           </div>
+                            <center>
+                               <button class="btn btn-primary" type="object" name="dashboard_driver_daily_statement_prev" string="Driver Daily Statements">Driver Daily Statements</button>
+
+
+                               </center>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
+
+                </span>
+                    </td>
+                    <td>
+                         <span t-attf-class="#{kanban_color(333)} oe_kanban_card ">
+                             <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px;">
+                    <div class="o_kanban_card_content" style="position:absolute;left:120px;">
+                      <div >
+                          <div class="">
+                              <center>
+                                 <span style="font-size:27px;">
+                                  Yesterdays Purchase
+                                  </span>
+                              </center>
+                           </div>
+                           <div>
+                              <center>
+                                <span style="font-size:15px;">
+                                  Total Purchases : <field name="total_site_purchases_yesterday"/>
+                                </span>
+                              </center>
+                          </div>
+                          <div>
+                              <center>
+                                <span style="font-size:15px;">
+                                  Total purchases to Approve : <field name="site_purchases_yesterday"/>
+                               </span>
+                              </center>
+                          </div>
+                          <div>
+                              <center>
+                                <span style="font-size:15px;">
+                                  Total purchase Approved : <field name="total_site_purchase_approved_yesterday"/>
+                               </span>
+                              </center>
+                          </div>
+                            <div>
+                            <center>
+                               <button class="btn btn-primary" type="object" name="dashboard_purchase_prev" string="Site Purchases Yesterday">Site Purchases Yesterday</button>
+
+
+                               </center>
+                                </div>
+                            </div>
+                        </div>
+                             </div>
+                </span>
+                    </td>
+                    <td>
+                        <span t-attf-class="#{kanban_color(155)} oe_kanban_card ">
+
+                <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px">
+                  <div class="o_kanban_card_content" style="position:absolute;top:70px;left:125px;" align="center">
+                    <center>
+                        <table>
+                            <tr>
+                                 <center>
+                                 <span style="font-size:27px;">
+                                   Todays Manufacuring Orders
+                                  </span>
+                              </center>
+
+                            </tr>
+                            <tr style="height:70%;">
+                                 <center>
+                                <field name="todays_manufacturing_orders"/>
+                              </center>
+                            </tr>
+                            <tr>
+                                <div >
+                            <center>
+                                <button class="btn btn-primary" type="object" name="dashboard_mo_orders" string="Manufacturing Orders">Manufacturing Orders</button>
+
+                               </center>
+                                </div>
+                            </tr>
+                        </table>
+
+                    </center>
+
+
+
+
+                        </div>
+
+                   </div>
+
+
+             </span>
+                    </td>
+                  </tr>
+                 <tr>
+                    <td>
+                      <span t-attf-class="#{kanban_color(155)} oe_kanban_card ">
+                      <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px">
+                        <div class="o_kanban_card_content" style="position:absolute;top:70px;left:125px;" align="center">
+                        <center>
+                            <table>
+                              <tr>
+                                 <center>
+                                    <span style="font-size:27px;">
+                                   Total Approved Tenders
+                                    </span>
+                                  </center>
+
+                              </tr>
+                              <tr style="height:70%;">
+                                <center>
+                                  <field name="todays_approved_tenders"/>
+                                </center>
+                              </tr>
+                            <tr>
+                                <div>
+                                  <center>
+                                    <button class="btn btn-primary" type="object" name="dashboard_approved_tenders" string="Approved Tenders">Approved Tenders</button>
+
+                                  </center>
+                                </div>
+                            </tr>
+                            </table>
+
+                        </center>
+
+
+
+
+                        </div>
+
+                   </div>
+
+
+                    </span>
+                    </td>
+                    <td>
+                      <span t-attf-class="#{kanban_color(155)} oe_kanban_card ">
+                    <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px">
+                  <div class="o_kanban_card_content" style="position:absolute;top:70px;left:125px;" align="center">
+                    <center>
+                        <table>
+                            <tr>
+                                 <center>
+                                 <span style="font-size:27px;">
+                                   Todays DPR Planning
+                                  </span>
+                              </center>
+
+                            </tr>
+                            <tr style="height:70%;">
+                                 <center>
+                                <!-- <field name="todays_approved_tenders"/> -->
+                              </center>
+                            </tr>
+                            <tr>
+                                <div >
+                            <center>
+                                <button class="btn btn-primary" type="object" name="dashboard_dpr_status" string="Todays DPR Planning">Todays DPR Planning</button>
+
+                               </center>
+                                </div>
+                            </tr>
+                        </table>
+
+                    </center>
+
+
+
+
+                        </div>
+
+                   </div>
+
+
+             </span>
+                    </td>
+
+                         <td>
+                      <span t-attf-class="#{kanban_color(155)} oe_kanban_card ">
+                    <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px">
+                  <div class="o_kanban_card_content" style="position:absolute;top:70px;left:125px;" align="center">
+                    <center>
+                        <table>
+                            <tr>
+                                 <center>
+                                 <span style="font-size:27px;">
+                                   Todays DPR Survey
+                                  </span>
+                              </center>
+
+                            </tr>
+                            <tr style="height:70%;">
+                                 <center>
+                                <!-- <field name="todays_approved_tenders"/> -->
+                              </center>
+                            </tr>
+                            <tr>
+                                <div >
+                            <center>
+                                <button class="btn btn-primary" type="object" name="dashboard_dpr_status_survey" string="Todays DPR Survey">Todays DPR Survey</button>
+
+                               </center>
+                                </div>
+                            </tr>
+                        </table>
+
+                    </center>
+
+
+
+
+                        </div>
+
+                   </div>
+
+
+             </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <span t-attf-class="#{kanban_color(155)} oe_kanban_card ">
+                    <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px">
+                  <div class="o_kanban_card_content" style="position:absolute;top:70px;left:125px;" align="center">
+                    <center>
+                        <table>
+                            <tr>
+                                 <center>
+                                 <span style="font-size:27px;">
+                                   Todays Purchase Orders
+                                  </span>
+                              </center>
+
+                            </tr>
+                            <tr style="height:70%;">
+                                 <center>
+                                <field name="total_purchase_order"/>
+                              </center>
+                            </tr>
+                            <tr>
+                                <div >
+                            <center>
+                                <button class="btn btn-primary" type="object" name="dashboard_purchase_order_today" string="Todays Purchase Orders">Purchase Orders</button>
+
+                               </center>
+                                </div>
+                            </tr>
+                        </table>
+
+                    </center>
+
+
+
+
+                        </div>
+
+                   </div>
+
+
+             </span>
+                    </td>
+
+                    <td>
+                      <span t-attf-class="#{kanban_color(155)} oe_kanban_card ">
+                    <div class="o_project_kanban_main" style="font-size:27px;width:400px;height:250px">
+                  <div class="o_kanban_card_content" style="position:absolute;top:70px;left:125px;" align="center">
+                    <center>
+                        <table>
+                            <tr>
+                                 <center>
+                                 <span style="font-size:27px;">
+                                   Todays Purchase Comparison
+                                  </span>
+                              </center>
+
+                            </tr>
+                            <tr style="height:70%;">
+                                 <center>
+                                <field name="todays_purchase_comparison"/>
+                              </center>
+                            </tr>
+                            <tr>
+                                <div >
+                            <center>
+                                <button class="btn btn-primary" type="object" name="dashboard_purchase_comparison" string="Purchase Comparison">Purchase Comparison</button>
+
+                               </center>
+                                </div>
+                            </tr>
+                        </table>
+
+                    </center>
+
+
+
+
+                        </div>
+
+                   </div>
+
+
+             </span>
+                    </td>
+                  </tr>
+
+
+            </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              </t>
+        </templates>
+    </kanban>
+  </field>
+</record>
+
+      <record id="channel_dashboard_form_view" model="ir.ui.view">
+      <field name="name">custom.sales.dashboard.form.view</field>
+      <field name="model">hr.dashboard</field>
+     <field name="arch" type="xml">
+           <form>
+               <field name="color"/>
+               <field name="name"/>
+          </form>
+     </field>
+ </record>
+
+
+
+<record id="custom_hr_dashboard_action" model="ir.actions.act_window">
+    <field name="name">Dashboard</field>
+    <field name="res_model">hr.dashboard</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="view_type">form</field>
+    <field name="context">{}</field>
+    <field name="view_mode">kanban,form</field>
+</record>
+
+        <menuitem id="menu_hr_config" parent= "hr.menu_hr_reporting" sequence= "1" name= "DashBoard" action="custom_hr_dashboard_action"/>
+         <menuitem id="base.next_id_64" name="Sales" parent="base.menu_reporting" sequence="1" groups="hiworth_dashboard.group_hiworth_dashboard" />
+        <menuitem id="hr.menu_hr_reporting" parent="base.menu_reporting" name="My DashBoard" sequence="40"/>
+        <menuitem id="account.menu_finance_reporting" name="Accounting" parent="base.menu_reporting" sequence="35" groups="hiworth_dashboard.group_hiworth_dashboard"/>
+        <menuitem parent="base.menu_reporting" id="event.menu_reporting_events" sequence="30" groups="hiworth_dashboard.group_hiworth_dashboard" name="Events"/>
+        <menuitem name="Fleet" parent="base.menu_reporting" id="fleet.menu_fleet_reporting" sequence="50" groups="hiworth_dashboard.group_hiworth_dashboard"/>
+
+
+    </data>
+</openerp>

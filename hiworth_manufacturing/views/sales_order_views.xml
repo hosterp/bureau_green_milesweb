@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+
+		<record id="view_inherit_form_sale_order" model="ir.ui.view">
+			<field name="name">sale.order.inherit.form.view</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//sheet/group/group[2]/field[@name='client_order_ref']" position="after">
+					<field name="company" />
+					<field name="bank_details" />
+				</xpath>
+				<xpath expr="//sheet" position="after">
+					<sheet>
+					<group>
+						<field name="t_c_1" />
+						<field name="t_c_2" />
+						<field name="t_c_3" />
+						<field name ="days_within" attrs ="{'invisible':[('t_c_3','=',False)]}"/>
+						<field name="t_c_4" />
+						<field name="t_c_5" />
+						<field name="t_c_6" />
+						<field name ="laying_charge" attrs ="{'invisible':[('t_c_6','=',False)]}"/>
+						<field name="t_c_7" />
+						<field name="t_c_8" />
+						<field name="t_c_9" />
+						<field name="t_c_10" />
+						<field name="t_c_11" />
+					</group>
+					</sheet>
+				</xpath>
+				<xpath expr ="//sheet/notebook/page/group" postition= "after">
+					<field name="sale_advance" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+				<div style="font-size: 20px;">
+					<label for="balance_amount"/>
+				</div>
+					<field name="balance_amount"  nolabel="1" widget='monetary' options="{'currency_field': 'currency_id'}"  attrs="{'readonly':True}" style="font-size: 20px;" />
+				
+				</xpath>
+				<xpath expr ="//sheet/group/group[1]/field[@name='partner_id']" position= "after">
+					<field name="customer_identify" />
+					<field name="show_visit_date" />
+					<field name="supply_date" />
+				</xpath>
+
+
+
+			</field>
+		</record>
+		<record
+			id="view_partner_form_contractor"
+			model="ir.ui.view">
+			<field name="name">res.partner.form.contractor</field>
+			<field name="model">res.partner</field>
+			<field eval="1" name="priority" />
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//sheet/group/group[2]/field[@name ='email']"
+					position="after">
+					<field name="gst_no" invisible="1"/>
+				</xpath>
+			</field>
+		</record>
+		<record id="product_template_color_design" model="ir.ui.view">
+			<field name="name">product.template.new_change2</field>
+			<field name="model">product.template</field>
+			<field name="inherit_id" ref="product.product_template_only_form_view"/>
+			<field name="arch" type="xml">
+				<xpath expr="//sheet/notebook/page[1]/group[1]/group[1]/field[@name = 'uom_id']" position="after">
+					<field name="pro_color" />
+					<field name="pro_design" /> 	
+				</xpath>
+				
+			</field>
+		</record>
+	</data>
+</openerp>

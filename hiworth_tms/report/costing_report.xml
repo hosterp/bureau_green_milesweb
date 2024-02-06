@@ -1,0 +1,133 @@
+
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="fleet_vehicle_costing_wizard">
+			<field name="name">vehicle.costing.wizard</field>
+			<field name="model">vehicle.costing.wizard</field>
+			<field name="arch" type="xml">
+				<form string="Costing Report">
+					<group col="4">
+						<field name="date_from" required="1"/>
+						<field name="date_to" required="1"/>
+					</group>
+
+					<footer>
+						<button name="action_vehicle_costing" type="object" string="Print" class="oe_highlight" />
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="action_fleet_vehicle_costing_wizard" model="ir.actions.act_window">
+					<field name="name">Vehicles Complete Expense Report</field>
+					<field name="type">ir.actions.act_window</field>
+					<field name="res_model">vehicle.costing.wizard</field>
+					<field name="target">new</field>
+					<field name="view_type">form</field>
+					<field name="view_mode">form</field>
+		</record>
+`		<menuitem id="fleet_vehicle_costing_report"
+				   parent="hiworth_construction.fleet_report"
+				   name="Costing Report" sequence="41"
+				   action="action_fleet_vehicle_costing_wizard"/>
+
+   		<report id="report_fleet_vehicle_costing_report"
+				string="Costing Report"
+				model="vehicle.costing.wizard"
+				report_type="qweb-pdf"
+				name="hiworth_tms.report_fleet_vehicle_costing_template" />
+
+   		<template id="report_fleet_vehicle_costing_template">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="report.external_layout">
+						<div class="page">
+							<center><b><h1>TTK Construction</h1></b></center>
+							<center><b><h3>All Vehicles Costing Report</h3></b></center>
+							<span><center><b><h4> <span t-field="o.date_from"/> To <span t-field="o.date_to"/></h4></b></center></span>
+							<t t-set="sl_no" t-value="1" />
+							<t t-set="total" t-value="0" />
+
+							<div>
+								<center>
+
+									<table class="table table-bordered">
+										<thead>
+
+											<tr>
+												<td style="width: 10%;" align="center"><h4><b>SL.No</b></h4></td>
+												<td style="width: 30%; " align="center"><h4><b>Owner Name</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Vehicle Model</b></h4></td>
+												<td style="width: 30%; " align="center"><h4><b>Type of Machinery</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Register No</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>No of Days Worked</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Total Amount of Fuel</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Total Maintenance Cost</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Total Driver Expense</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Total Other Expense</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Total Expense</b></h4></td>
+											</tr>
+										</thead>
+										<tbody>
+											<t t-foreach="docs.get_details()" t-as="line">
+												<tr >
+													<td >
+														<span t-esc="sl_no" />
+														<t t-set="sl_no" t-value="sl_no+1" />
+													</td>
+
+													<td >
+														<span t-esc="line['owner_name'] or N/A"/>
+													</td>
+													<td >
+														<span t-esc="line['model']"/>
+													</td>
+													<td >
+														<span t-esc="line['type']"/>
+													</td>
+													<td >
+														<span t-esc="line['no']"/>
+													</td>
+													<td >
+														<span t-esc="line['no_of_days']"/>
+													</td>
+													<td >
+														<span t-esc="line['maintenance_cost']"/>
+													</td>
+													<td >
+														<span t-esc="line['fuel_cost']"/>
+													</td>
+													<td >
+														<span t-esc="line['driver_expense']"/>
+													</td>
+													<td >
+														<span t-esc="line['other_expense']"/>
+													</td>
+													<td >
+														<span t-esc="line['total_amt']"/>
+													</td>
+													<t t-set="total" t-value="total+line['total_amt']" />
+												</tr>
+
+											</t>
+										</tbody>
+
+									</table>
+									<t>
+										<h3 class="text-right">Total Expense : <t t-esc="total"/> </h3>
+									</t>
+								</center>
+							</div>
+
+						</div>
+					</t>
+				</t>
+			</t>
+		</template>
+
+
+
+    </data>
+</openerp>

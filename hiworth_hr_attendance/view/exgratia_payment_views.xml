@@ -1,0 +1,177 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+<!--        <record id="exgratia_payment_form" model="ir.ui.view">-->
+<!--            <field name="name">Exgratia Payment</field>-->
+<!--            <field name="model">exgratia.payment</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <form string="Exgratia" create="false">-->
+<!--                	<header>-->
+<!--&lt;!&ndash;                        <button name="action_payment" string="Payment" states='draft,new' type="object" class="oe_highlight"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                		 <button name="action_adjust_leave" states='draft' string="Adjusted to Leave" type="object" class="oe_highlight" attrs="{'invisible':[('lop','=',0)]}"/>&ndash;&gt;-->
+<!--                         <button name="action_cancel" states='draft,new' string="Cancel" type="object" class="oe_highlight"/>-->
+<!--                        <button name="action_set_draft" string="Set to New" states='cancel' type="object" class="oe_highlight"/>-->
+<!--                        <field name="state" widget="statusbar"/>-->
+
+<!--                	</header>-->
+<!--                	<sheet>-->
+<!--                	<group col="4">-->
+<!--                        <field name="employee_id" options="{'no_create':True}" attrs="{'readonly':[('state','in',['paid','cancel','new'])]}"/>-->
+<!--                        <field name="date" attrs="{'readonly':[('state','in',['paid','cancel','new'])]}"/>-->
+<!--&lt;!&ndash;                        <field name="payment_amt" attrs="{'readonly':[('state','in',['paid','cancel'])]}"/>&ndash;&gt;-->
+
+<!--                    </group>-->
+<!--                        <group col="4">-->
+<!--                            &lt;!&ndash;                            <field name="estimated"/>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                            <field name="lop" attrs="{'invisible':[('state','=','paid')],'readonly':[('state','in',['paid','cancel'])]}"/>&ndash;&gt;-->
+<!--                            <field name="hours" attrs="{'readonly':[('state','in',['paid','cancel','new'])]}"/>-->
+<!--                            <field name="remarks" attrs="{'readonly':[('state','in',['paid','cancel'])]}"/>-->
+<!--                        </group>-->
+<!--&lt;!&ndash;                        <group col="4">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="exgratia_redeem" attrs="{'readonly':[('state','in',['paid','cancel'])]}"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="leave_type_id" options="{'no_create':True}" attrs="{'readonly':[('state','in',['paid','cancel'])]}"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="journal_id" options="{'no_create':True}" attrs="{'readonly':[('state','in',['paid','cancel'])]}"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="debit_account_id" options="{'no_create':True}" attrs="{'readonly':[('state','in',['paid','cancel'])]}"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            <field name="credit_account_id" options="{'no_create':True}" attrs="{'readonly':[('state','in',['paid','cancel'])]}"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </group>&ndash;&gt;-->
+<!--                    </sheet>-->
+
+<!--                </form>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <record id="exgratia_payment_form" model="ir.ui.view">
+            <field name="name">Exgratia Payment</field>
+            <field name="model">exgratia.payment</field>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+                <form string="Exgratia" create="false">
+                	<header>
+                         <button name="action_cancel" states='draft,new' string="Cancel" type="object" class="oe_highlight"/>
+                        <button name="action_set_draft" string="Set to New" states='cancel' type="object" class="oe_highlight"/>
+                        <button name="action_request_method" string="Request" states='draft' type="object" class="oe_highlight"/>
+                        <button name="action_approve" string="Approved" states='requested' type="object" class="oe_highlight"/>
+                        <field name="state" widget="statusbar"/>
+
+                	</header>
+                	<sheet>
+                	<group col="4">
+                        <field name="employee_id" options="{'no_create':True}" attrs="{'readonly':[('state','in',['paid','cancel','new'])]}"/>
+                        <field name="date" attrs="{'readonly':[('state','in',['paid','cancel','new'])]}"/>
+                        <field name="hours" required="1" attrs="{'readonly':[('state','in',['paid','cancel','new'])]}"/>
+                    </group>
+                        <group col="4">
+                            <field name="payment_amt" required="1" attrs="{'readonly':[('state','in',['paid','cancel','new'])]}"/>
+                            <field name="total_amt" required="1" attrs="{'readonly':[('state','in',['paid','cancel','new'])]}"/>
+                            <field name="remarks" attrs="{'readonly':[('state','in',['paid','cancel'])]}"/>
+                        </group>
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="exgratia_payment_form_holiday" model="ir.ui.view">
+            <field name="name">Exgratia Payment</field>
+            <field name="model">exgratia.payment</field>
+            <field name="arch" type="xml">
+                <form string="Exgratia" create="false">
+                	<header>
+                         <button name="action_cancel" states='draft,new' string="Cancel" type="object" class="oe_highlight"/>
+                        <button name="action_set_draft" string="Set to New" states='cancel' type="object" class="oe_highlight"/>
+                        <button name="action_request_method" string="Request" states='draft' type="object" class="oe_highlight"/>
+                        <button name="action_approve" string="Approved" states='requested' type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar"/>
+
+                	</header>
+                	<sheet>
+                	<group col="4">
+                        <field name="employee_id" options="{'no_create':True}" attrs="{'readonly':[('state','in',['paid','cancel','new'])]}"/>
+                        <field name="date" attrs="{'readonly':[('state','in',['paid','cancel','new'])]}"/>
+
+                    </group>
+                        <group col="4">
+                            <field name="attendance" required="1" attrs="{'readonly':[('state','in',['paid','cancel','new'])]}"/>
+                            <field name="remarks" attrs="{'readonly':[('state','in',['paid','cancel'])]}"/>
+                        </group>
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="exgratia_payment_tree_holiday" model="ir.ui.view">
+            <field name="name">Exgratia Payment</field>
+            <field name="model">exgratia.payment</field>
+            <field name="arch" type="xml">
+                <tree>
+                     <field name="employee_id" options="{'no_create':True}"/>
+                        <field name="date"/>
+                    <field name="attendance"/>
+                     <field name="remarks"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="exgratia_payment_tree" model="ir.ui.view">
+            <field name="name">Exgratia Payment</field>
+            <field name="model">exgratia.payment</field>
+            <field name="arch" type="xml">
+                <tree>
+                     <field name="employee_id" options="{'no_create':True}"/>
+                        <field name="date"/>
+                        <field name="hours"/>
+                     <field name="remarks"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="exgratia_payment_action" model="ir.actions.act_window">
+            <field name="name">Exgratia Payment</field>
+            <field name="res_model">exgratia.payment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="target">current</field>
+            <field name="view_id" ref="exgratia_payment_tree" />
+            <field name="domain">[('hours','!=',0.0)]</field>
+        </record>
+
+        <record id="action_holiday_working_days" model="ir.actions.act_window">
+            <field name="name">Exgratia Payment</field>
+            <field name="res_model">exgratia.payment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="target">current</field>
+            <field name="domain">[('attendance','in',['full','half'])]</field>
+        </record>
+
+        <record id="action_holiday_working_hiworth_tree_view" model="ir.actions.act_window.view">
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="exgratia_payment_tree"/>
+            <field name="act_window_id" ref="action_holiday_working_days"/>
+        </record>
+        <record id="action_holiday_working_hiworth_form_view" model="ir.actions.act_window.view">
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="exgratia_payment_form_holiday"/>
+            <field name="act_window_id" ref="action_holiday_working_days"/>
+        </record>
+
+        <menuitem name="Overtime"
+                  id="menu_exgratia"
+                  parent="hiworth_hr_attendance.menu_attendance"
+                  sequence="3"
+                  action="exgratia_payment_action"
+                  groups="base.group_erp_manager,group_hr"/>
+
+        <menuitem name="Holiday/Sunday attendance"
+                  id="menu_exgratia_holiday_id"
+                  parent="hiworth_hr_attendance.menu_attendance"
+                  sequence="4"
+                  action="action_holiday_working_days"
+                  groups="base.group_erp_manager,group_hr"/>
+    </data>
+</openerp>

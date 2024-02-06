@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <record id="tree_document_collection_id" model="ir.ui.view">
+            <field name="name">document.collection</field>
+            <field name="model">document.collection</field>
+            <field name="arch" type="xml">
+                <tree string="Documents Details">
+                    <field name="name"/>
+                    <field name="project"/>
+                </tree>
+            </field>
+        </record>
+        <record id="form_document_collection_id" model="ir.ui.view">
+			<field name="name">document.collection</field>
+			<field name="model">document.collection</field>
+			<field name="arch" type="xml">
+				<form string="Documents Details">
+                    <sheet>
+					<h1><center>Documents Details</center></h1><br></br><br></br>
+					<group col="2">
+						<group>
+							<field name="name"/>
+						</group>
+						<group>
+                            <field name="project"/>
+						</group>
+					</group>
+                        <notebook>
+                            <page String="Mechanical">
+                                <field name ="mech_docs_ids">
+                                    <tree editable="bottom">
+                                        <field name="work_description"/>
+                                        <field name="activity"/>
+                                        <field name="man_power"/>
+                                        <field name="Duration"/>
+                                        <field name="cost"/>
+<!--                                        <field name="site_engineer"/>-->
+                                    </tree>
+                                </field>
+                            </page>
+                            <page String="Electrical">
+                                <field name ="elect_docs_ids">
+                                    <tree editable="bottom">
+                                        <field name="work_description"/>
+                                        <field name="activity"/>
+                                        <field name="man_power"/>
+                                        <field name="Duration"/>
+                                        <field name="cost"/>
+<!--                                        <field name="site_engineer"/>-->
+                                    </tree>
+                                </field>
+                            </page>
+                             <page String="Plumbing">
+                                <field name ="plum_docs_ids">
+                                    <tree editable="bottom">
+                                        <field name="work_description"/>
+                                        <field name="activity"/>
+                                        <field name="man_power"/>
+                                        <field name="Duration"/>
+                                        <field name="cost"/>
+<!--                                        <field name="site_engineer"/>-->
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+				</form>
+			</field>
+		</record>
+        <record model="ir.actions.act_window" id="action_document_collection_id">
+			<field name="name">Document Collection</field>
+			<field name="res_model">document.collection</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,kanban</field>
+		</record>
+        <menuitem action="action_document_collection_id" id="document_id_child" name="Documents Collected" parent="site_visit_parent_id" sequence="2"/>
+    </data>
+</openerp>

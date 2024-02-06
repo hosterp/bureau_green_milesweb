@@ -1,0 +1,157 @@
+<openerp>
+	<data>
+		<record id="report_paperformat_bg" model="report.paperformat">
+			<field name="name">Landscape</field>
+			<field name="default" eval="True" />
+			<field name="format">A4</field>
+			<field name="orientation">Landscape</field>
+			<field name="margin_top">5</field>
+			<field name="margin_bottom">0</field>
+			<field name="margin_left">15</field>
+			<field name="margin_right">15</field>
+			<field name="header_line" eval="False" />
+			<field name="header_spacing">12</field>
+			<field name="dpi">0</field>
+		</record>
+        <record model="ir.ui.view" id="report_costing_progress_wizard_id">
+			<field name="name">costing.progress.reports</field>
+			<field name="model">costing.progress.reports</field>
+			<field name="arch" type="xml">
+				<form string="Project Costing-Progress Report">
+					<group col="3">
+						<group>
+							<field name="date_from"/>
+						</group>
+						<group>
+							<field name="date_to"/>
+						</group>
+						<group>
+							<field name="project_id"/>
+						</group>
+                    </group>
+					<footer>
+						<button name="action_costing_progress_view" type="object" string="View" class="oe_highlight" />
+						<button name="action_costing_progress" type="object" string="Print" class="oe_highlight" />
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+<report id="report_costing_progress_id" string="Recurring Expense Report"
+			model="costing.progress.reports" report_type="qweb-pdf"
+			name="bg_office_management.report_costing_progress_template"/>
+				<record id="bg_office_management.report_costing_progress_id" model="ir.actions.report.xml">
+    <field name="paperformat_id" ref="bg_office_management.report_paperformat_bg"/>
+</record>
+<!--	.....TEMPLATE..............................................................................-->
+		<template id="report_costing_progress_template">
+			<style>
+             table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+             th, td {
+				padding: 17px;
+				text-align: left;
+				}
+           </style>
+
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="report.external_layout">
+						<div class="page">
+
+							<center><b><h1>Project Costing And Progress Report By Commercial</h1></b></center><br/>
+
+	                    <span><center><b><h4> <span t-field="o.date_from"/> To <span t-field="o.date_to"/></h4></b></center></span>
+							<t t-set="sl_no" t-value="1" />
+							<t t-set="subtotal" t-value="0" />
+
+							<div>
+								<center>
+
+									<table>
+										<thead>
+											<tr>
+
+
+                                                <td colspan="13"><b>Project Summary</b></td>
+										    </tr>
+
+											<tr>
+												<td style="width: 4%;" align="center"><h4><b><center>S# No</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Project</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Date</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Project Value</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Project_Duration (in months)</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Project_Estimated Man_Hrs</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Actual Man_hrs</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>% Of Manhours Consumed</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Estimated material Cost</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Purchased Material Cost</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>% material purchased</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>% of progress certificate</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>% of productivity</center></b></h4></td>
+											</tr>
+										</thead>
+										<tbody>
+											<t t-foreach="docs.get_details()" t-as="line">
+												<tr >
+													<td >
+														<center><span t-esc="sl_no" />
+															<t t-set="sl_no" t-value="sl_no+1" /></center>
+													</td>
+													<td>
+														<center><span t-esc="line['project_id']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['date']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['project_value']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['duration']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['e_man_hrs']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['a_man_hrs']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['perce_man_hrs_consumed']"/></center>
+													</td>
+													<td><center><span t-esc="line['estimated_mate_cost']"/></center></td>
+													<td><center><span t-esc="line['purchase_mat_cost']"/></center></td>
+													<td><center><span t-esc="line['per_mat_purchased']"/></center></td>
+													<td><center><span t-esc="line['per_progress']"/></center></td>
+													<td><center><span t-esc="line['per_productivity']"/></center></td>
+												</tr>
+											</t>
+										</tbody>
+									</table>
+								</center>
+							</div>
+						</div>
+					</t>
+				</t>
+			</t>
+</template>
+<!--_____________________________________________________________________________________________________________________-->
+
+		<record id="action_costing_commercial_report" model="ir.actions.act_window">
+					<field name="name">Print Costing-Progress Report</field>
+					<field name="type">ir.actions.act_window</field>
+					<field name="res_model">costing.progress.reports</field>
+					<field name="target">new</field>
+					<field name="view_type">form</field>
+					<field name="view_mode">form</field>
+		</record>
+
+		<menuitem action="action_costing_commercial_report" id="menu_progress_costing_reports_child"
+                              name="Project Costing-Progress Report"
+                              sequence="4" parent="menu_recurring_expense_reports"/>
+
+    </data>
+</openerp>

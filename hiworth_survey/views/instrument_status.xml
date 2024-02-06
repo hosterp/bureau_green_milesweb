@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+
+        <record id="instrument_status_tree_id" model="ir.ui.view">
+            <field name="name">Instrument Status Tree</field>
+            <field name="model">instrument.status</field>
+            <field name="arch" type="xml">
+                <tree editable="top" create="true" string="Instrument Status">
+                    <field name="instrument_no"/>
+                    <field name="calibrated_on"/>
+                    <field name="duration"/>
+                    <field name="calibrated_due"/>
+                    <field name="state"/>
+                    <field name="location_id"/>
+                    <field name="attach"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="instrument_status_form_id" model="ir.ui.view">
+            <field name="name">Instrument Status Form</field>
+            <field name="model">instrument.status</field>
+            <field name="arch" type="xml">
+                <form string="Instrument Status">
+                    <header>
+						<button name="done" string="Done" type="object" class="oe_highlight" states="not"/>
+						<field name="state" widget="statusbar"/>
+					</header>
+                    <group>
+                        <group>
+                            <field name="instrument_no"/>
+                            <field name="calibrated_on"/>
+                            <field name="duration"/>
+                        </group>
+                        <group>
+                            <field name="calibrated_due"/>
+                            <field name="status"/>
+                            <field name="location_id"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_instrument_status" model="ir.actions.act_window">
+            <field name="name">Instrument Status</field>
+            <field name="res_model">instrument.status</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="action_instrument_status" name="Instrument Status" id="menu_instrument_status" sequence="6" parent="hiworth_survey.menu_hiworth_survey_department"/>
+
+    </data>
+</openerp>

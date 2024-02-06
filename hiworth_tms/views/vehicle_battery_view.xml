@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+         <record model='ir.ui.view' id='fleet_vehicle_battery_entry'>
+            <field name="name">fleet.vehicle.battery.entry.form</field>
+            <field name="model">vehicle.battery</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group col="4">
+                            <field name="name"/>
+                            <field name="vehicle_id"/>
+                            <field name="warranty_period_from"/>
+                            <field name="warranty_to"/>
+                            <field name="extended_warranty_period_from"/>
+                            <field name="extended_warranty_to"/>
+                            <field name="supplier_id"/>
+                            <field name="amount"/>
+                            <field name="active"/>
+                            <field name="disposed_date"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+         </record>
+         <record model='ir.ui.view' id='fleet_vehicle_battery_entry_tree'>
+            <field name="name">fleet.vehicle.battery.entry.form</field>
+            <field name="model">vehicle.battery</field>
+            <field name="arch" type="xml">
+                <tree>
+
+                            <field name="name"/>
+                            <field name="vehicle_id"/>
+                            <field name="warranty_period_from"/>
+                            <field name="warranty_to"/>
+                            <field name="extended_warranty_period_from"/>
+                            <field name="extended_warranty_to"/>
+                            <field name="supplier_id"/>
+                            <field name="amount"/>
+                      <field name="disposed_date"/>
+
+                </tree>
+            </field>
+         </record>
+
+          <record model='ir.actions.act_window' id='fleet_vehicle_battery_action'>
+            <field name="name">Battery Entry</field>
+            <field name="res_model">vehicle.battery</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+
+        <menuitem id="fleet_vehicle_battery_menu_process" name="Battery Process"  parent="fleet.menu_root" sequence="4" />
+         <menuitem id="fleet_vehicle_bateery_menu" name="Battery Entry" action="fleet_vehicle_battery_action" parent="fleet_vehicle_battery_menu_process"  />
+
+
+    </data>
+</openerp>

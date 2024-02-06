@@ -1,0 +1,109 @@
+
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="fleet_vehicle_diesel_wizard">
+			<field name="name">vehicle.diesel.wizard</field>
+			<field name="model">vehicle.diesel.wizard</field>
+			<field name="arch" type="xml">
+				<form string="All Vehicle Diesel Information-Expense Report">
+					<group col="4">
+                        <h1>This Wizard Will Print All Vehicles Total Expense,Amount of Fuel and Running KM.</h1>
+<!--						<field name="date_from" required="1"/>-->
+<!--						<field name="date_to" required="1"/>-->
+					</group>
+
+					<footer>
+						<button name="action_vehicle_diesel_open_window" type="object" string="Print" class="oe_highlight" />
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="action_fleet_vehicle_diesel_wizard" model="ir.actions.act_window">
+					<field name="name">Print All Vehicle Diesel Information-Expense Report</field>
+					<field name="type">ir.actions.act_window</field>
+					<field name="res_model">vehicle.diesel.wizard</field>
+					<field name="target">new</field>
+					<field name="view_type">form</field>
+					<field name="view_mode">form</field>
+		</record>
+<menuitem id="fleet_vehicle_diesel_report" parent="hiworth_construction.fleet_report" name="All Vehicle Diesel Info Report" sequence="39" action="action_fleet_vehicle_diesel_wizard"/>
+
+   <report id="report_fleet_vehicle_diesel_report" string="Diesel Information"
+			model="vehicle.diesel.wizard" report_type="qweb-pdf"
+			name="hiworth_tms.report_fleet_vehicle_diesel_template" />
+
+   <template id="report_fleet_vehicle_diesel_template">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="report.external_layout">
+						<div class="page">
+							<center><b><h1>All Vehicle Fuel Information Report</h1></b></center>
+
+							<div>
+								<center>
+
+									<table class="table table-bordered">
+										<thead>
+
+											<tr>
+												<td style="width: 10%;" align="center"><h4><b>S.No</b></h4></td>
+<!--												<td style="width: 10%;" align="center"><h4><b>Date</b></h4></td>-->
+												<td style="width: 10%;" align="center"><h4><b>Vehicle Number</b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b>Vehicle Model</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Total Fuel</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Total Amount</b></h4></td>
+												<td style="width: 20%; " align="center"><h4><b>Total KM</b></h4></td>
+											</tr>
+										</thead>
+										<tbody>
+											<t t-foreach="docs.get_details()" t-as="line">
+												<tr >
+<!--													<td >-->
+<!--														<span t-esc="sl_no" />-->
+<!--														<t t-set="sl_no" t-value="(sl_no+1)" />-->
+<!--													</td>-->
+<!--													<td >-->
+<!--														<span t-esc="line['date']"/>-->
+<!--													</td>-->
+
+													<td >
+														<span t-esc="sl_no" />
+														<t t-set="sl_no" t-value="sl_no+1" />
+													</td>
+													<td >
+														<span t-esc="line['vehicle_id']"/>
+													</td>
+													<td >
+														<span t-esc="line['vehicle_model']"/>
+													</td>
+													<td >
+														<span t-esc="line['diesel_ltr']"/>
+													</td>
+													<td >
+														<span t-esc="line['diesel_price']"/>
+													</td>
+													<td >
+														<span t-esc="line['total_km']"/>
+													</td>
+
+												</tr>
+
+											</t>
+										</tbody>
+									</table>
+								</center>
+							</div>
+
+						</div>
+					</t>
+				</t>
+			</t>
+		</template>
+
+
+
+    </data>
+</openerp>

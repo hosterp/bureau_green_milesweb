@@ -1,0 +1,128 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <record id="employee_payroll_info_form_view" model="ir.ui.view">
+            <field name="name">Employee Payroll Info</field>
+            <field name="model">employee.payroll.info</field>
+            <field name="arch" type="xml">
+                <form string="Employee Payroll Info" create="false" >
+                    <group col="4">
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <group col="4">
+                        <field name="employee_id"/>
+                        <field name="basic"/>
+
+                         <field name="wages_due"/>
+                    </group>
+                     <group col="4">
+                        <field name="advance"/>
+                        <field name="staff_donation"/>
+                        <field name="mobile_over"/>
+                         <field name="pf_wages"/>
+
+                    </group>
+                      <group col="4">
+                           <field name="pf"/>
+
+                        <field name="esi"/>
+                        <field name="canteen"/>
+
+                    </group>
+                    <group col="4">
+                        <field name="pt_check"/>
+
+                    </group>
+                    <group col="4">
+                         <field name="pt_from_date" />
+                        <field name="pt_to_date"/>
+                    </group>
+                      <group col="4">
+
+                           <field name="professional_tax"/>
+                         <field name="labour_welfare_fund"/>
+                        <field name="fine"/>
+                        <field name="chitty"/>
+
+
+                    </group>
+                    <group col="4">
+                             <field name="welfare_society"/>
+                        <field name="tds"/>
+                    </group>
+                    <group>
+                        <field name="total_deduction"/>
+                        <field name="reimbursement"/>
+                        <field name="net_salary"/>
+                    </group>
+                </form>
+
+            </field>
+        </record>
+
+         <record id="employee_payroll_info_tree_view" model="ir.ui.view">
+            <field name="name">Employee Payroll Info Tree View</field>
+            <field name="model">employee.payroll.info</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                      <field name="employee_id"/>
+                    <field name="department"/>
+                    <field name="leave_cf"/>
+
+                        <field name="basic"/>
+
+
+                         <field name="wages_due"/>
+                    <field name="pf_wages"/>
+                    <field name="pf"/>
+
+                     <field name="esi"/>
+                     <field name="professional_tax"/>
+                         <field name="labour_welfare_fund"/>
+                     <field name="advance"/>
+                          <field name="canteen"/>
+                       <field name="welfare_society"/>
+                    <field name="mediclaim_insurance"/>
+                    <field name="lic_premium"/>
+                        <field name="staff_donation"/>
+                        <field name="chitty"/>
+                        <field name="mobile_over"/>
+
+
+
+                     <field name="fine"/>
+                      <field name="tds"/>
+
+                    <field name="total_deduction"/>
+                    <field name="reimbursement"/>
+                        <field name="net_salary"/>
+                </tree>
+            </field>
+         </record>
+
+          <record id="action_employee_payroll_info_view" model="ir.actions.act_window">
+            <field name="name">Employee Payroll Process</field>
+            <field name="res_model">employee.payroll.info</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+            <field name="target">current</field>
+            <field name="view_id" ref="employee_payroll_info_tree_view" />
+        </record>
+
+
+
+
+<!--        <menuitem name="Employee Payroll Process"-->
+<!--                  id="menu_employee_payroll_info"-->
+<!--                  parent="hr_payroll.menu_hr_root_payroll"-->
+<!--                  sequence="2"-->
+<!--                  action="action_employee_payroll_info_view"-->
+<!--                  groups="base.group_erp_manager,group_hr"/>-->
+
+
+
+    </data>
+</openerp>

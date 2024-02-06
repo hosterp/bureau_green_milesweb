@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+
+        <record id="pending_work_status_tree_id" model="ir.ui.view">
+            <field name="name">Pending Work Status Tree</field>
+            <field name="model">survey.pending.work.status</field>
+            <field name="arch" type="xml">
+                <tree editable="top" create="true" string="Pending Work Status">
+                    <field name="location_id"/>
+                    <field name="worklist_id"/>
+                    <field name="employee_id"/>
+                    <field name="remarks"/>
+                    <field name="is_site" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pending_work_status_form_id" model="ir.ui.view">
+            <field name="name">Pending Work Status Form</field>
+            <field name="model">survey.pending.work.status</field>
+            <field name="arch" type="xml">
+                <form string="Pending Work Status">
+                    <header>
+						<button name="done" string="Done" type="object" class="oe_highlight" states="not"/>
+						<field name="state" widget="statusbar"/>
+					</header>
+                    <group>
+                        <group>
+                            <field name="location_id"/>
+                            <field name="worklist_id"/>
+                        </group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="remarks"/>
+                            <field name="is_site" invisible="1"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <menuitem name="Project work status" id="menu_pending_work_status" sequence="8" parent="hiworth_survey.menu_hiworth_survey_department"/>
+
+        <record id="action_pending_work_status_site" model="ir.actions.act_window">
+            <field name="name">Project work status</field>
+            <field name="res_model">survey.pending.work.status</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('is_site', '=', True)]</field>
+            <field name="context">{'default_is_site': True}</field>
+        </record>
+
+        <menuitem action="action_pending_work_status_site" name="Site" id="menu_pending_work_status_site" sequence="1" parent="hiworth_survey.menu_pending_work_status"/>
+
+        <record id="action_pending_work_status_office" model="ir.actions.act_window">
+            <field name="name">Pending Work Status Office</field>
+            <field name="res_model">survey.pending.work.status</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('is_site', '=', False)]</field>
+            <field name="context">{'default_is_site': False}</field>
+        </record>
+
+        <menuitem action="action_pending_work_status_office" name="Office" id="menu_pending_work_status_office" sequence="2" parent="hiworth_survey.menu_pending_work_status"/>
+
+    </data>
+</openerp>

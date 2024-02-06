@@ -1,0 +1,42 @@
+<openerp>
+    <data>
+          <record model="ir.ui.view" id="statutory_payment_form_wizard">
+            <field name="name">statutory.payment.wizard.form</field>
+            <field name="model">statutory.payment.wizard</field>
+            <field name="arch" type="xml">
+               <form>
+                  <group>
+                            <field name="contract_company_id"/>
+                              <field name="date"/>
+                              <field name="journal_id"/>
+                              <field name="paid_amount"/>
+                              <field name="payable_amount"/>
+                      <field name="eps_account_id" options="{'no_create':True}" attrs="{'invisible':[('eps_account_id','=',False)]}"/>
+                        <field name="account_id" options="{'no_create':True}"/>
+                      <field name="admin_charge_account_id" options="{'no_create':True}" attrs="{'invisible':[('admin_charge_account_id','=',False)]}"/>
+
+
+                  </group>
+                   <footer>
+                       <button name="action_submit" string="Submit" type="object" class="oe_highlight"/>
+                       or
+                       <button string="Cancel" special="cancel" class="oe_highlight"/>
+                   </footer>
+               </form>
+            </field>
+        </record>
+
+         <record id="action_statutory_payment_form" model="ir.actions.act_window">
+            <field name="name">Payment</field>
+            <field name="res_model">statutory.payment.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+             <field name="target">new</field>
+            <field name="view_id" eval="statutory_payment_form_wizard"/>
+
+
+        </record>
+    </data>
+</openerp>

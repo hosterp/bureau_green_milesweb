@@ -1,0 +1,76 @@
+<openerp>
+    <data>
+          <record model="ir.ui.view" id="salary_rule_history_form_wizard">
+            <field name="name">salary.rule.history.form</field>
+            <field name="model">salary.rule.history.wizard</field>
+            <field name="arch" type="xml">
+               <form>
+
+                  <group>
+                      <field name="related_type" readonly="1"/>
+                      <field name="salary_rule_history_line_ids" attrs="{'invisible':[('related_type','not in',['pt'])]}">
+                          <tree editable="bottom">
+                              <field name="witheffct_date"/>
+                              <field name="range_from"/>
+                              <field name="range_to"/>
+                              <field name="tax_amount"/>
+
+                          </tree>
+                      </field>
+
+                      <field name="esi_salary_rule_history_line_ids" attrs="{'invisible':[('related_type','not in',['esi'])]}">
+                          <tree editable="bottom">
+                              <field name="celing_limit"/>
+                              <field name="witheffct_date"/>
+                              <field name="employee_ratio_esi"/>
+                              <field name="employer_esi"/>
+
+
+                          </tree>
+                      </field>
+                      <field name="pf_salary_rule_history_line_ids" attrs="{'invisible':[('related_type','not in',['pf'])]}">
+                          <tree editable="bottom">
+                              <field name="celing_limit"/>
+                              <field name="witheffct_date"/>
+                              <field name="epf_employee"/>
+                              <field name="epf_employer"/>
+                              <field name="eps_employer"/>
+
+                          </tree>
+                      </field>
+                       <field name="salary_rule_history_admin_line_ids" attrs="{'invisible':[('related_type','not in',['pf'])]}">
+                          <tree editable="bottom">
+                              <field name="witheffct_date"/>
+                              <field name="name"/>
+                              <field name="type"/>
+                              <field name="amount"/>
+
+
+                          </tree>
+                      </field>
+
+
+                  </group>
+                   <footer>
+                       <button name="action_submit" string="Submit" type="object" class="oe_highlight"/>
+                       or
+                       <button string="Cancel" special="cancel" class="oe_highlight"/>
+                   </footer>
+               </form>
+            </field>
+        </record>
+
+         <record id="action_salary_rule_history" model="ir.actions.act_window">
+            <field name="name">Salary Rule History Report</field>
+            <field name="res_model">salary.rule.history.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+             <field name="target">new</field>
+            <field name="view_id" eval="salary_rule_history_form_wizard"/>
+
+
+        </record>
+    </data>
+</openerp>

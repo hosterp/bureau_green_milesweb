@@ -1,0 +1,28 @@
+<openerp>
+    <data>
+         <record model="ir.ui.view" id="view_insurance_renewal_report_wizard_form">
+            <field name="name">insurance.renewal.report.wizard.form</field>
+            <field name="model">insurance.renewal.wizard</field>
+            <field name="arch" type="xml">
+               <form>
+                   <p>Are you sure to Confirm?</p>
+                   <group>
+                       <field name="employee_insurance_ids" widget="many2many_tags"/>
+                   </group>
+
+                   <footer>
+                       <button name="action_submit" string="Submit" type="object"/>
+
+                   </footer>
+               </form>
+            </field>
+        </record>
+
+        <act_window id="hiworth_hr_employee_insurance"
+            name="Insurance Renewal" res_model="insurance.renewal.wizard"
+            view_mode="form" target="new" multi="True"
+            view_id="view_insurance_renewal_report_wizard_form"
+            src_model="employee.insurance"
+            context="{'employee_ids': active_ids}"/>
+    </data>
+</openerp>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="web_favicon_layout" inherit_id="web.layout">
+            <link rel="shortcut icon" position="replace"> 
+                <link rel="shortcut icon" href="/web_favicon/static/src/img/favicon.ico" type="image/x-icon"/>
+               
+            </link>
+        </template>
+    </data>
+</openerp>

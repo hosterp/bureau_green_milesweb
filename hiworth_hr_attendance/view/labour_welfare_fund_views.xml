@@ -1,0 +1,84 @@
+<openerp>
+    <data>
+        <record id="view_labour_welfare_fund_new_form" model="ir.ui.view">
+          <field name="name">labour.welfare.fund.form</field>
+          <field name="model">labour.welfare.fund</field>
+          <field name="arch" type="xml">
+            <form string="Labour Welfare Fund" create="false" edit="false">
+              <header>
+               <button name="%(action_statutory_payment_form)d" string="Payment" type="action" states="draft"/>
+                 <field name="state" widget="statusbar" statusbar_visible="draft,paid" />
+
+              </header>
+              <sheet>
+                <group>
+                    <group>
+                    <field name="date" required="1"/>
+                    <field name="user_id" required="1"/>
+                  </group>
+                  <group>
+                       <field name="company_contractor_id" options="{'no_create':True}"/>
+                    <label for="month" string="Period"/>
+                    <div>
+                        <field name="month" class="oe_inline" required="1"/> - <field name="year" class="oe_inline" required="1"/>
+                    </div>
+
+                  </group>
+                </group>
+                <notebook>
+                    <page string="Lines">
+                        <field name="labour_welfare_fund_line_ids">
+                            <tree editable="bottom">
+                                <field name="employee_id"/>
+                                <field name="wages_due"/>
+                                <field name="amount"/>
+                                <field name="employer_contribution"/>
+                                <field name="total_contri"/>
+                            </tree>
+                        </field>
+
+                    </page>
+                </notebook>
+                  <group>
+                    <field name="total_amount"/>
+                    <field name="paid_amount" readonly="1"/>
+                    <field name="balance"/>
+                </group>
+              </sheet>
+            </form>
+
+          </field>
+        </record>
+
+         <record id="view_labour_welfare_fund_tree" model="ir.ui.view">
+          <field name="name">labour.welfare.fund.form</field>
+          <field name="model">labour.welfare.fund</field>
+          <field name="arch" type="xml">
+            <tree string="Labour Welfare Fund">
+                <field name="date"/>
+                <field name="user_id"/>
+                <field name="month"/>
+                <field name="year"/>
+
+            </tree>
+          </field>
+         </record>
+
+          <record id="action_employee_labour_welfare_fund" model="ir.actions.act_window">
+            <field name="name">Labour Welfare Fund</field>
+            <field name="res_model">labour.welfare.fund</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+              <field name="view_id" ref="view_labour_welfare_fund_tree"/>
+        </record>
+
+<!--       <menuitem name="Labour Welfare Fund"-->
+<!--                 id="menu_employee_labour_welfare_fund"-->
+<!--                 parent="menu_esi"-->
+<!--                 action="action_employee_labour_welfare_fund"-->
+<!--                 groups="base.group_erp_manager,group_hr"-->
+<!--                 sequence="4"/>-->
+
+
+    </data>
+</openerp>

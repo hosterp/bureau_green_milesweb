@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record model='ir.ui.view' id='fleet_vehicle_tyre_entry'>
+            <field name="name">fleet.vehicle.tyre.entry.form</field>
+            <field name="model">vehicle.tyre</field>
+            <field name="arch" type="xml">
+                <form string="Tyre Entry">
+                    <header>
+                         <button name="action_done" string="Dispose Tyre" type="object" />
+                    </header>
+                    <group>
+                        <group>
+                            <field name="name" required="1" />
+                            <field name="tyre_model_id" required="1" />
+                            <field name="tyre_type_id"/>
+                            <field name="purchase_type" required="1" />
+                            <field name="purchase_date" required="1" />
+                            <field name="position_id"/>
+                            <field name="tyre_cost"/>
+                            <field name="start_odometer"/>
+                            <field name="end_odometer"/>
+                        </group>
+                        <group>
+                            <field name="vehicle_id" />
+                            <field name="manufacture_id"/>
+                            <field name="supplier" />
+                            <field name="purchase_mileage"/>
+                            <field name="tread_warning" readonly="1"/>
+                            <field name="warranty_km"/>
+                            <field name="warranty_period"/>
+                            <field name="is_remouldable"/>
+                            <field name="active"/>
+<!--                            <field name="cum_km"/>-->
+                        </group>
+
+                    </group>
+
+                    <notebook>
+                        <page string="Retreading">
+                            <field name="retreading_ids" context="{'default_vehicle_id':vehicle_id,'default_manufacture_id':supplier}" >
+                                 <tree editable="bottom">
+                                <field name="tyre_id" invisible="1"/>
+                                     <field name="vehicle_id" />
+                                     <field name="tyre_id" />
+                                     <field name="position_id"  />
+                                     <field name="retreading_date" string="Retreading date"/>
+                                     <field name="manufacture_id" invisible="1"/>
+                                     <field name="purchase_type" invisible="1" />
+                                     <field name="tyre_retrading_type"  />
+
+                                 <field name="retrading_cost" />
+                                     <field name="purchase_km" />
+                                 <field name="retreading_km" />
+                                     <field name="removing_km"/>
+                                <field name="total_km"/>
+                                <field name="cum_km"/>
+                            </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+          <record model='ir.ui.view' id='fleet_retreading_tyre_tree'>
+            <field name="name">retreading.tyre.line.tree</field>
+            <field name="model">retreading.tyre.line</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                             <field name="tyre_id" />
+                            <field name="vehicle_id" />
+                             <field name="retreading_date" required="1" />
+                                 <field name="manufacture_id" required="1" />
+                            <field name="purchase_type"/>
+                        <field name="tyre_retrading_type" required="1" />
+
+
+                        <field name="retrading_cost"/>
+
+                                 <field name="retreading_km"/>
+
+                                <field name="total_km"/>
+                                <field name="cum_km"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+          </record>
+
+
+        <record model='ir.ui.view' id='fleet_vehicle_tyre_tree'>
+            <field name="name">fleet.vehicle.tyre.tree</field>
+            <field name="model">vehicle.tyre</field>
+            <field name="arch" type="xml">
+                <tree string="Tyre">
+                    <field name="vehicle_id"/>
+                    <field name="name" required="1" />
+                        <field name="purchase_type" required="1" />
+                        <field name="purchase_date" required="1" />
+                        <field name="tyre_model_id" required="1" />
+                        <field name="supplier" />
+                         <field name="tyre_cost"/>
+                        <field name="projected_life"/>
+                        <field name="warranty_period"/>
+                        <field name="warranty_km"/>
+                        <field name="manufacture_id"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record model='ir.actions.act_window' id='fleet_vehicle_tyre_action'>
+            <field name="name">Tyre Entry</field>
+            <field name="res_model">vehicle.tyre</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+
+        <menuitem id="fleet_vehicle_tyre_menu_process" name="Tyre Process"  parent="fleet.menu_root" sequence="4" />
+         <menuitem id="fleet_vehicle_tyre_menu" name="Tyre Entry" action="fleet_vehicle_tyre_action" parent="fleet_vehicle_tyre_menu_process"  />
+
+
+
+        <record model='ir.ui.view' id='fleet_vehicle_tyre_retrading_form'>
+            <field name="name">fleet.vehicle.tyre.retrading.form</field>
+            <field name="model">retreading.tyre</field>
+            <field name="arch" type="xml">
+                <form string="Retrading Tyre">
+                    <group string="Vehicle Details" col="4">
+                        <field name="vehicle_id"/>
+                    </group>
+                       <!-- <field name="name" required="1" />-->
+                        <notebook>
+                            <page>
+                                <field name="retreading_tyre_name_ids" context="{'vehicle_id':vehicle_id}">
+                            <tree editable="bottom">
+                                 <field name="name" />
+                                <!-- <field name="no_of_retread" />-->
+                        <field name="retreading_ids" context="{'default_tyre_id':name}">
+                            <tree editable="bottom">
+                                <field name="tyre_id" invisible="1"/>
+                             <field name="retreading_date" required="1" />
+                                 <field name="manufacture_id" required="1" />
+                        <field name="tyre_retrading_type" required="1" />
+
+                        <field name="estimated_life" />
+                        <field name="retrading_cost"/>
+                                 <field name="retreading_km"/>
+                                <field name="total_km"/>
+                                <field name="cum_km"/>
+                            </tree>
+                        </field>
+
+                            </tree>
+                        </field>
+                            </page>
+                        </notebook>
+
+
+                        <!-- <field name="end_bal" /> -->
+
+
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.ui.view' id='fleet_vehicle_tyre_retrading_tree'>
+            <field name="name">fleet.tyre_retrading.tree</field>
+            <field name="model">retreading.tyre</field>
+            <field name="arch" type="xml">
+                <tree string="Tyre Retrading">
+                    <field name="vehicle_id" required="1" />
+
+                </tree>
+            </field>
+        </record>
+
+
+
+
+
+
+
+         <record model='ir.ui.view' id='fleet_vehicle_tyre_mounting_form'>
+            <field name="name">fleet.vehicle.tyre.mounting.form</field>
+            <field name="model">vehicle.mount</field>
+            <field name="arch" type="xml">
+                <form string="Mounting" create="false" edit="false" delete="false">
+                    <group string="Vehicle Details" col="4">
+                       
+                        <field name="exchange_date" />
+                        <field name="refit_km" invisible="1"/>
+                         <field name="vehicle_id" required="1" />
+                        <field name="to_vehicle_id"/>
+
+                    </group>
+                    <notebook>
+                        <page string="Tyre Details">
+                            <field name="mounting_tyre_ids" context="{'vehicle_id':vehicle_id}">
+                                <form>
+                                    <group>
+                                    <field name="name"/>
+                                    <field name="position_id"/>
+                                    <field name="manufacture_id"/>
+                                    <field name="tyre_model_id"/>
+                                    <field name="tyre_type_id"/>
+                                    <field name="purchase_type"/>
+                                    </group>
+                                </form>
+                                <tree editable="bottom">
+                                     <field name="name"/>
+                                    <field name="cum_km" string="Previous cumiliative purchase mileage at the time of exhange/refitiing" readonly="1"/>
+                                    <field name="refit_km"/>
+                                   <!-- <field name="position_id"/>
+                                    <field name="manufacture_id"/>
+                                    <field name="tyre_model_id"/>
+                                    <field name="tyre_type_id"/>
+                                    <field name="purchase_type"/>-->
+                                </tree>
+
+                            </field>
+                        
+                        </page>
+
+                    </notebook>
+
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.ui.view' id='fleet_vehicle_tyre_mounting_tree'>
+            <field name="name">fleet.tyre_mounting.tree</field>
+            <field name="model">vehicle.mount</field>
+            <field name="arch" type="xml">
+                <tree string="Tyre Mounting" delete="false">
+                   <field name="vehicle_id"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+
+         <record model='ir.ui.view' id='fleet_vehicle_tyre_warranty_form'>
+            <field name="name">fleet.vehicle.tyre.warranty.form</field>
+            <field name="model">warranty.tyre</field>
+            <field name="arch" type="xml">
+                <form string="Mounting" create="false">
+                    <header>
+                       
+                        <field name="state" widget="statusbar" statusbar_visible="draft,paid"/>
+                    <button name="action_done" string="Update Status" type="object" />
+                    </header>
+                    <group string="Vehicle Details" col="4">
+                        <field name="tyre_id"/>
+                        <field name="vehicle_id"/>
+                        <field name="tyre_type_id"/>
+                        <field name="amount"/>
+                        <field name="date" />
+                        <field  name="closing_km"/>
+
+                    </group>
+
+                    <group>
+
+                        <field name="manufacture_id"/>
+                        <field name="insurer_id"/>
+                         <field name="is_account_entry"/>
+                        <field name="not_approved"/>
+                    </group>
+                     <group attrs="{'invisible':['|',('state','!=','draft'),('is_account_entry','!=',True)]}">
+                        <field name="claim_rec_date"/>
+                        <field name="amount_appr"/>
+                        <field name="ref_det"/>
+
+
+                    </group>
+
+
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.ui.view' id='fleet_vehicle_tyre_warranty_tree'>
+            <field name="name">fleet.tyre_warranty.tree</field>
+            <field name="model">warranty.tyre</field>
+            <field name="arch" type="xml">
+                <tree string="Tyre Mounting">
+                      <field name="tyre_id"/>
+                        <field name="tyre_type_id"/>
+                        <field name="amount"/>
+                        <field name="date" />
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record model='ir.actions.act_window' id='fleet_vehicle_tyre_warranty_action'>
+            <field name="name">Tyre Warranty Claim</field>
+            <field name="res_model">warranty.tyre</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+      <menuitem id="fleet_vehicle_tyre_warranty_menu"
+                name="Tyre Warranty Claim"
+                action="fleet_vehicle_tyre_warranty_action"
+                parent="fleet_vehicle_tyre_menu_process"  />
+
+
+        <record model='ir.ui.view' id='fleet_vehicle_tyre_disosable_form'>
+            <field name="name">fleet.vehicle.tyre.dispose.tyre.form</field>
+            <field name="model">dispose.tyre</field>
+            <field name="arch" type="xml">
+                <form string="Disposing">
+
+                    <group string="Tyre Details" col="4">
+
+                        <field name="tyre_id"/>
+                        <field name="vehicle_id"/>
+                        <field name="retreading_date"/>
+
+                    </group>
+                    <group>
+                    <field name="retreading_km" string="Current KM"/>
+                        <field name="total_km"/>
+                         <field name="status"/>
+                    </group>
+
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.ui.view' id='fleet_vehicle_disposed_tree'>
+            <field name="name">fleet.tyre_warranty.tree</field>
+            <field name="model">dispose.tyre</field>
+            <field name="arch" type="xml">
+                <tree string="Tyre Disposing">
+                       <field name="vehicle_id"/>
+                        <field name="tyre_id"/>
+
+                        <field name="retreading_date"/>
+                    <field name="retreading_km" string="Current KM"/>
+                        <field name="total_km"/>
+                    <field name="status"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record model='ir.actions.act_window' id='fleet_vehicle_tyre_disposed_action'>
+            <field name="name">Tyre Disposed</field>
+            <field name="res_model">dispose.tyre</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+      <menuitem id="fleet_vehicle_tyre_disposed_menu" name="Tyre Disposing" action="fleet_vehicle_tyre_disposed_action" parent="fleet_vehicle_tyre_menu_process"  />
+
+
+
+    </data>
+</openerp>

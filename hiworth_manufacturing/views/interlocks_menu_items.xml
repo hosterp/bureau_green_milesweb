@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<menuitem id="interlocks_main_menu" name="Interlocks"
+		 sequence="10"/>
+		 <menuitem id="base.menu_sales" parent="interlocks_main_menu" name="Sales" sequence="1" />
+		 <menuitem id="base.menu_product" name="Products" parent="interlocks_main_menu" sequence="2"/>
+		 <menuitem id="menu_base_config" parent="interlocks_main_menu" name="Configuration" sequence="3" />
+		 <menuitem id="next_id_16" name="Units of Measure" parent="menu_base_config" sequence="4"/>
+
+        <menuitem action="product.product_uom_form_action" id="menu_product_uom_form_action" parent="menu_base_config" sequence="30"/>
+        <menuitem action="product.product_uom_categ_form_action" id="menu_product_uom_categ_form_action" parent="menu_base_config" sequence="31" />
+        <menuitem
+   	            id="base.menu_mrp_root"
+   				name="Manufacturing"
+   	           	parent="interlocks_main_menu"
+   	           	sequence="32"
+   	           	/>
+   	    <!--hide rentals,interlocks menu-->
+
+		<record id="make_invisible_interlocks" model="res.groups">
+            <field name="name">Visible IL Menu</field>
+        </record>
+        <record model="ir.ui.menu" id="interlocks_main_menu">
+            <field name="groups_id" eval="[(5,ref('make_invisible_interlocks'))]"/>
+        </record>
+		<menuitem id="interlocks_main_menu"  name="Interlocks" groups="make_invisible_interlocks"/>
+
+		<record id="make_invisible_rental" model="res.groups">
+            <field name="name">Visible Rental Menu</field>
+        </record>
+<!--        <record model="ir.ui.menu" id="expense_voucher.main_menu_main_mou">-->
+<!--            <field name="groups_id" eval="[(5,ref('make_invisible_rental'))]"/>-->
+<!--        </record>-->
+<!--		<menuitem id="expense_voucher.main_menu_main_mou"  name="Rentals" groups="make_invisible_rental"/>-->
+
+		<record id="make_invisible_telecom" model="res.groups">
+            <field name="name">Visible telecom Menu</field>
+        </record>
+        <record model="ir.ui.menu" id="hiworth_telecom.main_menu_telecom_root">
+            <field name="groups_id" eval="[(5,ref('make_invisible_telecom'))]"/>
+        </record>
+		<menuitem id="hiworth_telecom.main_menu_telecom_root"  name="Rentals" groups="make_invisible_telecom"/>
+
+		<record id="make_invisible_know" model="res.groups">
+            <field name="name">Visible Knowledge Menu</field>
+        </record>
+        <record model="ir.ui.menu" id="knowledge.menu_document">
+            <field name="groups_id" eval="[(5,ref('make_invisible_know'))]"/>
+        </record>
+		<menuitem id="knowledge.menu_document"  name="Knowledge" groups="make_invisible_know"/>
+
+        <record id="make_invisible_log" model="res.groups">
+            <field name="name">Visible Log Report Menu</field>
+        </record>
+        <record model="ir.ui.menu" id="auditlog.menu_audit_main_root">
+            <field name="groups_id" eval="[(5,ref('make_invisible_log'))]"/>
+        </record>
+		<menuitem id="auditlog.menu_audit_main_root"  name="Log Report" groups="make_invisible_log"/>
+
+
+        <record id="make_invisible_dashboard" model="res.groups">
+            <field name="name">Visible Dashboard Menu</field>
+        </record>
+        <record model="ir.ui.menu" id="base.menu_reporting">
+            <field name="groups_id" eval="[(5,ref('make_invisible_dashboard'))]"/>
+        </record>
+		<menuitem id="base.menu_reporting"  name="Dashboard" groups="make_invisible_dashboard"/>
+
+        <record id="make_invisible_marketing" model="res.groups">
+            <field name="name">Visible Marketing Menu</field>
+        </record>
+        <record model="ir.ui.menu" id="base.marketing_menu">
+            <field name="groups_id" eval="[(5,ref('make_invisible_marketing'))]"/>
+        </record>
+		<menuitem id="base.marketing_menu"  name="Marketing" groups="make_invisible_marketing"/>
+
+<!--TRIANGLEWAY SUBMENUS - HIDE-->
+        <record id="make_invisible_insurance" model="res.groups">
+            <field name="name">Visible Insurance Menu</field>
+        </record>
+<!--        <record model="ir.ui.menu" id="hiworth_hr_attendance.employee_insurance_menu">-->
+<!--            <field name="groups_id" eval="[(5,ref('make_invisible_insurance'))]"/>-->
+<!--        </record>-->
+		<menuitem id="hiworth_hr_attendance.employee_insurance_menu"  name="Insurances" groups="make_invisible_insurance"/>
+
+
+        <record id="make_invisible_society" model="res.groups">
+            <field name="name">Visible Society Welfare Menu</field>
+        </record>
+        <record model="ir.ui.menu" id="hiworth_hr_attendance.menu_employee_welfare">
+            <field name="groups_id" eval="[(5,ref('make_invisible_society'))]"/>
+        </record>
+		<menuitem id="hiworth_hr_attendance.menu_employee_welfare"  name="Insurances" groups="make_invisible_society"/>
+
+
+        <record id="make_invisible_allocation" model="res.groups">
+            <field name="name">Allocation</field>
+        </record>
+        <record model="ir.ui.menu" id="hr_holidays.menu_open_allocation_holidays">
+            <field name="groups_id" eval="[(5,ref('make_invisible_allocation'))]"/>
+        </record>
+<!--		<menuitem id="hr_holidays.menu_open_allocation_holidays"  name="Allocation Requests" groups="make_invisible_allocation"/>-->
+
+
+        <record id="make_invisible_allocation_req" model="res.groups">
+            <field name="name">Allocation Req</field>
+        </record>
+        <record model="ir.ui.menu" id="hr_holidays.menu_request_approve_allocation">
+            <field name="groups_id" eval="[(5,ref('make_invisible_allocation_req'))]"/>
+        </record>
+		<menuitem id="hr_holidays.menu_request_approve_allocation"  name="Allocation Requests Approval" groups="make_invisible_allocation_req"/>
+
+        <record id="make_invisible_payroll_report" model="res.groups">
+            <field name="name">Payroll Reports</field>
+        </record>
+        <record model="ir.ui.menu" id="hiworth_hr_attendance.employee_payroll_report_main">
+            <field name="groups_id" eval="[(5,ref('make_invisible_payroll_report'))]"/>
+        </record>
+		<menuitem id="hiworth_hr_attendance.employee_payroll_report_main"  name="Reports" groups="make_invisible_payroll_report"/>
+
+
+        <record id="make_invisible_canteen_attendance" model="res.groups">
+            <field name="name">Canteen Attendance</field>
+        </record>
+        <record model="ir.ui.menu" id="hiworth_hr_attendance.menu_employee_canteen">
+            <field name="groups_id" eval="[(5,ref('make_invisible_canteen_attendance'))]"/>
+        </record>
+		<menuitem id="hiworth_hr_attendance.menu_employee_canteen"  name="Canteen Attendance" groups="make_invisible_canteen_attendance"/>
+
+         <record id="make_invisible_canteen_uncat" model="res.groups">
+            <field name="name">Contract - uncategorized</field>
+        </record>
+        <record model="ir.ui.menu" id="hiworth_hr_attendance.employee_labour_details">
+            <field name="groups_id" eval="[(5,ref('make_invisible_canteen_uncat'))]"/>
+        </record>
+		<menuitem id="hiworth_hr_attendance.employee_labour_details"  name="Contract Uncategorized" groups="make_invisible_canteen_uncat"/>
+
+        <record id="make_invisible_canteen_uncat_atten" model="res.groups">
+            <field name="name">Uncategorized Attendance</field>
+        </record>
+        <record model="ir.ui.menu" id="hiworth_hr_attendance.menu_uncategorized_employee">
+            <field name="groups_id" eval="[(5,ref('make_invisible_canteen_uncat_atten'))]"/>
+        </record>
+		<menuitem id="hiworth_hr_attendance.menu_uncategorized_employee"  name="Uncategorized Attendanc" groups="make_invisible_canteen_uncat_atten"/>
+
+        <record id="make_invisible_canteen_canteen_atten" model="res.groups">
+            <field name="name">Canteen Attendance</field>
+        </record>
+<!--        <record model="ir.ui.menu" id="hiworth_hr_attendance.employee_canteen11">-->
+<!--            <field name="groups_id" eval="[(5,ref('make_invisible_canteen_canteen_atten'))]"/>-->
+<!--        </record>-->
+        <menuitem id="hiworth_hr_attendance.employee_canteen11" groups="make_invisible_canteen_canteen_atten"/>
+
+
+
+	</data>
+</openerp>

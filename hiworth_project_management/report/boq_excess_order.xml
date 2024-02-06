@@ -1,0 +1,147 @@
+<openerp>
+	<data>
+		<record id="report_paperformat_bg_3" model="report.paperformat">
+			<field name="name">Landscape</field>
+			<field name="default" eval="True" />
+			<field name="format">A4</field>
+			<field name="orientation">Landscape</field>
+			<field name="margin_top">5</field>
+			<field name="margin_bottom">0</field>
+			<field name="margin_left">15</field>
+			<field name="margin_right">15</field>
+			<field name="header_line" eval="False" />
+			<field name="header_spacing">12</field>
+			<field name="dpi">0</field>
+		</record>
+        <record model="ir.ui.view" id="report_boq_excess_wizard_id">
+			<field name="name">boq.excess.order.reports</field>
+			<field name="model">boq.excess.order.reports</field>
+			<field name="arch" type="xml">
+				<form string="Boq Excess Order Report By Qs">
+					<group col="2">
+						<group>
+							<field name="project_id"/>
+						</group>
+                        <group></group>
+                    </group>
+					<footer>
+						<button name="action_boq_excess_view" type="object" string="View" class="oe_highlight" />
+						<button name="action_excess_order" type="object" string="Print" class="oe_highlight" />
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+<report id="report_boq_excess_id" string="Boq Excess Order"
+			model="boq.excess.order.reports" report_type="qweb-pdf"
+			name="hiworth_project_management.report_boq_excess_order_template"/>
+				<record id="hiworth_project_management.report_boq_excess_id" model="ir.actions.report.xml">
+    <field name="paperformat_id" ref="hiworth_project_management.report_paperformat_bg_3"/>
+</record>
+<!--	.....TEMPLATE..............................................................................-->
+		<template id="report_boq_excess_order_template">
+			<style>
+             table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+             th, td {
+				padding: 17px;
+				text-align: left;
+				}
+           </style>
+
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="report.external_layout">
+						<div class="page">
+
+							<center><b><h1>Boq Excess Order Report By Qs</h1></b></center><br/>
+
+<!--	                    <span><center><b><h4> <span t-field="o.date_from"/> To <span t-field="o.date_to"/></h4></b></center></span>-->
+	                    <span><b><h4> <span t-field="o.project_id.name"/></h4></b></span>
+							<t t-set="sl_no" t-value="1" />
+							<t t-set="subtotal" t-value="0" />
+
+							<div>
+								<center>
+
+									<table>
+										<thead>
+											<tr>
+												<td colspan="11"><center><b>Actual</b></center></td>
+										    </tr>
+
+											<tr>
+												<td style="width: 4%;" align="center"><h4><b><center>S# No</center></b></h4></td>
+												<td style="width: 4%;" align="center"><h4><b><center>Category</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Sub Category</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Material</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Description</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Quantity</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Units</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Measure Length</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Unit Cost</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Total Cost</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Remarks</center></b></h4></td>
+											</tr>
+										</thead>
+										<tbody>
+											<t t-foreach="docs.get_details()" t-as="line">
+												<tr>
+													<td >
+														<center><span t-esc="sl_no" />
+															<t t-set="sl_no" t-value="sl_no+1" /></center>
+													</td>
+													<td><center><span t-esc="line['category']"/></center></td>
+													<td>
+														<center><span t-esc="line['sub_category']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['material']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['description']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['quantity']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['unit']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['measure_len']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['unit_cost']"/></center>
+													</td>
+													<td><center><span t-esc="line['total_cost']"/></center></td>
+													<td><center><span t-esc="line['remark']"/></center></td>
+												</tr>
+											</t>
+										</tbody>
+									</table>
+								</center>
+							</div>
+						</div>
+					</t>
+				</t>
+			</t>
+</template>
+<!--_____________________________________________________________________________________________________________________-->
+
+		<record id="action_boq_excess_report" model="ir.actions.act_window">
+					<field name="name">Print Boq Excess Report</field>
+					<field name="type">ir.actions.act_window</field>
+					<field name="res_model">boq.excess.order.reports</field>
+					<field name="target">new</field>
+					<field name="view_type">form</field>
+					<field name="view_mode">form</field>
+		</record>
+
+		<menuitem action="action_boq_excess_report" id="menu_boq_excess_reports_child"
+                              name="Boq Excess order"
+                              sequence="6" parent="menu_recurring_expense_reports"/>
+
+    </data>
+</openerp>

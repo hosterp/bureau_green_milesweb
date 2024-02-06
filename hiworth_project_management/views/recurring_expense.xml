@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="tree_recurring_expense" model="ir.ui.view">
+            <field name="name">recurring.expense</field>
+            <field name="model">recurring.expense</field>
+            <field name="arch" type="xml">
+                <tree string="Recurring Expense">
+                    <field name="overhead_category"/>
+                    <field name="overhead_sub_category"/>
+                    <field name="name"/>
+                    <field name="recurring_period"/>
+                    <field name="date_of_recurring"/>
+                    <field name="amount_recurring"/>
+                </tree>
+            </field>
+        </record>
+        <record id="recurring_expense_form_id" model="ir.ui.view">
+			<field name="name">recurring.expense</field>
+			<field name="model">recurring.expense</field>
+			<field name="arch" type="xml">
+				<form string="Recurring Expense">
+					<sheet>
+					<h1><center>Recurring Expense</center></h1><br></br>
+					<group col="2">
+						<group>
+							<field name="overhead_category"/>
+							<field name="overhead_sub_category"/>
+							<field name="name"/>
+						</group>
+						<group>
+							<field name="recurring_period"/>
+							<field name="date_of_recurring"/>
+							<field name="amount_recurring"/>
+						</group>
+					</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+			<record model="ir.actions.act_window" id="action_recurring_expense">
+			<field name="name">Recurring Expense</field>
+			<field name="res_model">recurring.expense</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,kanban</field>
+		</record>
+				<menuitem id="recurring_expense_parent_id" name="Recurring Expense" parent="hiworth_project_management.menu_office_management" sequence="3"/>
+				<menuitem action="action_recurring_expense" id="recurring_expense_id" name="Recurring Expense" parent="recurring_expense_parent_id"/>
+    </data>
+</openerp>

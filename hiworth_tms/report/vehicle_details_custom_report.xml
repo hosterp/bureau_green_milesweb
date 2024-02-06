@@ -1,0 +1,756 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <template id="vehicle_details_custom_report">
+            <t t-call="report.html_container">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+							<h2 class="text-center">TTK Construction</h2>
+							<t t-if="date_from">
+								<h3 class="text-center">Vehicle Maintenance Details</h3>
+							</t>
+
+							<t>
+								<t t-if="date_from" class="text-left">From : <t t-esc="date_from"/></t>
+								<t t-if="date_to" class="text-right">   To : <t t-esc="date_to"/></t>
+							</t>
+							<h2 class="text-left">Vehicle Details</h2>
+                        		<t t-set="sl_no" t-value="1" />
+								<t t-set="total" t-value="0" />
+								<t t-set="sub_total" t-value="0" />
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>SL NO</th>
+											<th>Registration Number</th>
+											<th>Owner Name</th>
+											<th>Brand</th>
+											<th>Type of Machinery</th>
+											<th>Site</th>
+											<th>Model</th>
+											<th>Registration Date</th>
+											<th>FC</th>
+											<th>Insurance</th>
+											<th>Tax Due Date</th>
+											<th>Pollution Under Control Certificates</th>
+											<th>Permit</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												<t t-esc="sl_no"/>
+												<t t-set="sl_no" t-value="sl_no+1" />
+											</td>
+											<td>
+												<t t-esc="doc.license_plate"/>
+											</td>
+											<td>
+												<t t-esc="doc.vehicle_under.name" />
+											</td>
+											<td>
+												<t t-esc="doc.brand_id.name" />
+											</td>
+											<td>
+												<t t-esc="doc.vehicle_categ_id.name" />
+											</td>
+											<td>
+												<t t-esc="doc.work_location.name" />
+											</td>
+											<td>
+												<t t-esc="doc.model_id.modelname" />
+											</td>
+											<td>
+												<t t-esc="doc.registration_date"/>
+											</td>
+											<td>
+												<t t-esc="doc.fitness_date" />
+											</td>
+											<td>
+												<t t-esc="doc.insurance_date" />
+											</td>
+											<td>
+												<t t-esc="doc.roadtax_date" />
+											</td>
+											<td>
+												<t t-esc="doc.pollution_date" />
+											</td>
+											<td>
+												<t t-esc="doc.permit_date" />
+											</td>
+										</tr>
+									</tbody>
+                        		</table>
+								<t t-set="sl_no" t-value="1" />
+								<t t-if="tyre_detials_ids">
+									<t t-set="sub_total" t-value="0" />
+									<h3>New Tyres</h3>
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th>SL NO</th>
+												<th>Tyre Name</th>
+												<th>Tyre Model</th>
+												<th>Tyre Type</th>
+												<th>Warranty Period</th>
+												<th>Warranty KM</th>
+												<th>Tyre Manufacturer</th>
+												<th>Supplier</th>
+												<th>Tread/Retread Warning At Kms</th>
+												<th>Cumulative KM</th>
+												<th>Purchase Type</th>
+												<th>Purchase Date</th>
+												<th>Purchased @KM</th>
+												<th>Tyre Position</th>
+												<th>Tyre Cost</th>
+												<th>Starting Odometer</th>
+												<th>Last Odometer</th>
+											</tr>
+										</thead>
+										<tr t-foreach="tyre_detials_ids" t-as="tyre">
+											<td>
+												<t t-esc="sl_no"/>
+												<t t-set="sl_no" t-value="sl_no+1" />
+											</td>
+											<td>
+												<t t-esc="tyre.name"/>
+											</td>
+											<td>
+												<t t-esc="tyre.tyre_model_id.name"/>
+											</td>
+											<td>
+												<t t-esc="tyre.tyre_type_id.name"/>
+											</td>
+											<td>
+												<t t-esc="tyre.warranty_period"/>
+											</td>
+											<td>
+												<t t-esc="tyre.warranty_km"/>
+											</td>
+											<td>
+												<t t-esc="tyre.manufacture_id.name"/>
+											</td>
+											<td>
+												<t t-esc="tyre.supplier.name"/>
+											</td>
+											<td>
+												<t t-esc="tyre.tread_warning"/>
+											</td>
+											<td>
+												<t t-esc="tyre.cum_km"/>
+											</td>
+											<td>
+												<t t-esc="tyre.purchase_type"/>
+											</td>
+											<td>
+												<t t-esc="tyre.purchase_date"/>
+											</td>
+											<td>
+												<t t-esc="tyre.purchase_mileage"/>
+											</td>
+											<td>
+												<t t-esc="tyre.position_id.name"/>
+											</td>
+											<td>
+												<t t-esc="tyre.tyre_cost"/>
+											</td>
+											<td>
+												<t t-esc="tyre.start_odometer"/>
+											</td>
+											<td>
+												<t t-esc="tyre.end_odometer"/>
+											</td>
+											<t t-set="sub_total" t-value="sub_total + tyre.tyre_cost" />
+										</tr>
+									</table>
+									<t t-if="with_expense">
+											<h4 class="text-right">Sub Total Expense : <t t-esc="sub_total"/> </h4>
+											<t t-set="total" t-value="total+sub_total"/>
+									</t>
+								</t>
+								<t t-if="retreading_ids">
+									<t t-set="sub_total" t-value="0" />
+									<t t-set="sl_no" t-value="1" />
+									<h3>Retreading Tyres</h3>
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th>SL NO</th>
+												<th>Tyre Name</th>
+												<th>Tyre Model</th>
+												<th>Tyre Type</th>
+												<th>Tyre Position</th>
+												<th>Retreading date</th>
+												<th>Retreading Cost</th>
+												<th>Retreading Type</th>
+												<th>Purchase@KM</th>
+												<th>Removing/Retreading KM</th>
+												<th>Total Mileage(KM)</th>
+												<th>Refitting at KM</th>
+											</tr>
+										</thead>
+										<tr t-foreach="retreading_ids" t-as="retreading">
+											<td>
+												<t t-esc="sl_no"/>
+												<t t-set="sl_no" t-value="sl_no+1" />
+											</td>
+											<td>
+												<t t-esc="retreading.tyre_id.name"/>
+											</td>
+											<td>
+												<t t-esc="retreading.tyre_id.tyre_model_id.name"/>
+											</td>
+											<td>
+												<t t-esc="retreading.tyre_id.tyre_type_id.name"/>
+											</td>
+											<td>
+												<t t-esc="retreading.position_id.name"/>
+											</td>
+											<td>
+												<t t-esc="retreading.retreading_date"/>
+											</td>
+											<td>
+												<t t-esc="retreading.retrading_cost"/>
+											</td>
+											<td>
+												<t t-esc="retreading.tyre_retrading_type.name"/>
+											</td>
+											<td>
+												<t t-esc="retreading.purchase_km"/>
+											</td>
+											<td>
+												<t t-esc="retreading.removing_km"/>
+											</td>
+											<td>
+												<t t-esc="retreading.total_km"/>
+											</td>
+											<td>
+												<t t-esc="retreading.retreading_km"/>
+											</td>
+										<t t-set="sub_total" t-value="sub_total + retreading.retrading_cost" />
+										</tr>
+									</table>
+									<t t-if="with_expense">
+										<h4 class="text-right">Total Retreading Tyres Expense : <t t-esc="sub_total"/> </h4>
+										<t t-set="total" t-value="total+sub_total"/>
+									</t>
+								</t>
+								<t t-if="fuel_lines">
+									<t t-set="sub_total" t-value="0" />
+									<t t-set="sl_no" t-value="1" />
+									<h3>Fuel Entry Details</h3>
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th>SL NO</th>
+												<th>Date</th>
+												<th>Opening Odometer</th>
+												<th>Closing Reading</th>
+												<th>Total Reading</th>
+												<th>Fuel Pump</th>
+												<th>Fuel Name</th>
+												<th>Fuel Filling KM</th>
+												<th>Fuel Quantity date</th>
+												<th>Fuel Price</th>
+												<th>Total Fuel Amount</th>
+											</tr>
+										</thead>
+										<tr t-foreach="fuel_lines" t-as="line">
+											<td>
+												<t t-esc="sl_no"/>
+												<t t-set="sl_no" t-value="sl_no+1" />
+											</td>
+											<td>
+												<t t-esc="line.date"/>
+											</td>
+											<td>
+												<t t-esc="line.odometer"/>
+											</td>
+											<td>
+												<t t-esc="line.closing_reading"/>
+											</td>
+											<td>
+												<t t-esc="line.total_reading"/>
+											</td>
+											<td>
+												<t t-esc="line.pump_id.name"/>
+											</td>
+											<td>
+												<t t-esc="line.item_char"/>
+											</td>
+											<td>
+												<t t-esc="line.odometer"/>
+											</td>
+											<td>
+												<t t-esc="line.litre"/>
+											</td>
+											<td>
+												<t t-esc="line.per_litre"/>
+											</td>
+											<td>
+												<t t-esc="line.amount"/>
+											</td>
+
+										<t t-set="sub_total" t-value="sub_total + line.amount" />
+										</tr>
+									</table>
+										<t t-if="with_expense">
+											<h4 class="text-right">Total Fuel Expense : <t t-esc="sub_total"/> </h4>
+											<t t-set="total" t-value="total+sub_total"/>
+										</t>
+								</t>
+								<t t-if="battery_details_ids">
+									<t t-set="sub_total" t-value="0" />
+									<t t-set="sl_no" t-value="1" />
+									<h3>Battery Details</h3>
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th>SL NO</th>
+												<th>ID/SN</th>
+												<th>Warranty Period From</th>
+												<th>Warranty Period To</th>
+												<th>Extended Warranty Period From</th>
+												<th>Extended Warranty Period To</th>
+												<th>Supplier</th>
+												<th>Amount</th>
+												<th>Disposed Date</th>
+											</tr>
+										</thead>
+										<tr t-foreach="battery_details_ids" t-as="battery_line">
+											<td>
+												<t t-esc="sl_no"/>
+												<t t-set="sl_no" t-value="sl_no+1" />
+											</td>
+											<td>
+												<t t-esc="battery_line.name"/>
+											</td>
+											<td>
+												<t t-esc="battery_line.warranty_period_from"/>
+											</td>
+											<td>
+												<t t-esc="battery_line.warranty_to"/>
+											</td>
+											<td>
+												<t t-esc="battery_line.extended_warranty_period_from"/>
+											</td>
+											<td>
+												<t t-esc="battery_line.extended_warranty_to"/>
+											</td>
+											<td>
+												<t t-esc="battery_line.supplier_id.name"/>
+											</td>
+											<td>
+												<t t-esc="battery_line.amount"/>
+											</td>
+										<t t-set="sub_total" t-value="sub_total + battery_line.amount" />
+										</tr>
+
+									</table>
+									<t t-if="with_expense">
+											<h4 class="text-right">Total Battery Expense : <t t-esc="sub_total"/> </h4>
+											<t t-set="total" t-value="total+sub_total"/>
+										</t>
+								</t>
+								<t t-if="vehicles_gps_ids">
+									<t t-set="sub_total" t-value="0" />
+									<t t-set="sl_no" t-value="1" />
+									<h3>Vehicle GPS Updates</h3>
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th>SL NO</th>
+												<th>Name</th>
+												<th>Purchase Type</th>
+												<th>GPS Model</th>
+												<th>Manufacturer</th>
+												<th>Supplier</th>
+												<th>Purchase date</th>
+												<th>GPS Cost</th>
+												<th>Description</th>
+											</tr>
+										</thead>
+										<tr t-foreach="vehicle_gps_ids" t-as="gps_line">
+											<td>
+												<t t-esc="sl_no"/>
+												<t t-set="sl_no" t-value="sl_no+1" />
+											</td>
+											<td>
+												<t t-esc="gps_line.name"/>
+											</td>
+											<td>
+												<t t-esc="gps_line.purchase_type"/>
+											</td>
+											<td>
+												<t t-esc="gps_line.gps_model_id"/>
+											</td>
+											<td>
+												<t t-esc="gps_line.manufacturer_id.name"/>
+											</td>
+											<td>
+												<t t-esc="gps_line.supplier_id.name"/>
+											</td>
+											<td>
+												<t t-esc="gps_line.purchase_date"/>
+											</td>
+											<td>
+												<t t-esc="gps_line.gps_cost"/>
+											</td>
+											<td>
+												<t t-esc="gps_line.notes"/>
+											</td>
+
+										<t t-set="sub_total" t-value="sub_total + gps_line.gps_cost" />
+										</tr>
+
+									</table>
+									<t t-if="with_expense">
+											<h4 class="text-right">Total GPS Expense : <t t-esc="sub_total"/> </h4>
+											<t t-set="total" t-value="total+sub_total"/>
+										</t>
+								</t>
+								<t t-if="maintenance_ids">
+									<t t-set="sl_no" t-value="1" />
+									<t t-set="sub_total" t-value="0" />
+									<h3>Repair &amp; Service Details</h3>
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th>SL NO</th>
+												<th>Date</th>
+												<th>work</th>
+												<th>Last service km</th>
+												<th>Service period</th>
+												<th>Next service km</th>
+												<th>Expense</th>
+												<th>remarks</th>
+											</tr>
+										</thead>
+										<tr t-foreach="maintenance_ids" t-as="work">
+											<td>
+												<t t-esc="sl_no"/>
+												<t t-set="sl_no" t-value="sl_no+1" />
+											</td>
+											<td>
+												<t t-esc="work.date"/>
+											</td>
+											<td>
+												<t t-esc="work.work"/>
+											</td>
+											<td>
+												<t t-esc="work.last_service_km"/>
+											</td>
+											<td>
+												<t t-esc="work.service_period"/>
+											</td>
+											<td>
+												<t t-esc="work.next_service_km"/>
+											</td>
+											<td>
+												<t t-esc="work.cost"/>
+											</td>
+											<td>
+												<t t-esc="work.remarks"/>
+											</td>
+
+										<t t-set="sub_total" t-value="sub_total + work.cost" />
+										</tr>
+
+									</table>
+									<t t-if="with_expense">
+											<h4 class="text-right">Total Service Expense : <t t-esc="sub_total"/> </h4>
+											<t t-set="total" t-value="total+sub_total"/>
+										</t>
+								</t>
+								<t t-if="cost_ids">
+									<t t-set="sl_no" t-value="1" />
+									<t t-set="sub_total" t-value="0" />
+								<h3>Spare Parts Expense Details</h3>
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>SL NO</th>
+											<th>Date</th>
+											<th>Old parts name</th>
+											<th>new parts name</th>
+											<th>Quantity</th>
+											<th>Rate</th>
+											<th>Amount</th>
+										</tr>
+									</thead>
+									<tr t-foreach="cost_ids" t-as="cost">
+										<td>
+											<t t-esc="sl_no"/>
+											<t t-set="sl_no" t-value="sl_no+1" />
+										</td>
+										<td>
+											<t t-esc="cost.date"/>
+										</td>
+										<td>
+											<t t-esc="cost.old_parts_name"/>
+										</td>
+										<td>
+											<t t-esc="cost.new_parts_name"/>
+										</td>
+										<td>
+											<t t-esc="cost.qty"/>
+										</td>
+										<td>
+											<t t-esc="cost.rate"/>
+										</td>
+										<td>
+											<t t-esc="cost.amount"/>
+										</td>
+
+									<t t-set="sub_total" t-value="sub_total + cost.amount" />
+										</tr>
+
+								</table>
+									<t t-if="with_expense">
+											<h4 class="text-right">Total Parts Expense : <t t-esc="sub_total"/> </h4>
+											<t t-set="total" t-value="total+sub_total"/>
+										</t>
+							</t>
+								<t t-if="driver_stmt_line">
+									<t t-set="sl_no" t-value="1" />
+									<t t-set="sub_total" t-value="0" />
+								<h3>Driver Daily Expense Details</h3>
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>SL NO</th>
+											<th>Invoice Date</th>
+											<th>Purchase Order</th>
+											<th>From Location</th>
+											<th>To Location</th>
+											<th>Item</th>
+											<th>Quantity</th>
+											<th>Rate</th>
+											<th>Amount</th>
+											<th>Tax Amount</th>
+											<th>Total Amount</th>
+											<th>Start KM</th>
+											<th>End KM</th>
+											<th>Total KM</th>
+											<th>Driver Amount</th>
+										</tr>
+									</thead>
+									<tr t-foreach="driver_stmt_line" t-as="stmt">
+										<td>
+											<t t-esc="sl_no"/>
+											<t t-set="sl_no" t-value="sl_no+1" />
+										</td>
+										<td>
+											<t t-esc="stmt.invoice_date"/>
+										</td>
+										<td>
+											<t t-esc="stmt.purchase_id.name"/>
+										</td>
+										<td>
+											<t t-esc="stmt.from_id2.name"/>
+											<t t-esc="stmt.from_loc.name"/>
+										</td>
+										<td>
+											<t t-esc="stmt.to_id2.name"/>
+											<t t-esc="stmt.to_loc.name"/>
+										</td>
+										<td>
+											<t t-esc="stmt.item_expense2.name"/>
+										</td>
+										<td>
+											<t t-esc="stmt.qty"/>
+										</td>
+										<td>
+											<t t-esc="stmt.rate"/>
+										</td>
+										<td>
+											<t t-esc="stmt.total"/>
+										</td>
+										<td>
+											<t t-esc="stmt.tax_amount"/>
+										</td>
+										<td>
+											<t t-esc="stmt.total_amount"/>
+										</td>
+										<td>
+											<t t-esc="stmt.start_km"/>
+										</td>
+										<td>
+											<t t-esc="stmt.end_km"/>
+										</td>
+										<td>
+											<t t-esc="stmt.total_km"/>
+										</td>
+										<td>
+											<t t-esc="stmt.driver_betha"/>
+										</td>
+
+									<t t-set="sub_total" t-value="sub_total + stmt.driver_betha" />
+										</tr>
+
+								</table>
+									<t t-if="with_expense">
+											<h4 class="text-right">Total Driver Expense : <t t-esc="sub_total"/> </h4>
+											<t t-set="total" t-value="total+sub_total"/>
+										</t>
+							</t>
+								<t t-if="expense_line">
+									<t t-set="sl_no" t-value="1" />
+									<t t-set="sub_total" t-value="0" />
+								<h3>Other Expense Details</h3>
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>SL NO</th>
+											<th>Date</th>
+											<th>Item</th>
+											<th>Quantity</th>
+											<th>Rate</th>
+											<th>Total</th>
+											<th>Payment</th>
+										</tr>
+									</thead>
+									<tr t-foreach="expense_line" t-as="line">
+										<td>
+											<t t-esc="sl_no"/>
+											<t t-set="sl_no" t-value="sl_no+1" />
+										</td>
+										<td>
+											<t t-esc="line.date"/>
+										</td>
+										<td>
+											<t t-esc="line.item_expense2.name"/>
+										</td>
+										<td>
+											<t t-esc="line.qty"/>
+										</td>
+										<td>
+											<t t-esc="line.rate"/>
+										</td>
+										<td>
+											<t t-esc="line.total"/>
+										</td>
+										<td>
+											<t t-esc="line.payment"/>
+										</td>
+
+										<t t-set="sub_total" t-value="sub_total + line.payment" />
+										</tr>
+
+								</table>
+									<t t-if="with_expense">
+											<h4 class="text-right">Total Other Expense : <t t-esc="sub_total"/> </h4>
+											<t t-set="total" t-value="total+sub_total"/>
+										</t>
+							</t>
+
+
+							<t t-if="with_expense">
+								<h3 class="text-Right"> Grand Total : <t t-esc="total"/></h3>
+							</t>
+					</div>
+                    </t>
+                </t>
+        </template>
+
+        <report
+            id="vehicle_details_custom"
+            model="fleet.vehicle"
+            string="Vehicle Details"
+            report_type="qweb-pdf"
+            name="hiworth_tms.vehicle_details_custom_report"
+            file="hiworth_tms.vehicle_details_custom_report"/>
+
+
+
+<!--		<template id="vehicle_details_custom_date_sort_report">-->
+<!--            <t t-call="report.html_container">-->
+<!--				<t t-call="report.external_layout">-->
+<!--					<div class="page">-->
+<!--						<h2 class="text-center">Vehicle Details</h2>-->
+<!--						<t t-set="sl_no" t-value="1" />-->
+<!--						<table class="table table-bordered">-->
+<!--							<thead>-->
+<!--								<tr>-->
+<!--									<th>SL NO</th>-->
+<!--									<th>Registration Number</th>-->
+<!--									<th>Owner Name</th>-->
+<!--									<th>Brand</th>-->
+<!--									<th>Type of Machinery</th>-->
+<!--									<th>Site</th>-->
+<!--									<th>Model</th>-->
+<!--									<th>Registration Date</th>-->
+<!--									<th>FC</th>-->
+<!--									<th>Insurance</th>-->
+<!--									<th>Tax Due Date</th>-->
+<!--									<th>Pollution Under Control Certificates</th>-->
+<!--									<th>Permit</th>-->
+<!--								</tr>-->
+<!--							</thead>-->
+<!--							<tbody>-->
+<!--								<tr t-foreach="docs" t-as="doc">-->
+<!--									<td>-->
+<!--										<t t-esc="sl_no"/>-->
+<!--										<t t-set="sl_no" t-value="sl_no+1" />-->
+<!--									</td>-->
+<!--									<td>-->
+<!--&lt;!&ndash;										<t t-esc="doc.get(license_plate)"/>&ndash;&gt;-->
+<!--									</td>-->
+<!--&lt;!&ndash;											<td>&ndash;&gt;-->
+<!--&lt;!&ndash;												<t t-esc="doc.vehicle_under.name" />&ndash;&gt;-->
+<!--&lt;!&ndash;											</td>&ndash;&gt;-->
+<!--&lt;!&ndash;											<td>&ndash;&gt;-->
+<!--&lt;!&ndash;												<t t-esc="doc.brand_id.name" />&ndash;&gt;-->
+<!--&lt;!&ndash;											</td>&ndash;&gt;-->
+<!--&lt;!&ndash;											<td>&ndash;&gt;-->
+<!--&lt;!&ndash;												<t t-esc="doc.vehicle_categ_id.name" />&ndash;&gt;-->
+<!--&lt;!&ndash;											</td>&ndash;&gt;-->
+<!--&lt;!&ndash;											<td>&ndash;&gt;-->
+<!--&lt;!&ndash;												<t t-esc="doc.work_location.name" />&ndash;&gt;-->
+<!--&lt;!&ndash;											</td>&ndash;&gt;-->
+<!--&lt;!&ndash;											<td>&ndash;&gt;-->
+<!--&lt;!&ndash;												<t t-esc="doc.model_id.modelname" />&ndash;&gt;-->
+<!--&lt;!&ndash;											</td>&ndash;&gt;-->
+<!--&lt;!&ndash;											<td>&ndash;&gt;-->
+<!--&lt;!&ndash;												<t t-esc="doc.registration_date"/>&ndash;&gt;-->
+<!--&lt;!&ndash;											</td>&ndash;&gt;-->
+<!--&lt;!&ndash;											<td>&ndash;&gt;-->
+<!--&lt;!&ndash;												<t t-esc="doc.fitness_date" />&ndash;&gt;-->
+<!--&lt;!&ndash;											</td>&ndash;&gt;-->
+<!--&lt;!&ndash;											<td>&ndash;&gt;-->
+<!--&lt;!&ndash;												<t t-esc="doc.insurance_date" />&ndash;&gt;-->
+<!--&lt;!&ndash;											</td>&ndash;&gt;-->
+<!--&lt;!&ndash;											<td>&ndash;&gt;-->
+<!--&lt;!&ndash;												<t t-esc="doc.roadtax_date" />&ndash;&gt;-->
+<!--&lt;!&ndash;											</td>&ndash;&gt;-->
+<!--&lt;!&ndash;											<td>&ndash;&gt;-->
+<!--&lt;!&ndash;												<t t-esc="doc.pollution_date" />&ndash;&gt;-->
+<!--&lt;!&ndash;											</td>&ndash;&gt;-->
+<!--&lt;!&ndash;											<td>&ndash;&gt;-->
+<!--&lt;!&ndash;												<t t-esc="doc.permit_date" />&ndash;&gt;-->
+<!--&lt;!&ndash;											</td>&ndash;&gt;-->
+<!--								</tr>-->
+<!--							</tbody>-->
+<!--							</table>-->
+
+
+<!--					</div>-->
+
+<!--                    </t>-->
+
+<!--                </t>-->
+<!--        </template>-->
+
+
+
+<!--		<report-->
+<!--            id="vehicle_details_custom_date_sort"-->
+<!--            model="fleet.vehicle"-->
+<!--            string="Vehicle Details Print"-->
+<!--            report_type="qweb-pdf"-->
+<!--            name="hiworth_tms.vehicle_details_custom_date_sort_report"-->
+<!--            file="hiworth_tms.vvehicle_details_custom_date_sort_report"-->
+<!--			menu = "False"/>-->
+    </data>
+</openerp>

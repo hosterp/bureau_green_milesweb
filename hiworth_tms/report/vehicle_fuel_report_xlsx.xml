@@ -1,0 +1,42 @@
+<openerp>
+    <data>
+		<record id="form_vehicle_fuel_report_report" model="ir.ui.view">
+			<field name="name">Vehicle Fuel Report</field>
+			<field name="model">report.vehicle.fuel.report</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<h3>This Wizard Wizard will Print All Vehicle Fuel Report</h3>
+
+					</group>
+					<footer>
+						<button type="object" name="generate_xls_report"
+							string="Print Excel" class="oe_highlight" />
+						<button special="cancel" string="Cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+		<report
+            id="vehicle_fuel_excel_report"
+            model="report.vehicle.fuel.report"
+            string="Vehicle fuel Report"
+            report_type="xlsx"
+            name="custom.vehicle_fuel_report.xlsx"
+            file="custom.vehicle_fuel_report.xlsx"
+           	menu="False"
+        />
+		<record id="action_form_vehicle_fuel_report_report" model="ir.actions.act_window">
+			<field name="name">Vehicle Fuel Report</field>
+			<field name="res_model">report.vehicle.fuel.report</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+<menuitem id="menu_fuel_report"
+				  parent="hiworth_construction.fleet_report"
+				  action="action_form_vehicle_fuel_report_report"
+				  name="Fuel Report Excel" sequence="27" />
+    </data>
+</openerp>

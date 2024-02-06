@@ -1,0 +1,279 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+        <record id="view_payroll_report_form" model="ir.ui.view">
+    <field name="name">Payroll Report</field>
+    <field name="model">payroll.report</field>
+    <field name="arch" type="xml">
+        <form string="Choose your details">
+            <group>
+                <group>
+                     <field name="company_person_id"  style="width: 40%%" domain="[('company_contractor','=',True)]"/>
+                </group>
+                <group>
+                    <field name="start_date" />
+                    <field name="end_date" />
+                </group>
+            </group>
+            <footer>
+                <button name="print_xls_report" string="Print Report" type="object"  class="oe_highlight"  />
+                or
+                <button string="Cancel" class="oe_link" special="cancel" />
+            </footer>
+        </form>
+    </field>
+</record>
+
+
+        <record id="action_employee_payroll_report" model="ir.actions.act_window">
+			<field name="name">Employee Payroll Report</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">payroll.report</field>
+			<field name="target">new</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+            <field name="view_id" ref="view_payroll_report_form"/>
+		</record>
+
+<!--        <menuitem id="employee_payroll_report_main"-->
+<!--                  parent="hr_payroll.menu_hr_root_payroll"-->
+<!--                  name="Reports" sequence="4"-->
+<!--                  />-->
+
+<!--		<menuitem id="employee_payroll_report"-->
+<!--                  parent="employee_payroll_report_main"-->
+<!--                  name="Payroll report" sequence="3"-->
+<!--                  action="action_employee_payroll_report"/>-->
+
+<!--        <menuitem id="menu_payslip_cash_entry1"-->
+<!--					  parent="employee_payroll_report_main"-->
+<!--					  name="Cash Payment"-->
+<!--					  action="hiworth_hr_attendance.action_payslip_cash_entry_new"-->
+<!--					  sequence="20"/>-->
+
+<!--        <menuitem id="menu_payslip_bank_entry1"-->
+<!--					  parent="employee_payroll_report_main"-->
+<!--					  name="Bank Payment"-->
+<!--					  action="hiworth_hr_attendance.action_payslip_bank_entry_new"-->
+<!--					  sequence="25"/>-->
+
+        <template id="hr_payroll.report_payslip">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+                            <h2>Pay Slip</h2>
+                            <p t-field="o.name"/>
+                            <table class="table table-condensed table-bordered">
+                                <tr>
+                                    <td><strong>Name</strong></td>
+                                    <td><span t-field="o.employee_id"/></td>
+                                    <td><strong>Designation</strong></td>
+                                    <td><span t-field="o.employee_id.user_category"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Address</strong></td>
+                                    <td colspan="3">
+                                        <div t-field="o.employee_id.street"
+                                            t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Email</strong></td>
+                                    <td><span t-field="o.employee_id.work_email"/></td>
+                                    <td><strong>Employee Code</strong></td>
+                                    <td><span t-field="o.employee_id.emp_code"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Reference</strong></td>
+                                    <td><span t-field="o.number"/></td>
+                                    <td><strong>Bank Account</strong></td>
+                                    <td><span t-field="o.employee_id.p_bank_name"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Date From</strong></td>
+                                    <td><span t-field="o.date_from"/></td>
+                                    <td><strong>Date To</strong></td>
+                                    <td><span t-field="o.date_to"/></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Attendance</strong></td>
+                                    <td><span t-field="o.attendance"/></td>
+                                    <td><strong>LOP days</strong></td>
+                                    <td><span t-field="o.lop"/></td>
+                                </tr>
+                            </table>
+                            <h3>Earnings</h3>
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.contract_salary_rule_ids" t-as="p">
+                                        <td><span t-field="p.rule_id.name"/></td>
+                                        <td><span t-esc="formatLang(p.amount, currency_obj=o.company_id.currency_id)"/></td>
+                                    </tr>
+                                    <tr t-if="o.overtime">
+                                        <td>Overtime</td>
+                                        <td><span  t-esc="formatLang(o.overtime, currency_obj=o.company_id.currency_id)"/></td>
+                                    </tr>
+                                    <tr>
+                                        <strong><td>Gross Salary</td></strong>
+                                        <strong><td t-esc="formatLang(o.gross_salary, currency_obj=o.company_id.currency_id)"/></strong>
+                                    </tr>
+                                </tbody>
+                            </table>
+                             <h3>Deductions</h3>
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.salary_deductions" t-as="p">
+                                        <td><span t-field="p.name"/></td>
+                                        <td><span t-esc="formatLang(p.amount, currency_obj=o.company_id.currency_id)"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lop amount</td>
+                                        <td><span t-esc="formatLang(o.lop_amount, currency_obj=o.company_id.currency_id)"/></td>
+                                    </tr>
+                                    <tr>
+                                        <strong><td>Total Deduction</td></strong>
+                                        <strong><td t-esc="formatLang(o.total_deduction, currency_obj=o.company_id.currency_id)"/></strong>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <table class="table table-condensed">
+                                <tr class="border-black">
+                                    <h4>Net Salary</h4>
+                                    <h4>
+                                        <td class="text-right" t-esc="formatLang(o.net_salary, currency_obj=o.company_id.currency_id)"/>
+                                    </h4>
+                                </tr>
+                            </table>
+                            <p class="text-right"><strong>Authorized signature</strong></p>
+                            <p class="text-right"><strong>HR signature</strong></p>
+                        </div>
+                    </t>
+                </t>
+            </t>
+</template>
+
+        <template id="hr_payroll.report_payslipdetails">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="report.external_layout">
+                    <div class="page">
+                        <h2>Pay Slip</h2>
+                        <p t-field="o.name"/>
+
+                        <table class="table table-condensed table-bordered">
+                            <tr>
+                                <td><strong>Name</strong></td>
+                                <td><span t-field="o.employee_id"/></td>
+                                <td><strong>Designation</strong></td>
+                                <td><span t-field="o.employee_id.job_id"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Address</strong></td>
+                                <td colspan="3">
+                                    <div t-field="o.employee_id.address_home_id"
+                                        t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true}'/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Email</strong></td>
+                                <td><span t-field="o.employee_id.work_email"/></td>
+                                <td><strong>Identification No</strong></td>
+                                <td><span t-field="o.employee_id.job_id"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Reference</strong></td>
+                                <td><span t-field="o.number"/></td>
+                                <td><strong>Bank Account</strong></td>
+                                <td><span t-field="o.employee_id.otherid"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Date From</strong></td>
+                                <td><span t-field="o.date_from"/></td>
+                                <td><strong>Date To</strong></td>
+                                <td><span t-field="o.date_to"/></td>
+                            </tr>
+                        </table>
+
+                        <h3>Details by Salary Rule Category</h3>
+                        <table class="table table-condensed mb32">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Salary Rule Category</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="get_details_by_rule_category(o.details_by_salary_rule_category)" t-as="h">
+                                    <td>
+                                        <span t-esc="h['code']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="'..'*h['level']"/><span t-esc="h['rule_category']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="formatLang(h['total'], currency_obj=o.company_id.currency_id)"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>Payslip Lines by Contribution Register</h3>
+                        <table class="table table-condensed mt32">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Name</th>
+                                    <th>Quantity/rate</th>
+                                    <th>Amount</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="get_lines_by_contribution_register(o.line_ids)" t-as="p">
+                                    <td><span t-esc="p.get('code', '')"/></td>
+                                    <td><span t-esc="p.get('name', '')"/></td>
+                                    <td><span t-esc="p.get('quantity', '')"/></td>
+                                    <td><span t-esc="formatLang(p.get('amount', 0))"/></td>
+                                    <td><span t-esc="formatLang(p.get('total', 0), currency_obj=o.company_id.currency_id)"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p class="text-right"><strong>Authorized signature</strong></p>
+                    </div>
+                </t>
+            </t>
+        </t>
+</template>
+
+
+
+
+<report
+    id="report_pyroll_xlsx"
+    model="payroll.report"
+    string="Payroll Report"
+    report_type="xlsx"
+    name="hiworth_hr_attendance.report_payroll_report.xlsx"
+    file="hiworth_hr_attendance.report_payroll_report.xlsx"
+    attachment_use="False"
+/>
+
+
+    </data>
+</openerp>

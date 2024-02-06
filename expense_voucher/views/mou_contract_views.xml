@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="view_mou_contract_form" model="ir.ui.view">
+			<field name="name">mou.contract.form.view</field>
+			<field name="model">mou.contract</field>
+			<field name="arch" type="xml">
+                <form>
+                        <header>
+                        <button  name="contract_close" states="open" type="object" class="oe_highlight" string="Terminate Contract" groups="base.group_erp_manager"/>
+
+
+                        <button class="oe_highlight" name="contract_renew" states="open,toclose" type="object" string="Renew Contract" help="Create a new contract automatically with all the same informations except for the date that will start at the end of current contract" groups="base.group_erp_manager"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group col="2">
+                            <group string="Contract details">
+                                <field name="mou_id" />
+                                <field name="mou_category_id" required="1" />
+                                <field name="amount"/>
+
+                            </group>
+
+                        </group>
+                        <group col="2">
+                            <group>
+
+                                <field name="start_date"/>
+                                <field name="expiration_date"/>
+                            </group>
+                            <group>
+                                <field name="partner_id" />
+                                <field name="contractor_id"/>
+                                <field name="contract_ref"/>
+                            </group>
+                        </group>
+
+                        <group string="Terms and Conditions">
+                            <field name="terms_cond" nolabel="1" placeholder="Write here all other information relative to this contract"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_mou_contract_tree" model="ir.ui.view">
+			<field name="name">mou.contract.tree.view</field>
+			<field name="model">mou.contract</field>
+			<field name="arch" type="xml">
+                <tree>
+                     <field name="start_date"/>
+                                <field name="expiration_date"/>
+                           <field name="mou_id" />
+                                <field name="mou_category_id" required="1" />
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        	<record id="action_mou_contract" model="ir.actions.act_window">
+			<field name="name">MOU Contracts</field>
+			<field name="res_model">mou.contract</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" eval="view_mou_contract_tree" />
+		</record>
+    </data>
+</openerp>

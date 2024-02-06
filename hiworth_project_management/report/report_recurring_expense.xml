@@ -1,0 +1,150 @@
+<openerp>
+	<data>
+		<record id="report_paperformat_bg1" model="report.paperformat">
+			<field name="name">Landscape</field>
+			<field name="default" eval="True" />
+			<field name="format">A4</field>
+			<field name="orientation">Landscape</field>
+			<field name="margin_top">5</field>
+			<field name="margin_bottom">0</field>
+			<field name="margin_left">15</field>
+			<field name="margin_right">15</field>
+			<field name="header_line" eval="False" />
+			<field name="header_spacing">12</field>
+			<field name="dpi">0</field>
+		</record>
+        <record model="ir.ui.view" id="report_recurring_expense_wizard_id">
+			<field name="name">recurring.expense.reports</field>
+			<field name="model">recurring.expense.reports</field>
+			<field name="arch" type="xml">
+				<form string="Recurring Expense Report">
+					<group col="2">
+						<group>
+							<field name="overhead_category"/>
+							<field name="overhead_sub_category"/>
+						</group>
+						<group>
+							<field name="name"/>
+							<field name="recurring_period"/>
+						</group>
+                    </group>
+					<footer>
+						<button name="action_recurring_expense_view" type="object" string="View" class="oe_highlight" />
+						<button name="action_recurring_expense" type="object" string="Print" class="oe_highlight" />
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+<report id="report_recurring_expense_id" string="Recurring Expense Report"
+			model="recurring.expense.reports" report_type="qweb-pdf"
+			name="hiworth_project_management.report_recurring_expense_template"/>
+
+					<record id="hiworth_project_management.report_recurring_expense_id" model="ir.actions.report.xml">
+    <field name="paperformat_id" ref="hiworth_project_management.report_paperformat_bg1"/>
+</record>
+
+<!--	.....TEMPLATE..............................................................................-->
+		<template id="report_recurring_expense_template">
+			<style>
+             table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+             th, td {
+				padding: 17px;
+				text-align: left;
+				}
+           </style>
+
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="report.external_layout">
+						<div class="page">
+
+							<center><b><h1>Recurring Expense Report</h1></b></center><br/>
+
+<!--	                    <span><center><b><h4> <span t-field="o.date_from"/> To <span t-field="o.date_to"/></h4></b></center></span>-->
+							<t t-set="sl_no" t-value="1" />
+							<t t-set="subtotal" t-value="0" />
+
+							<div>
+								<center>
+
+									<table>
+										<thead>
+
+											<tr>
+												<td style="width: 4%;" align="center"><h4><b><center>S# No</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Categories</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Sub Categories</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Name</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Recurring Period</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Date Of Recurring</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Amount Recurring</center></b></h4></td>
+											</tr>
+										</thead>
+										<tbody>
+											<t t-foreach="docs.get_details()" t-as="line">
+												<tr >
+													<td >
+														<center><span t-esc="sl_no" />
+															<t t-set="sl_no" t-value="sl_no+1" /></center>
+													</td>
+													<td>
+														<center><span t-esc="line['overhead_category']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['overhead_sub_category']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['name']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['recurring_period']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['date_of_recurring']"/></center>
+													</td>
+													<td>
+														<center><span t-esc="line['amount_recurring']"/></center>
+													</td>
+												</tr>
+											</t>
+										</tbody>
+									</table>
+								</center>
+							</div>
+						</div>
+					</t>
+				</t>
+			</t>
+</template>
+<!--_____________________________________________________________________________________________________________________-->
+
+		<record id="action_expense_recurring_report" model="ir.actions.act_window">
+					<field name="name">Print Recurring Expense Report</field>
+					<field name="type">ir.actions.act_window</field>
+					<field name="res_model">recurring.expense.reports</field>
+					<field name="target">new</field>
+					<field name="view_type">form</field>
+					<field name="view_mode">form</field>
+		</record>
+
+		<menuitem id="menu_recurring_expense_reports"
+                  name="Reports"
+                  sequence="9" parent="hiworth_project_management.menu_office_management"/>
+		<menuitem action="action_expense_recurring_report" id="menu_recurring_expense_reports_child"
+                              name="Recurring Expense Report"
+                              sequence="3" parent="menu_recurring_expense_reports"/>
+
+
+
+
+
+
+
+
+
+    </data>
+</openerp>

@@ -1,0 +1,107 @@
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="employee_attendance_indiv_wizard">
+			<field name="name">employee.attendance.individual</field>
+			<field name="model">employee.attendance.individual</field>
+			<field name="arch" type="xml">
+				<form string="Employee Individual Attendance Report">
+                    <group>
+                        <field name ="employee_id"/>
+                    </group>
+					<group col="4">
+						<field name="date_from" required="1"/>
+						<field name="date_to" required="1"/>
+					</group>
+
+					<footer>
+						<button name="action_individual_attendance_open_window" type="object" string="Print" class="oe_highlight" />
+						<button string="Cancel" class="oe_link" special="cancel" />
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_emp_indiv_attendance_wizard" model="ir.actions.act_window">
+					<field name="name">Print Employee Individual Attendance Report</field>
+					<field name="type">ir.actions.act_window</field>
+					<field name="res_model">employee.attendance.individual</field>
+					<field name="target">new</field>
+					<field name="view_type">form</field>
+					<field name="view_mode">form</field>
+		</record>
+<menuitem id="hr_emp_individual_attendance_report_id" parent="hiworth_hr_attendance.menu_attendance_reports" name="Individual Attendance Report" sequence="122" action="action_emp_indiv_attendance_wizard"/>
+
+   <report id="report_hr_emp_indiv_report" string="Attendance Report"
+			model="employee.attendance.individual" report_type="qweb-pdf"
+			name="hiworth_hr_attendance.report_employee_individual_attendance_template"/>
+
+
+   <template id="report_employee_individual_attendance_template">
+	   <style>
+table, th, td {
+
+
+   border: 1px solid black;
+
+}
+th, td {
+  padding: 17px;
+  text-align: center;
+}
+</style>
+
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="report.external_layout">
+						<div class="page">
+							<center><b><h1>Employee Attendance Report</h1></b></center>
+
+	<span><center><b><h4> <span t-field="o.date_from"/> To <span t-field="o.date_to"/></h4></b></center></span>
+							<span><center><b><h2><span t-field="o.employee_id"/></h2></b></center></span>
+							<t t-set="sl_no" t-value="1" />
+							<t t-set="subtotal" t-value="0" />
+
+							<div>
+								<center>
+
+									<table>
+										<thead>
+
+											<tr>
+												<td style="width: 4%;" align="center"><h4><b><center>Sl.No</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Date</center></b></h4></td>
+												<td style="width: 10%;" align="center"><h4><b><center>Attendance</center></b></h4></td>
+
+											</tr>
+										</thead>
+										<tbody>
+											<t t-foreach="docs.get_details()" t-as="line">
+												<tr >
+													<td >
+														<span t-esc="sl_no" />
+														<t t-set="sl_no" t-value="sl_no+1" />
+													</td>
+													<td >
+														<span t-esc="line['date']"/>
+													</td>
+
+													<td >
+														<span t-esc="line['attendance']"/>
+													</td>
+												</tr>
+											</t>
+
+										</tbody>
+									</table>
+								</center>
+							</div>
+
+						</div>
+					</t>
+				</t>
+			</t>
+		</template>
+
+    </data>
+</openerp>

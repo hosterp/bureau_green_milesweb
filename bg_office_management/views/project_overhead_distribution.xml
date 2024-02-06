@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="tree_project_overhead_distribution" model="ir.ui.view">
+            <field name="name">projectoverhead.distribution</field>
+            <field name="model">projectoverhead.distribution</field>
+            <field name="arch" type="xml">
+                <tree string="Project Overhead Distribution">
+                    <field name="project_id"/>
+                    <field name="project_value"/>
+                    <field name="month_select"/>
+                    <field name="actual_value"/>
+                </tree>
+            </field>
+        </record>
+        <record id="project_overhead_distribution_form_id" model="ir.ui.view">
+			<field name="name">projectoverhead.distribution</field>
+			<field name="model">projectoverhead.distribution</field>
+			<field name="arch" type="xml">
+				<form string="Project Overhead Distribution">
+					<sheet>
+					<h1><center>Project Overhead Distribution</center></h1><br></br>
+					<group col="2">
+						<group>
+							<field name="project_id"/>
+							<field name="project_value" required="1"/>
+						</group>
+						<group>
+
+						</group>
+					</group>
+						<notebook>
+							<Page string="Actual Project Value">
+								<group col="2">
+									<group>
+										<field name="month_select"/>
+										<field name="actual_value"/>
+						            </group>
+									<group>
+										<field name="date" required="1"/>
+									</group>
+								</group>
+							</Page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+			<record model="ir.actions.act_window" id="action_project_overhead_distribution">
+			<field name="name">Project Overhead Distribution</field>
+			<field name="res_model">projectoverhead.distribution</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,kanban</field>
+		</record>
+<!--		<menuitem id="project_overhead_distribution" name="Project Overhead Distribution" parent="bg_office_management.overhead_costing" action="action_project_overhead_distribution"/>-->
+    </data>
+</openerp>

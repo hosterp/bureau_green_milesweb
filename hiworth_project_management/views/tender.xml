@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+        <record id="tree_tender_view_id" model="ir.ui.view">
+            <field name="name">tender.tender</field>
+            <field name="model">tender.tender</field>
+            <field name="arch" type="xml">
+                <tree string="Tenders">
+                    <field name="tender_no"/>
+                    <field name="name"/>
+                    <field name="location"/>
+                    <field name="contract_awarder"/>
+                    <field name="creation_date"/>
+                </tree>
+            </field>
+        </record>
+        <record id="form_tender_view_id" model="ir.ui.view">
+			<field name="name">tender.tender</field>
+			<field name="model">tender.tender</field>
+			<field name="arch" type="xml">
+				<form string="Site Visits">
+                    <header>
+						<button name="button_approve" attrs="{'invisible':[('state','!=', 'draft')]}" string="Approve" type="object" class="oe_highlight"/>
+						<button name="button_reject" attrs="{'invisible':[('state','!=', 'draft')]}" string="Reject" type="object" class="oe_highlight"/>
+						<button name="button_cancel"  attrs="{'invisible':[('state','in', ['draft','cancel'])]}" string="Cancel" type="object" class="oe_highlight"/>
+						<field name="state" widget="statusbar" statusbar_visible="draft,approved,rejected,cancel"/>
+
+
+					</header>
+					<sheet>
+                        <group>
+							<label for="name" string="Work Name" class="oe_inline"/>
+                            <h2><center><field name="name"/></center></h2>
+                        </group>
+					<group col="2">
+						<group>
+							<field name="tender_no"/>
+							<field name="location"/>
+						</group>
+						<group>
+							<field name="contract_awarder"/>
+							<field name="creation_date"/>
+						</group>
+					</group>
+						<group col="2">
+							<group>
+                            <field name="tender_last_date"/>
+                            <field name="tender_postponed_date"/>
+						</group>
+                        <group>
+                            <field name="tender_amount"/>
+							<field name="bond_amount"/>
+                        </group>
+						</group>
+                        <notebook>
+                            <page string="Attachments">
+									<field name="attachment_ids">
+										<tree editable="bottom">
+											<field name="date"/>
+											<field name="name" />
+											<field name="binary_field" filename="filename" />
+											<field name="filename" />
+										</tree>
+									</field>
+								</page>
+                        </notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+        <record model="ir.actions.act_window" id="action_tender_view">
+			<field name="name">Tender</field>
+			<field name="res_model">tender.tender</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,kanban</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_rejected_tender_view">
+			<field name="name">Tender</field>
+			<field name="res_model">tender.tender</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,kanban</field>
+			<field name="domain">[('state','=','rejected')]</field>
+		</record>
+
+        <menuitem id="tender_parent_id" name="Tenders" parent="hiworth_project_management.menu_office_management" sequence="2"/>
+        <menuitem action="action_tender_view" id="tender_id_child" name="Tender Creation" parent="tender_parent_id" sequence="1"/>
+        <menuitem action="action_rejected_tender_view" id="tender_id_child2" name="Rejected Tenders" parent="tender_parent_id" sequence="2"/>
+    </data>
+</openerp>

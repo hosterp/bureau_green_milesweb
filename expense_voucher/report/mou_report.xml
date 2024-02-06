@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<report id="print_mou_report" string="MOU Report Print"
+		model="mou.mou" report_type="qweb-pdf"
+		name="expense_voucher.mou_report_template" />
+
+		<report id="view_mou_report" string="MOU Report View"
+		model="mou.mou" report_type="qweb-html"
+		name="expense_voucher.mou_report_template" />
+
+		  <record id="expense_voucher.print_mou_report" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="hiworth_construction.paper_format_report_master_plan" />
+        </record>
+
+
+		<template id="external_layout_header_inherit_mou">
+    				<div class="header">
+        					<div class="row">
+
+
+        						<div  style="font-size: 20px;">
+
+									<div class="col-xs-10 text-center;" style="font-size: 24px;">
+									<p ><center><b>Memorandum of Understanding<br>With Palathra Constructions</br><br>For the Service/Supply of Vehicle Material/Land/House/Room</br></b></center></p>
+									</div>
+
+            					<div class="col-xs-2" >
+               						 <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="max-height: 80px;"/>
+               					</div>
+
+            					</div>
+								<div class="col-xs-12;" style="font-size: 18px;">
+									<b> NO :<span t-field="o.name" /></b>
+								</div>
+								<br/>
+								<br/>
+            					<!--div class="col-xs-12 text-center" style="font-size: 20px;margin-top:30px;" t-field="o.company.name"/-->
+        					
+           						<!--div  style="font-size: 20px;margin-top:0px;"--> 
+                						
+                						
+
+        					</div>
+        					
+                    	
+        
+    				</div>
+		</template>
+    	<template id="external_layout_inherit_mou">
+    <!-- Multicompany -->
+    	<t t-if="o and 'company_id' in o">
+        	<t t-set="company" t-value="o.company_id"></t>
+    	</t>
+    	<t t-if="not o or not 'company_id' in o">
+        	<t t-set="company" t-value="res_company"></t>
+    	</t>
+
+
+    <t t-raw="0" />
+    </template>
+		
+		<template id="mou_report_template">
+			<t t-call="report.html_container">
+				<t t-foreach="docs" t-as="o">
+
+						<div class="page">
+
+								<t t-call="expense_voucher.external_layout_header_inherit_mou"/>
+							<div></div>
+								<table cellpadding="10" align='right' style="font-size: 20px;width:100%;border: 1px solid black;">
+									<tr style="border-bottom:1px solid black">
+										<td style="border-bottom:1px solid black"><b>Work Name :</b></td>
+										<td style="border-left:1px solid black;border-bottom:1px solid black" colspan="2"><center><b><span t-field="o.site"/></b></center></td>
+									</tr>
+									<tr style="border-bottom:1px solid black">
+										<td style="width:40%"><b>Name of Supplier Owner</b></td>
+										<td style="border-left:1px solid black;" colspan="2"><center><b><span t-field="o.partner_id.name"/></b></center></td>
+									</tr>
+									<tr style="border-bottom:1px solid black">
+										<td ><b>Supplier/Owner Address and contact details </b></td>
+										<td style="border-left:1px solid black;" colspan="2"><center><b><span t-field="o.address"/></b></center> </td>
+									</tr>
+									<tr style="border-bottom:1px solid black">
+										<td ><b>Contact Phone Number </b></td>
+										<td style="border-left:1px solid black;" colspan="2"><center><b><span t-field="o.partner_id.phone"/>,<span t-field="o.partner_id.mobile"/></b></center></td>
+									</tr>
+									<tr style="border-bottom:1px solid black">
+										<td ><b>Service/Supply</b><br>(Vehicle/Material/Land)</br> </td>
+										<td style="border-left:1px solid black;" colspan="2">
+											<center><b><span t-field="o.category_id.name"/></b></center>
+										</td>
+									</tr>
+									<tr style="border-bottom:1px solid black;" rowspan="3">
+										<t t-if="o.type">
+										<td align='right'>
+											Type &amp; Model **:
+										</td>
+										<td style="border-left:1px solid black;" colspan="2">
+											<center><b><span t-field="o.type"/></b>
+												</center>
+										</td>
+										</t>
+										<t t-if="o.get_vehicle_no()">
+										<td align='right'>
+											Vehicle Number **:
+										</td>
+										<td style="border-left:1px solid black;" colspan="2">
+											<center>
+												<b><span t-esc="o.get_vehicle_no()"/></b></center>
+										</td>
+										</t>
+										<t t-if="o.land_area">
+										<td align='right'>
+											Land Area **:
+										</td>
+										<td style="border-left:1px solid black;" colspan="2">
+											<center><b>
+												<span t-field="o.land_area"/></b></center>
+										</td>
+										</t>
+									</tr>
+									<tr style="border-bottom:1px solid black">
+										<td ><b>Agreement Date</b> </td>
+										<td style="border-left:1px solid black;" colspan="2"><center><b><span t-field="o.agreement_date"/></b></center></td>
+									</tr>
+									<tr style="border-bottom:1px solid black" height="40">
+										<td  rowspan="3"><b>Agreement Rate </b></td>
+										<td style="border-left:1px solid black;width:25%" height="20">
+											<center><b>Agreement Unit: <br/><center><span t-field="o.unit_of_meassure.name"/> </center></b></center></td>
+										<td style="border-left:1px solid black;" height="20">
+											<center><t t-if="o.detail==False"><span t-field="o.cost"/></t><t t-if="o.detail==True"><span t-field="o.agreement_rate_details"/></t></center></td>
+										<tr style="border-bottom:1px solid black">
+											<t t-if="o.bata and o.bata_details">
+												<td style="border-left:1px solid black;width:25%" height="20"><center>Bata(if any)</center></td>
+
+												<td style="border-left:1px solid black;" height="20"><center><t t-if="o.bata_detail==False"><span t-field="o.bata"/></t><t t-if="o.bata_detail==True"><span t-field="o.bata_details"/></t></center></td>
+											</t>
+											</tr>
+										<tr style="border-bottom:1px solid black">
+											<td style="border-left:1px solid black;width:25%" height="20"><center><b>Total</b></center></td>
+
+											<td style="border-left:1px solid black;" height="20"><center><b><span t-field="o.total"/></b></center></td></tr>
+
+										
+									</tr>
+									<tr style="border-bottom:1px solid black" height="40">
+										<td  rowspan="2" ><b>Agreement Period </b></td>
+										<td style="border-left:1px solid black;width:25%" height="20" >
+										<center>	Starting Date</center></td>
+										<td style="border-left:1px solid black;" height="20" >
+											<center><b><span t-field="o.starting_date"/></b></center></td>
+										<tr style="border-bottom:1px solid black" height="20"><td style="border-left:1px solid black;width:25%" ><center>Finishing Date</center></td>
+										
+											<td style="border-left:1px solid black;" height="20"><center><b><span t-field="o.finishing_date"/></b></center>
+											</td></tr>
+										
+									</tr>
+									<t t-if="o.security_payment_mou">
+									<tr style="border-bottom:1px solid black">
+										<td align="right"><b>Security Deposit Details</b>
+											<br><right>Amount :</right></br><br><right>Mode of Payment :</right></br>
+											<br><right>Date of Payment :</right></br></td>
+										<td style="border-left:1px solid black;" colspan="2" align="left">.<br><span t-field="o.amount"/></br><br><span t-field="o.mode_of_payment"/></br><br><span t-field="o.date_of_payment"/></br></td>
+									</tr>
+									</t>
+									<tr height="40" style="border-bottom:1px solid black">
+										<td><b>PAN</b></td>
+										<td colspan="2" style="border-left:1px solid black;"><center><b><span t-field="o.pan"/></b></center></td>
+									</tr>
+
+									<tr height="40" style="border-bottom:1px solid black">
+										<td><b>GST Account Name :<br>GST No:</br></b></td>
+										<td colspan="2" style="border-left:1px solid black;"><center><b><span t-field="o.gst_account"/><br><span t-field="o.gst_no"/></br></b></center></td>
+									</tr>
+									<tr style="border-bottom:1px solid black">
+										<td align="right"><b>Bank Account Details</b><right><br>Account Name :</br><br>Bank Name :</br>
+										<br>Branch :</br><br>A/C No :</br><br>IFSC Code :</br></right></td>
+										<td style="border-left:1px solid black;" colspan="2" align="left"><b><br><span t-field="o.account_name"/></br><br><span t-field="o.bank_name"/></br><br><span t-field="o.branch"/></br><br><span t-field="o.acc_no"/></br><br><span t-field="o.ifsc_code"/></br></b></td>
+									</tr>
+
+
+								</table>
+								<div style="font-size: 17px;">
+									<br><p>**TO BE FILLED ONLY, IF APPLICABLE</p></br>
+									<br><p><b>I hereby agree the above mentioned terms for the uninterupted service &amp; supply of the <br>vehicle/material as and when required</br></b></p></br>
+								</div>
+								<table class="table table-bordered" style="width:100%;font-size: 17px;">
+									<tr ><td style="width:50%"><b>Site in Charge</b>
+										<br>Name:<span t-field="o.supervisor.name"/></br>
+										<br>Sign and Date:<span t-field="o.supervisor.sign"/></br>
+										</td>
+										<td style="width:50%"><b>Supplier</b>
+										<br>Name:<span t-field="o.partner_id.name"/></br>
+										<br>Sign and Date:</br>
+										</td>
+										<td style="width:50%">
+										<br><b><span t-field="o.approved_by.name"/></b></br>
+
+											<b>Management Approval</b>
+										</td>
+									</tr>
+								</table>
+
+
+
+
+						</div>
+					</t>
+				</t>
+			</template>
+		</data>
+	</openerp>
+

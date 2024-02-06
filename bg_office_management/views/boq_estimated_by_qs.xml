@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="tree_boq_estimated_by_qs" model="ir.ui.view">
+            <field name="name">boq.estimated.qs</field>
+            <field name="model">boq.estimated.qs</field>
+            <field name="arch" type="xml">
+                <tree string="Boq Estimated By Qs">
+                    <field name="project_id"/>
+                    <field name="overhead_category"/>
+                    <field name="overhead_sub_category"/>
+                    <field name="material"/>
+                    <field name="description"/>
+                    <field name="qty"/>
+                    <field name="unit"/>
+                    <field name="measure_length"/>
+                    <field name="unit_cost"/>
+                </tree>
+            </field>
+        </record>
+        <record id="boq_estimated_by_qs_form_id" model="ir.ui.view">
+			<field name="name">boq.estimated.qs</field>
+			<field name="model">boq.estimated.qs</field>
+			<field name="arch" type="xml">
+				<form string="Boq Estimated By Qs">
+					<sheet>
+					<h1><center>Boq Estimated By Qs</center></h1><br></br><br></br>
+					<group col="2" string="Estimated">
+						<group>
+							<field name="project_id"/>
+							<field name="overhead_category"/>
+							<field name="overhead_sub_category"/>
+							<field name="material"/>
+							<field name="description"/>
+						</group>
+						<group>
+							<field name="qty"/>
+							<field name="unit"/>
+							<field name="measure_length"/>
+							<field name="unit_cost"/>
+						</group>
+					</group>
+						<group col="2" string="Actual">
+							<group>
+								<field name="qty_actual"/>
+							    <field name="unit_actual"/>
+							    <field name="difference"/>
+							    <field name="unit_cost_actual"/>
+							</group>
+							<group>
+
+							</group>
+
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+			<record model="ir.actions.act_window" id="action_boq_estimated_by_qs">
+			<field name="name">Boq Estimated by Qs</field>
+			<field name="res_model">boq.estimated.qs</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,kanban</field>
+		</record>
+				<menuitem id="boq_estimated_by_qs_parent_id" name="BOQ Estimated" parent="hiworth_project_management.menu_office_management" sequence="5"/>
+				<menuitem action="action_boq_estimated_by_qs" id="boq_estimated_by_qs_child_id" name="By QS" parent="boq_estimated_by_qs_parent_id"/>
+    </data>
+</openerp>

@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<menuitem 
+				id="main_menu_property_details" 
+				parent="hiworth_construction.menu_hiworth_finance_root"
+				name="Property Details" 
+				sequence="3" />
+
+		<record id="view_property_details_form" model="ir.ui.view">
+			<field name="name">property.details.form</field>
+			<field name="model">property.details</field>
+            <field name="priority">1</field>
+			<field name="arch" type="xml">
+				<header>
+					<button name="action_sold" states="in_hand" string="Sold Out"
+							type="object" class="oe_highlight" />
+					<field name="state" widget="statusbar" statusbar_visible="in_hand,sold" />
+				</header>
+				<form string="Property Details">						
+						<group>
+							<group>
+								<field name="reg_no"/>
+								<field name="reg_date"/>
+								<field name="tax_payment_date"/>
+								<field name="thandaper"/>
+								<field name="location"/>
+								<field name="title_value"/>
+								<field name="stamp_value"/>
+								<field name="reg_fee"/>
+								<field name="h_ed_fee"/>
+								<field name="cess"/>
+								<field name="title_owner"/>								
+								<field name="survey_details_ids">
+									<tree editable="bottom">
+										<field name="survey_no"/>
+										<field name="quantity"/>
+									</tree>
+								</field>
+								<field name="hr"/>
+								<field name="released_gehan"/>
+							</group>
+							<group>	
+								<field name="are"/>
+								<field name="sqm"/>
+								<field name="total_cents"/>
+								<field name="block"/>
+								<field name="district"/>
+								<field name="sub_district"/>
+								<field name="thaluk"/>
+								<field name="village"/>
+								<field name="muri"/>
+								<field name="panchayath"/>
+								<field name="sub_registrar_office"/>	
+								<field name="pledge_bank"/>				
+								<field name="type_id" readonly="1"/>
+								<field name="possession"/>
+								<field name="location_sketch"/>
+							</group>
+					</group>
+					<group>
+						<group>
+							<field name="fair_value"/>
+							<field name="reg_fee"/>
+							<field name="writing"/>
+							<field name="other_exp"/>
+							<field name="market_value"/>
+							<field name="collateral"/>
+						</group>
+						<group>
+							<field name="pledged_to_id"/>
+							<field name="land_type"/>
+							<field name="writers_details"/>
+							<field name="total_extent"/>
+							<field name="land_tax"/>
+							<field name="land_tax_date"/>
+							<field name="physical_status"/>
+							<field name="land_tax_date"/>
+							<field name="ec"/>
+						</group>
+					</group>
+
+					<notebook>
+						<page string="Pre-Deed Details">
+							<field name="pre_deed_ids" nolabel="1" >
+								<tree editable="bottom">
+									<field name="pre_deed_date"/>							
+									<field name="pre_title_owner"/>							
+									<field name="pre_deed_no"/>							
+									<field name="doc_type"/>							
+								</tree>
+							</field>
+						</page>
+						<page string="Bank Value Details">
+							<field name="bank_value_ids" nolabel="1" >
+								<tree editable="bottom">
+									<field name="date"/>									
+									<field name="valuer"/>									
+									<field name="mobile"/>									
+									<field name="bank_value"/>								
+								</tree>
+							</field>
+						</page>
+					</notebook>
+
+					<group>				
+							<field name="remarks"/>				
+					</group>
+					
+				</form>
+			</field>
+		</record>
+
+		<record id="view_property_details_tree" model="ir.ui.view">
+			<field name="name">property.details.tree</field>
+			<field name="model">property.details</field>
+			<field name="arch" type="xml">
+				<tree string="Bill of Quantity">
+					<field name="reg_no"/>
+					<field name="reg_date"/>
+					<field name="tax_payment_date"/>
+					<field name="thandaper"/>
+					<field name="location"/>
+					<field name="title_value"/>
+					<field name="stamp_value"/>
+					<field name="reg_fee"/>
+					<field name="h_ed_fee"/>
+					<field name="cess"/>
+					<field name="title_owner"/>								
+					<field name="survey_no"/>
+					<field name="re_sy_no"/>
+					<field name="hr"/>
+					<field name="are"/>
+					<field name="sqm"/>
+					<field name="total_cents"/>
+					<field name="block"/>
+					<field name="district"/>
+					<field name="sub_district"/>
+					<field name="thaluk"/>
+					<field name="village"/>
+					<field name="muri"/>
+					<field name="panchayath"/>
+					<field name="sub_registrar_office"/>	
+					<field name="pledge_bank"/>				
+					<field name="type_id"/>				
+					<field name="remarks"/>			
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_property_details_menu" model="ir.actions.act_window">
+			<field name="name">Property Details</field>
+			<field name="res_model">property.details</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_property_details_tree" />
+		</record>
+
+
+		<menuitem 
+				id="main_menu_property_details_sub" 
+				name="Property Details" 
+				parent="main_menu_property_details"
+				action="action_property_details_menu"
+				sequence="1" />
+
+
+
+				<report id="print_property_details_report" string="Property Details - Print Report"
+			model="property.details" report_type="qweb-pdf"
+			name="hiworth_construction.report_property_details_template" />
+
+		<report id="view_property_details_report" string="Property Details - View Report"
+			model="property.details" report_type="qweb-html"
+			name="hiworth_construction.report_treasury_deposit_template" />
+
+		<!-- <record id="hiworth_construction.print_security_deposit_report" model="ir.actions.report.xml">
+			<field name="paperformat_id" ref="hiworth_construction.report_paperformat" />
+		</record> -->
+
+		<template id="report_treasury_deposit_template">
+			<t t-call="report.html_container">
+				<t t-call="report.external_layout">
+					<div class="page" >
+						<div class="header">
+							<h3>
+								<center>Treasurey Deposit </center>
+							</h3>
+						</div>
+						<t t-foreach="docs" t-as="o">
+							<table style="font-size:16px;width: 100%;border-bottom: outset;border-top: outset;margin-top:10px;">
+							<!-- <table class="table table-bordered" style="border-top: outset;border-left: outset; border-right: outset;border-bottom: outset;width: 100%">
+ -->
+								<tr style="border-left: outset; border-right: outset;border-bottom: outset;">
+									<td style="width: 30%;">
+										Name of Work
+									</td>
+									<td style="width: 5%;">
+										:
+									</td>
+									<td colspan="3" style="width: 65%;">
+										<span t-field="o.name_of_work" />
+									</td>
+								</tr>
+								<tr style="border-left: outset; border-right: outset;border-bottom: outset;">
+									<td>
+										Name of Purpose
+									</td>
+									<td>
+										:
+									</td>
+									<td colspan="3">
+										<span t-field="o.purpose_id.name" />
+									</td>
+								</tr>
+								<tr style="border-left: outset; border-right: outset;border-bottom: outset;">
+									<td>
+										Submitted To
+									</td>
+									<td>
+										:
+									</td>
+									<td colspan="3">
+										<span t-field="o.submitted_to" />
+									</td>
+								</tr>
+
+							</table>
+							<table style="font-size:16px;width: 100%;border-bottom: outset;border-top: outset;margin-top:10px;">
+
+								<tr style="border-left: outset; border-right: outset;border-bottom: outset;">
+									<td colspan="5" align="center">
+										<strong>Normal Security Deposit Details</strong>
+									</td>
+								</tr>
+								<tr style="border-left: outset; border-right: outset;border-bottom: outset;">
+									<td style="width: 30%;">
+										Name of Treasury
+									</td>
+									<td style="width: 5%;">
+										:
+									</td>
+									<td colspan="3" style="width: 65%;">
+										<span t-field="o.cs_treasury_id.name" />
+									</td>
+								</tr>
+								<tr style="border-left: outset; border-right: outset;border-bottom: outset;">
+									<td>
+										Security Amount
+									</td>
+									<td>
+										:
+									</td>
+									<td colspan="3">
+										<span t-esc="'{0:,.2f}'.format(o.com_security_amount)" />
+									</td>
+								</tr>
+
+								<tr style="border-left: outset; border-right: outset;border-bottom: outset;">
+									<td>
+										Number And Date
+									</td>
+									<td>
+										:
+									</td>
+									<td colspan="3">
+										<span t-field="o.cs_date" />&amp;<span t-field="o.treasury_number" />
+									</td>
+								</tr>
+
+
+
+							</table>
+							<table style="font-size:16px;width: 100%;border-bottom: outset;border-top: outset;margin-top:10px;">
+
+
+
+								<tr style="border-left: outset; border-right: outset;border-bottom: outset;">
+									<td>
+										Period
+									</td>
+									<td>
+										:
+									</td>
+									<td colspan="3">
+										<span t-field="o.treasury_period" />
+									</td>
+								</tr>
+
+								<tr style="border-left: outset; border-right: outset;border-bottom: outset;">
+									<td>
+										Maturity Date
+									</td>
+									<td>
+										:
+									</td>
+									<td colspan="3">
+										<span t-field="o.expected_cs_release_date" />
+									</td>
+								</tr>
+							</table>
+
+							<table style="font-size:16px;width: 100%;margin-top:10px;">
+
+
+								<tr >
+									<td colspan="1">
+										<strong>Remarks</strong>
+									</td>
+									<td colspan="2">
+										<span t-field="o.remarks" />
+									</td>
+
+								</tr>
+
+							</table>
+
+
+
+
+
+							<!-- <div class="col-xs-32">
+								<div class="col-xs-12">
+									Prepared by
+								</div>
+								<div class="col-xs-12">
+									Verified by
+								</div>
+								<div class="col-xs-12">
+									Approved by
+								</div>
+
+							</div> -->
+
+						</t>
+					</div>
+				</t>
+			</t>
+		</template>
+
+	</data>
+</openerp>
