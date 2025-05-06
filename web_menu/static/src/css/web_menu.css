@@ -48,5 +48,5 @@ border-color: darkgrey;
 }
 
 .oe_secondary_menus_container.oe_folded.active_menu {
-	display: block !important;
+/*	display: block !important; */
 }
