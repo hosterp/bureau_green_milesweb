@@ -39,3 +39,26 @@
 	background-color: #209FB3;
     background-image: linear-gradient(to bottom, #33C0D6, #209FB3);
 }
+
+
+
+
+.oe_list_header_columns {
+	font-size: 16px;
+	background-color: #387298 !important;
+	color: white !important;
+}
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+	border-color: #101010;
+	background-color: #387298 !important;
+}
+
+#oe_main_menu_navbar li a, #oe_main_menu_navbar li button {
+	font-size: 13px;
+	border-right: 1px solid !important;
+}
+
+.openerp .nav-pills > li.active > a, .openerp a.list-group-item.active > a {
+	background-color: #387298 !important;
+}
