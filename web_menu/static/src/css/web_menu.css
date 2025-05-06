@@ -47,4 +47,6 @@ border-color: darkgrey;
     width:0px !important;
 }
 
-
+.oe_secondary_menus_container.oe_folded.active_menu {
+	display: block !important;
+}
