@@ -70,31 +70,31 @@
 					</div>
 
 					 <div class="oe_horizontal_separator oe_clear" style="margin-bottom:10px;">
-                <div class="oe_inline second_class" style="display:inline-flex; flex-wrap:wrap; width:auto;">
-                   <div class="oe_inline" style="margin-right:15px;">
-                      <label for="employee_id" string="Supervisor"/>
-                      <field name="employee_id" required="True" domain="[('user_category','=','site_eng')]" class="oe_inline"/>
-                   </div>
-                   <div class="oe_inline" style="margin-right:15px;">
-                      <label for="date"/>
-                      <field name="date" required="True" attrs="{'readonly':[('state','in',('confirmed','approved','checked','cancelled'))]}" class="oe_inline"/>
-                   </div>
-                   <div class="oe_inline" style="margin-right:15px;">
-                      <label for="project_id"/>
-                      <field name="project_id" required="1" class="oe_inline"/>
-                   </div>
-                   <div class="oe_inline" style="margin-right:15px;">
-                      <label for="location_ids"/>
-                      <field name="location_ids" required="True" options="{'no_create': True, 'no_create_edit':True}" attrs="{'readonly':[('state','in',('confirmed','approved','checked','cancelled'))]}" class="oe_inline"/>
-                   </div>
-                   <div class="oe_inline" style="margin-right:15px;">
-                      <label for="project_task_id" string="Task"/>
-                      <field name="project_task_id" class="oe_inline"/>
-                   </div>
-                   <field name="reception" invisible="1" style="display:none;" />
-                   <field name="transfer" invisible="1" style="display:none;" />
-                </div>
-             </div>
+							<div class="oe_inline second_class" style="display:inline-flex; flex-wrap:wrap; width:auto;">
+							   <div class="oe_inline" style="margin-right:15px;">
+								  <label for="employee_id" string="Supervisor"/>
+								  <field name="employee_id" required="True" domain="[('user_category','=','site_eng')]" class="oe_inline"/>
+							   </div>
+							   <div class="oe_inline" style="margin-right:15px;">
+								  <label for="date"/>
+								  <field name="date" required="True" attrs="{'readonly':[('state','in',('confirmed','approved','checked','cancelled'))]}" class="oe_inline"/>
+							   </div>
+							   <div class="oe_inline" style="margin-right:15px;">
+								  <label for="project_id"/>
+								  <field name="project_id" required="1" class="oe_inline"/>
+							   </div>
+							   <div class="oe_inline" style="margin-right:15px;">
+								  <label for="location_ids"/>
+								  <field name="location_ids" required="True" options="{'no_create': True, 'no_create_edit':True}" attrs="{'readonly':[('state','in',('confirmed','approved','checked','cancelled'))]}" class="oe_inline"/>
+							   </div>
+							   <div class="oe_inline" style="margin-right:15px;">
+								  <label for="project_task_id" string="Task"/>
+								  <field name="project_task_id" class="oe_inline"/>
+							   </div>
+							   <field name="reception" invisible="1" style="display:none;" />
+							   <field name="transfer" invisible="1" style="display:none;" />
+							</div>
+                     </div>
 					<group string="Task Details">
 					<notebook>
 						<page>

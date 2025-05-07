@@ -100,3 +100,15 @@ margin-top: -2px;
 .openerp .oe_notebook > li.ui-tabs-active > a {
     color: #fff;
 }
+
+.oe_inline.project_second_class {
+	border: 2px solid black;
+	padding: 4px;
+}
+
+.oe_inline.project_second_class > div {
+	/* padding: 8px; */
+	border-right: 1px solid black;
+	padding-bottom: 18px;
+	/* border-top: 1px solid black; */
+}

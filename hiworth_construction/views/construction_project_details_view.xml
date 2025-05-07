@@ -718,34 +718,76 @@
 				</xpath>
 				<xpath expr="//div[1]" position="replace">
 					<div class="oe_title">
-						<label for="project_number" string="Project Number" />
-						<h1>
-							<field name="project_number" string="Project Number" colspan="2"/>
-						</h1>
-						<label for="name" string="Project Name" />
-						<h1>
-							<field name="name" string="Project Name" colspan="2"/>
-						</h1>
-						<label for="project_value" string="Project Value" />
-						<h1>
-							<field name="project_value" string="Project Value" required="1" colspan="2"/>
-						</h1>
+<!--						<label for="project_number" string="Project Number" />-->
+<!--						<h1>-->
+<!--							<field name="project_number" string="Project Number" colspan="2"/>-->
+<!--						</h1>-->
+<!--						<label for="name" string="Project Name" />-->
+<!--						<h1>-->
+<!--							<field name="name" string="Project Name" colspan="2"/>-->
+<!--						</h1>-->
+<!--						<label for="project_value" string="Project Value" />-->
+<!--						<h1>-->
+<!--							<field name="project_value" string="Project Value" required="1" colspan="2"/>-->
+<!--						</h1>-->
 
-						<label for="tender_id" string="Tender Number" />
-						<h2>
-							<field name="tender_id"/>
-						</h2>
+<!--						<label for="tender_id" string="Tender Number" />-->
+<!--						<h2>-->
+<!--							<field name="tender_id"/>-->
+<!--						</h2>-->
 
-						<label for="project_location_ids" string="Project Locations" />
-						<h1>
-							<field name="project_location_ids" string="Project Location"
-								required="True" widget="many2many_tags"/>
-						</h1>
-						<div name="options_active">
-							<field name="use_tasks" class="oe_inline" />
-							<label for="use_tasks" string="Use Tasks" />
-						</div>
+<!--						<label for="project_location_ids" string="Project Locations" />-->
+<!--						<h1>-->
+<!--							<field name="project_location_ids" string="Project Location"-->
+<!--								required="True" widget="many2many_tags"/>-->
+<!--						</h1>-->
+<!--						<div name="options_active">-->
+<!--							<field name="use_tasks" class="oe_inline" />-->
+<!--							<label for="use_tasks" string="Use Tasks" />-->
+<!--						</div>-->
+
+
+
+
+						<div class="oe_horizontal_separator oe_clear" style="margin-bottom:10px;">
+							<div class="oe_inline project_second_class" style="display:inline-flex; flex-wrap:wrap; width:auto;">
+							   <div class="oe_inline" style="margin-right:15px;">
+								  <label for="project_number" string="Project Number"/>
+								  <field name="project_number"  class="oe_inline"/>
+							   </div>
+							   <div class="oe_inline" style="margin-right:15px;">
+								  <label for="name" string="Project Name"/>
+								  <field name="name" required="True"   class="oe_inline"/>
+							   </div>
+							   <div class="oe_inline" style="margin-right:15px;">
+								  <label for="project_value" string="Project Value"/>
+								  <field name="project_value" required="1" class="oe_inline"/>
+							   </div>
+							   <div class="oe_inline" style="margin-right:15px;">
+								  <label for="tender_id" string="Tender Number"/>
+								  <field name="tender_id"    class="oe_inline"/>
+							   </div>
+							   <div class="oe_inline" style="margin-right:15px;">
+								  <label for="project_location_ids" string="Project Location"/>
+								  <field name="project_location_ids" required="True" widget="many2many_tags" class="oe_inline"/>
+							   </div>
+								<div class="oe_inline" name="options_active" style="margin-right:15px;">
+								  <label for="use_tasks" string="Use Tasks"/>
+								  <field name="use_tasks" class="oe_inline"/>
+							   </div>
+
+							</div>
+                     </div>
+
+
+
+
 					</div>
+
+
+
+
+
 <!--					<div class="oe_title">-->
 <!--&lt;!&ndash;					<group>&ndash;&gt;-->
 <!--&lt;!&ndash;						<group col="5">&ndash;&gt;-->
