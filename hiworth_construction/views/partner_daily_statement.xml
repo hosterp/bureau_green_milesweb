@@ -68,33 +68,33 @@
 							<field name="name" readonly="1"/>
 						</h1>
 					</div>
-<!--					<div class="oe_left oe_button_box" name="buttons" >-->
-<!--						<button class="oe_inline oe_stat_button" type="object" name="cash_transfer" icon="fa-tasks" string="Cash Transfer"-->
-<!--								attrs="{'invisible':[('state','!=','draft')]}"/>-->
-<!--						<button class="oe_inline oe_stat_button" type="object" name="view_transfer" icon="fa-tasks" string="View Transfers"/>-->
-<!--						<button class="oe_inline oe_stat_button" type="object" name="view_receipt" icon="fa-tasks" string="View Reception"/>-->
-<!--					</div>-->
 
-					<group>
-						<group>
-
-							<field name="employee_id" required="True" string="Supervisor" domain="[('user_category','=','site_eng')]"
-								  />
-<!--							<field name="account_id" required="True" />-->
-							<field name="date" required="True" attrs="{'readonly':[('state','in',('confirmed','approved','checked','cancelled'))]}" />
-
-                                <field name="project_id" required="1"/>
-							<field name="location_ids" required="True" options="{'no_create': True, 'no_create_edit':True}" attrs="{'readonly':[('state','in',('confirmed','approved','checked','cancelled'))]}"/>
-							<field name="project_task_id" string="Task"/>
-							<field name="reception" invisible="1" />
-							<field name="transfer" invisible="1" />
-						</group>
-					</group>
-						<group >
-							<newline />
-
-						</group>
-
+					 <div class="oe_horizontal_separator oe_clear" style="margin-bottom:10px;">
+                <div class="oe_inline second_class" style="display:inline-flex; flex-wrap:wrap; width:auto;">
+                   <div class="oe_inline" style="margin-right:15px;">
+                      <label for="employee_id" string="Supervisor"/>
+                      <field name="employee_id" required="True" domain="[('user_category','=','site_eng')]" class="oe_inline"/>
+                   </div>
+                   <div class="oe_inline" style="margin-right:15px;">
+                      <label for="date"/>
+                      <field name="date" required="True" attrs="{'readonly':[('state','in',('confirmed','approved','checked','cancelled'))]}" class="oe_inline"/>
+                   </div>
+                   <div class="oe_inline" style="margin-right:15px;">
+                      <label for="project_id"/>
+                      <field name="project_id" required="1" class="oe_inline"/>
+                   </div>
+                   <div class="oe_inline" style="margin-right:15px;">
+                      <label for="location_ids"/>
+                      <field name="location_ids" required="True" options="{'no_create': True, 'no_create_edit':True}" attrs="{'readonly':[('state','in',('confirmed','approved','checked','cancelled'))]}" class="oe_inline"/>
+                   </div>
+                   <div class="oe_inline" style="margin-right:15px;">
+                      <label for="project_task_id" string="Task"/>
+                      <field name="project_task_id" class="oe_inline"/>
+                   </div>
+                   <field name="reception" invisible="1" style="display:none;" />
+                   <field name="transfer" invisible="1" style="display:none;" />
+                </div>
+             </div>
 					<group string="Task Details">
 					<notebook>
 						<page>
@@ -108,10 +108,7 @@
 									<field name="no_labours"/>
 									<field name="veh_categ_id" options="{'no_create':1}" widget="many2many_tags"/>
 									<field name="material" options="{'no_create':1}" widget="many2many_tags"/>
-	<!--								<field name="qty_estimate"/>-->
-	<!--								<field name="unit"/>-->
-	<!--								<field name="rate"/>-->
-	<!--								<field name="estimate_cost"/>-->
+
 									<field name="start_date"/>
 									<field name="finish_date"/>
 									<field name="subcontractor"/>
@@ -122,17 +119,7 @@
 					</notebook>
 					</group>
 
-<!--<notebook>-->
-<!--    <page string="Today Tasks">-->
-<!--		<field name = "task_id"/>-->
 
-<!--&lt;!&ndash;		<field name="item_received_lines" >&ndash;&gt;-->
-<!--&lt;!&ndash;				<tree>&ndash;&gt;-->
-<!--&lt;!&ndash;					<field name="product_id"/>&ndash;&gt;-->
-<!--&lt;!&ndash;				</tree>&ndash;&gt;-->
-<!--&lt;!&ndash;		</field>&ndash;&gt;-->
-<!--    </page>-->
-<!--</notebook>-->
 					<group string="Supervisor Daily Work Details">
 					<notebook>
 						<page string="Supervisor Daily Work Details">
@@ -147,10 +134,7 @@
 									<field name="unit"/>
 <!--									<field name="qty_estimate"/>-->
 									<field name="quantity"/>
-<!--									<field name="pre_qty"/>-->
-<!--									<field name="upto_date_qty"/>-->
-<!--									<field name="rate"/>-->
-<!--									<field name="estimate_cost"/>-->
+
 									<field name="estimated_hrs" string="Estimated hours"/>
 									<field name="remarks"/>
 
@@ -205,85 +189,7 @@
 								</field>
 
 
-<!--								<field name="line_ids" nolabel="1" attrs="{'readonly':[('state','in',('confirmed','approved','checked','cancelled'))]}" >-->
-<!--									<tree>-->
-<!--										<field name="account_id" required="True" string="Particulars"/>-->
-<!--										<field name="item_id" string="Work"/>-->
-<!--&lt;!&ndash;										<field name="qty_char"/>&ndash;&gt;-->
-<!--&lt;!&ndash;										<field name="qty_no" sum="Total" widget="char"/>&ndash;&gt;-->
-<!--										<field name="rate_char" />-->
-<!--										<field name="payment_total" sum="Total" widget="char"/>-->
-<!--&lt;!&ndash;										<field name="vr_no" />&ndash;&gt;-->
-<!--										<field name="remarks" />-->
 
-<!--									</tree>-->
-<!--									<form>-->
-<!--										<sheet>-->
-<!--											<group>-->
-<!--												<group>-->
-<!--													<field name="account_id" string="Particulars" required="1" options="{'no_create': True, 'no_create_edit':True}" domain="['|',('labour_categ','=',True),('is_mason','=',True)]"/>-->
-<!--												</group>-->
-<!--												<group>-->
-<!--													<field name="item_id" required="1" string="Work" options="{'no_create': True, 'no_create_edit':True}" />-->
-<!--													<field name="category_id" invisible="1"/>-->
-<!--													<field name="line_bool" invisible="1" />-->
-<!--													<field name="quantity" attrs="{'invisible':['|',('line_bool','=',False),('mason_bool','=',True)],'required':[('line_bool','=',True),('mason_bool','=',False)]}" widget="char"/>-->
-<!--													&lt;!&ndash; <field name="qty_entered" attrs="{'invisible':[('line_bool','=',False)],'required':[('line_bool','=',True)]}"/> &ndash;&gt;-->
-<!--													<field name="rate" attrs="{'invisible':['|',('line_bool','=',False),('mason_bool','=',True)],'required':[('line_bool','=',True),('mason_bool','=',False)],'readonly':[('is_labour','=',True)]}" widget="char" />-->
-<!--													<field name="total" attrs="{'invisible':['|',('line_bool','=',False),('mason_bool','=',True)],'required':[('line_bool','=',True),('mason_bool','=',False)]}" widget="char" />-->
-
-<!--													<field name="line_bool" invisible="1"/>-->
-
-<!--													<field name="is_labour"  invisible="1"/>-->
-<!--													<field name="account_type"  invisible="1"/>-->
-<!--													<field name="mason_bool" invisible="1" />-->
-<!--													<field name="line_bool" invisible="1"/>-->
-
-<!--												</group>-->
-<!--											</group>-->
-<!--											<group attrs="{'invisible':[('line_bool','=',True)]}">-->
-<!--												<field name="particular_ids" nolabel="1">-->
-<!--													<tree editable="bottom">-->
-<!--														<field name="account_id" required="1" string="Labours"/>-->
-<!--														<field name="qty" sum="Total" widget="char"/>-->
-<!--														<field name="category_id" invisible="1"/>-->
-<!--														<field name="rate" sum="Total" widget="char"/>-->
-<!--														<field name="total" sum="Total"  widget="char"/>-->
-<!--														<field name="payment" sum="Total"  widget="char"/>-->
-
-
-<!--													</tree>-->
-<!--												</field>-->
-<!--											</group>-->
-
-<!--											<group attrs="{'invisible':[('mason_bool','=',False)]}">-->
-<!--												<field name="mason_lines" nolabel="1">-->
-<!--													<tree editable="bottom" create="false" >-->
-<!--														<field name="name" readonly="1" string="Category"/>-->
-<!--														<field name="rate" sum="Total" readonly="1"  widget="char"/>-->
-<!--														<field name="qty" sum="Total" widget="char"/>-->
-<!--														<field name="total" sum="Total" widget="char"/>-->
-
-
-<!--													</tree>-->
-<!--												</field>-->
-<!--											</group>-->
-<!--											<group>-->
-<!--												<group>-->
-<!--													<field name="vr_no" required="1" />-->
-<!--													<field name="payment"-->
-<!--														   attrs="{'invisible':[('line_bool','=',False),('mason_bool','=',False)]}" widget="char"/>-->
-<!--												</group>-->
-<!--												<group>-->
-<!--													<field name="remarks"/>-->
-<!--												</group>-->
-<!--											</group>-->
-<!--										</sheet>-->
-<!--									</form>-->
-
-
-<!--								</field>-->
-<!--							</group>-->
 						</page>
 						<page string="Details Of Received Items">
 							<field name="products_received_lines" attrs="{'readonly':[('state','in',('confirmed','approved','checked','cancelled'))]}">

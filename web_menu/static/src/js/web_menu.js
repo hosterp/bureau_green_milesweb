@@ -189,7 +189,7 @@ openerp.web_menu = function(instance){
                 var margin_left = $main_menu.position()
                 this.$secondary_menus.addClass("active_menu")
                 this.$secondary_menus.css("margin-left",margin_left.left)
-                this.$secondary_menus.css("display","table")
+                this.$secondary_menus.css("display","block")
                 this.$secondary_menus.find('.oe_secondary_menu').hide();
                 if(this.$secondary_menus.parents('.oe_leftbar').length){
                     $(this.$secondary_menus.parents('.oe_leftbar > div')[0]).addClass("set_width")

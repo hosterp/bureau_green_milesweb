@@ -62,3 +62,33 @@
 .openerp .nav-pills > li.active > a, .openerp a.list-group-item.active > a {
 	background-color: #387298 !important;
 }
+
+.oe_horizontal_separator.oe_clear .oe_form_label.oe_align_right {
+    color: black ;
+}
+
+.oe_horizontal_separator.oe_clear {
+	font-size: 15px;
+}
+
+.oe_inline.second_class {
+	/* width: auto !important; */
+
+}
+
+.oe_horizontal_separator .oe_inline {
+margin-top: -2px;
+}
+
+.oe_inline.second_class {
+	border: 2px solid black;
+	padding: 4px;
+}
+.oe_inline.second_class > div {
+    border-right: 2px solid black;
+    padding-right: 10px ;
+}
+
+.oe_inline.second_class > div:nth-child(5) {
+    border-right: none !important;
+}
